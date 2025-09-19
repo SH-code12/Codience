@@ -1,0 +1,6 @@
+@Codience.API_HostAddress = http://localhost:5051
+
+GET {{Codience.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

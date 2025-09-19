@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Q9Hwig5C/8o=",
+  "success": true,
+  "projectFilePath": "D:\\GraduationProject\\Codience\\Backend\\API\\Codience.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Noura\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.2\\microsoft.aspnetcore.openapi.9.0.2.nupkg.sha512",
+    "C:\\Users\\Noura\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
