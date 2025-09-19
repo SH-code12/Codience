@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "vscode": "^1.1.37"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.104.0"
+  }
+}
