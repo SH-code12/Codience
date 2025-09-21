@@ -1,0 +1,6 @@
+d:\GraduationProject\Codience\Backend\Infrastructure\Presentation\obj\Debug\net9.0\Infrastructure.Presentation.csproj.AssemblyReference.cache
+d:\GraduationProject\Codience\Backend\Infrastructure\Presentation\obj\Debug\net9.0\Infrastructure.Presentation.GeneratedMSBuildEditorConfig.editorconfig
+d:\GraduationProject\Codience\Backend\Infrastructure\Presentation\obj\Debug\net9.0\Infrastructure.Presentation.AssemblyInfoInputs.cache
+d:\GraduationProject\Codience\Backend\Infrastructure\Presentation\obj\Debug\net9.0\Infrastructure.Presentation.AssemblyInfo.cs
+d:\GraduationProject\Codience\Backend\Infrastructure\Presentation\obj\Debug\net9.0\Infrastructure.Presentation.csproj.CoreCompileInputs.cache
+d:\GraduationProject\Codience\Backend\Infrastructure\Presentation\obj\Debug\net9.0\Infrastructure.Presentation.sourcelink.json

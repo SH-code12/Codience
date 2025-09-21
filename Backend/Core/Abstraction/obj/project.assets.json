@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net9.0": {}
+    "net9.0": {
+      "Share/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/Share.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Share.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Share/1.0.0": {
+      "type": "project",
+      "path": "../../Share/Share.csproj",
+      "msbuildProject": "../../Share/Share.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net9.0": []
+    "net9.0": [
+      "Share >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\Noura\\.nuget\\packages\\": {},
@@ -14,11 +33,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj",
+      "projectUniqueName": "d:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj",
       "projectName": "Core.Abstraction",
-      "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj",
+      "projectPath": "d:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj",
       "packagesPath": "C:\\Users\\Noura\\.nuget\\packages\\",
-      "outputPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\obj\\",
+      "outputPath": "d:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -39,7 +58,11 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "d:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {
+              "projectPath": "d:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
