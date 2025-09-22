@@ -212,7 +212,8 @@
   "projectFileDependencyGroups": {
     "net9.0": [
       "Core.Abstraction >= 1.0.0",
-      "Core.Services >= 1.0.0"
+      "Core.Services >= 1.0.0",
+      "Share >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -248,11 +249,14 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "d:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj": {
-              "projectPath": "d:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj"
+            "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj": {
+              "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj"
             },
             "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj": {
               "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj"
+            },
+            "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {
+              "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj"
             }
           }
         }

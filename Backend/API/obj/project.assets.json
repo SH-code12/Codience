@@ -1023,7 +1023,8 @@
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
           "Core.Abstraction": "1.0.0",
-          "Core.Services": "1.0.0"
+          "Core.Services": "1.0.0",
+          "Share": "1.0.0"
         },
         "compile": {
           "bin/placeholder/Infrastructure.Presentation.dll": {}

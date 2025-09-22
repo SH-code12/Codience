@@ -33,11 +33,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj",
+      "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj",
       "projectName": "Core.Abstraction",
-      "projectPath": "d:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj",
+      "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj",
       "packagesPath": "C:\\Users\\Noura\\.nuget\\packages\\",
-      "outputPath": "d:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\obj\\",
+      "outputPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -59,8 +59,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "d:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {
-              "projectPath": "d:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj"
+            "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {
+              "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj"
             }
           }
         }

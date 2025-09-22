@@ -2,6 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Abstraction\Core.Abstraction.csproj" />
     <ProjectReference Include="..\..\Core\Services\Core.Services.csproj" />
+    <ProjectReference Include="..\..\Share\Share.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.8" />
