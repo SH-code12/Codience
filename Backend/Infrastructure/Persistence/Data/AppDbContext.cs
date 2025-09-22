@@ -6,7 +6,7 @@ namespace Infrastructure.Persistence.Data
     public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-
+         public DbSet<AuthUser> Users { get; set; }
         public DbSet<GitHubRepo> Repositories { get; set; }
         public DbSet<GitHubPullRequest> PullRequests { get; set; }
 

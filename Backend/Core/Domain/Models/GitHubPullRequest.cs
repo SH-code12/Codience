@@ -2,7 +2,9 @@ namespace Core.Domain.Models;
 
 public class GitHubPullRequest : BaseEntity<int>
 {
-    public int UserId{get;set;}=default!;
+    public Guid UserId{get;set;}=default!;
+
+    public AuthUser User { get; set; } = default!;
     public string Title { get; set; } = default!;
     public string HtmlUrl { get; set; } = default!;
     public string State { get; set; } = default!;

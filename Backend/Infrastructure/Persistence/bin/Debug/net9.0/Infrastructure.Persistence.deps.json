@@ -11,6 +11,7 @@
           "Core.Domain": "1.0.0",
           "Core.Services": "1.0.0",
           "Microsoft.EntityFrameworkCore": "9.0.9",
+          "Microsoft.EntityFrameworkCore.Design": "9.0.9",
           "Microsoft.EntityFrameworkCore.Tools": "9.0.9",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.4"
         },

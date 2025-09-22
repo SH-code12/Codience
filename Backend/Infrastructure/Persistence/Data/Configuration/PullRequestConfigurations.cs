@@ -8,6 +8,7 @@ public class PullRequestConfigurations : IEntityTypeConfiguration<GitHubPullRequ
 {
     public void Configure(EntityTypeBuilder<GitHubPullRequest> builder)
     {
+        builder.ToTable("PullRequests", "GitHub");
 
         builder.HasKey(p => p.Id);
 

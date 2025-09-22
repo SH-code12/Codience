@@ -1,10 +1,16 @@
-namespace Share;
+using System.Text.Json.Serialization;
 
-public record AuthUserDto
+public class AuthUserDto
 {
-    public string GitHubId { get; init; } = default!;
-    public string UserName { get; init; } = default!;
-    public string Email { get; init; } = default!;
-    public string AccessToken { get; init; } = default!;
-}
+    [JsonPropertyName("id")]
+    public long GitHubId { get; set; } = default!;
 
+    [JsonPropertyName("login")]
+    public string UserName { get; set; } = string.Empty;
+
+    [JsonPropertyName("email")]
+    public string? Email { get; set; }
+
+    public string AccessToken { get; set; } = string.Empty;
+    public string GitHubIdString => GitHubId.ToString();
+}

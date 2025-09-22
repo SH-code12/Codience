@@ -1,5 +1,8 @@
 using Core.Abstraction;
+using Core.Domain.Contracts;
+using Core.Domain.Models;
 using Infrastructure.Persistence.Data;
+using Infrastructure.Persistence.Repositories;
 using Infrastructure.Presentation.Controllers;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,14 +14,16 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers()
        .AddApplicationPart(typeof(GitHubAuthController).Assembly);
 
-builder.Services.AddDbContext<AuthDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
    
  builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
   
   builder.Services.AddHttpClient<IGithubAuthService, GitHubAuthService>();
+  builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+  builder.Services.AddScoped(typeof(IGenericRepository<AuthUser,Guid>), typeof(GenericRepository<AuthUser,Guid>));
+
 
 
 

@@ -8,6 +8,7 @@ public class RepositoryConfigurations:IEntityTypeConfiguration<GitHubRepo>
 {
      public void Configure(EntityTypeBuilder<GitHubRepo> builder)
     {
+        builder.ToTable("Repository", "GitHub");
         builder.HasKey(r => r.Id);
 
         builder.Property(r => r.Name)

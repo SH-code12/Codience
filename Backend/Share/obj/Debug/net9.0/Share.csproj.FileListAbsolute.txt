@@ -1,4 +1,4 @@
-d:\GraduationProject\Codience\Backend\Share\bin\Debug\net9.0\Share.deps.json
+D:\GraduationProject\Codience\Backend\Share\bin\Debug\net9.0\Share.deps.json
 d:\GraduationProject\Codience\Backend\Share\bin\Debug\net9.0\Share.dll
 d:\GraduationProject\Codience\Backend\Share\bin\Debug\net9.0\Share.pdb
 d:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\Share.GeneratedMSBuildEditorConfig.editorconfig
@@ -9,4 +9,4 @@ d:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\Share.sourcelink.js
 d:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\Share.dll
 d:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\refint\Share.dll
 d:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\Share.pdb
-d:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\ref\Share.dll
+D:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\ref\Share.dll

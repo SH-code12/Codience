@@ -11,6 +11,8 @@ public class AuthUser : BaseEntity<Guid>
         public string AuthUserName { get; set; } = default!;
         public string Email { get; set; } = default!;
         public string? AccessToken { get; set; } = default!;
-         public string? Password { get; set; } = default!;
+        public string? Password { get; set; } = default!;
+        public ICollection<GitHubRepo> Repositories { get; set; } = new List<GitHubRepo>();
+        public ICollection<GitHubPullRequest> PullRequests { get; set; } = new List<GitHubPullRequest>();
     
 }

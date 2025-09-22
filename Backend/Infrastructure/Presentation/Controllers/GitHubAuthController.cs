@@ -26,6 +26,12 @@ public class GitHubAuthController : ControllerBase
         public async Task<IActionResult> GetAccessToken([FromBody] DeviceCodeResponse deviceCode, CancellationToken cancellationToken)
         {
             var token = await _gitHubAuthService.PollForAccessTokenAsync(deviceCode, cancellationToken);
+            if (string.IsNullOrEmpty(token.AccessToken))
+                {
+                    return BadRequest(new { error = token.Error ?? "Access token not received yet" });
+                }
+
+           // var user = await _gitHubAuthService.SaveUserAsync(token.AccessToken, cancellationToken);
             return Ok(token);
         }
 }
