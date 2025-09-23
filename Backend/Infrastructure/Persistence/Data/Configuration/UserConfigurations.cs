@@ -10,7 +10,7 @@ public class AuthUserConfigurations : IEntityTypeConfiguration<AuthUser>
 {
     public void Configure(EntityTypeBuilder<AuthUser> builder)
     {
-        builder.ToTable("Users", "Auth");
+        builder.ToTable("Users","Auth");
 
         builder.Property(u => u.Email)
               .IsRequired()

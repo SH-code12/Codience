@@ -18,7 +18,7 @@ public class GitHubAuthService : IGithubAuthService
     {
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         clientId = configuration["GitHub:ClientId"]!;
-        clientSecret = configuration["ClientSecret"]!;
+        clientSecret = configuration["GitHub:ClientSecret"]!;
         _authUow = authUow;
 
     }

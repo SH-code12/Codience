@@ -31,7 +31,7 @@ public class GitHubAuthController : ControllerBase
                     return BadRequest(new { error = token.Error ?? "Access token not received yet" });
                 }
 
-           // var user = await _gitHubAuthService.SaveUserAsync(token.AccessToken, cancellationToken);
-            return Ok(token);
+            var user = await _gitHubAuthService.SaveUserAsync(token.AccessToken, cancellationToken);
+            return Ok(user);
         }
 }

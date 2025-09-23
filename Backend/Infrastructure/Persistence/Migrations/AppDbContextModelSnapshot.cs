@@ -49,7 +49,7 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuthUser");
+                    b.ToTable("Users", "Auth");
                 });
 
             modelBuilder.Entity("Core.Domain.Models.GitHubPullRequest", b =>
@@ -81,14 +81,16 @@ namespace Infrastructure.Persistence.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RepositoryId");
 
-                    b.ToTable("PullRequests");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PullRequests", "GitHub");
                 });
 
             modelBuilder.Entity("Core.Domain.Models.GitHubRepo", b =>
@@ -116,15 +118,17 @@ namespace Infrastructure.Persistence.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<int>("OwnerLogin")
-                        .HasColumnType("integer");
-
                     b.Property<bool>("Private")
                         .HasColumnType("boolean");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Repositories");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Repository", "GitHub");
                 });
 
             modelBuilder.Entity("Core.Domain.Models.GitHubPullRequest", b =>
@@ -135,7 +139,33 @@ namespace Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Core.Domain.Models.AuthUser", "User")
+                        .WithMany("PullRequests")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Repository");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.GitHubRepo", b =>
+                {
+                    b.HasOne("Core.Domain.Models.AuthUser", "User")
+                        .WithMany("Repositories")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.AuthUser", b =>
+                {
+                    b.Navigation("PullRequests");
+
+                    b.Navigation("Repositories");
                 });
 
             modelBuilder.Entity("Core.Domain.Models.GitHubRepo", b =>
