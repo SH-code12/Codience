@@ -11,6 +11,7 @@ public class PullRequestConfigurations : IEntityTypeConfiguration<GitHubPullRequ
         builder.ToTable("PullRequests","GitHub");
 
         builder.HasKey(p => p.Id);
+        builder.Property(P => P.Id).UseIdentityColumn();
 
         builder.Property(p => p.Title)
             .IsRequired()

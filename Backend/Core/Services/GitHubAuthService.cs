@@ -33,7 +33,7 @@ public class GitHubAuthService : IGithubAuthService
             Content = new FormUrlEncodedContent(new Dictionary<string, string>
                 {
                     { "client_id", clientId },
-                    { "scope", "read:user user:email"}
+                    { "scope", "repo read:user user:email"}
                 })
         };
         req.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -95,88 +95,204 @@ public class GitHubAuthService : IGithubAuthService
 
         throw new TimeoutException("Device code expired before authorization.");
     }
-        
-public async Task<AuthUserDto> SaveUserAsync(string accessToken, CancellationToken ct = default)
-{
-    if (string.IsNullOrEmpty(accessToken))
-        throw new ArgumentException("Access token cannot be null or empty.");
 
-    // ===== التحقق من تهيئة الـ dependencies =====
-    if (_httpClient == null) 
-        throw new InvalidOperationException("_httpClient is not initialized.");
-    if (_authUow == null) 
-        throw new InvalidOperationException("_authUow is not initialized.");
 
-    var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
-    if (userRepo == null)
-        throw new InvalidOperationException("userRepo is null. Check GetGenericRepository implementation.");
 
-    // ===== إعدادات الـ HttpClient =====
-    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-    _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Codience");
-
-    // ===== جلب بيانات المستخدم من GitHub =====
-    var response = await _httpClient.GetAsync("https://api.github.com/user", ct);
-    if (!response.IsSuccessStatusCode)
+    public async Task<AuthUserDto> SaveUserAsync(string accessToken, CancellationToken ct = default)
     {
-        var errorBody = await response.Content.ReadAsStringAsync(ct);
-        throw new Exception($"GitHub API error: {response.StatusCode} - {errorBody}");
-    }
+        if (string.IsNullOrEmpty(accessToken))
+            throw new ArgumentException("Access token cannot be null or empty.");
 
-    var userDto = await response.Content.ReadFromJsonAsync<AuthUserDto>(cancellationToken: ct);
-    if (userDto == null)
-        throw new Exception("GitHub user API returned null.");
 
-    var gitHubIdString = userDto.GitHubId.ToString();
-    if (string.IsNullOrEmpty(gitHubIdString))
-        throw new Exception("GitHubId is null or empty.");
+        if (_httpClient == null)
+            throw new InvalidOperationException("_httpClient is not initialized.");
+        if (_authUow == null)
+            throw new InvalidOperationException("_authUow is not initialized.");
 
-    // ===== التحقق إذا المستخدم موجود بالفعل =====
-    var existingUser = await userRepo.FirstOrDefaultAsync(u => u.GitHubId == gitHubIdString);
-    if (existingUser != null)
-    {
-        existingUser.AuthUserName = userDto.UserName ?? existingUser.AuthUserName;
-        existingUser.Email = userDto.Email ?? existingUser.Email;
-        existingUser.AccessToken = accessToken;
+        var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
+        if (userRepo == null)
+            throw new InvalidOperationException("userRepo is null. Check GetGenericRepository implementation.");
 
+
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Codience");
+
+
+        var response = await _httpClient.GetAsync("https://api.github.com/user", ct);
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorBody = await response.Content.ReadAsStringAsync(ct);
+            throw new Exception($"GitHub API error: {response.StatusCode} - {errorBody}");
+        }
+
+        var userDto = await response.Content.ReadFromJsonAsync<AuthUserDto>(cancellationToken: ct);
+        if (userDto == null)
+            throw new Exception("GitHub user API returned null.");
+
+        var gitHubIdString = userDto.GitHubId.ToString();
+        if (string.IsNullOrEmpty(gitHubIdString))
+            throw new Exception("GitHubId is null or empty.");
+
+
+        var existingUser = await userRepo.FirstOrDefaultAsync(u => u.GitHubId == gitHubIdString);
+        if (existingUser != null)
+        {
+            existingUser.AuthUserName = userDto.UserName ?? existingUser.AuthUserName;
+            existingUser.Email = userDto.Email ?? existingUser.Email;
+            existingUser.AccessToken = accessToken;
+
+            await _authUow.SaveChangesAsync();
+
+            return new AuthUserDto
+            {
+                GitHubId = userDto.GitHubId,
+                UserName = existingUser.AuthUserName,
+                Email = existingUser.Email,
+                AccessToken = existingUser.AccessToken
+            };
+        }
+
+
+        var newUser = new AuthUser
+        {
+            Id = Guid.NewGuid(),
+            GitHubId = gitHubIdString,
+            AuthUserName = userDto.UserName ?? "Unknown",
+            Email = userDto.Email ?? string.Empty,
+            AccessToken = accessToken
+        };
+
+        await userRepo.AddAsync(newUser);
         await _authUow.SaveChangesAsync();
 
         return new AuthUserDto
         {
             GitHubId = userDto.GitHubId,
-            UserName = existingUser.AuthUserName,
-            Email = existingUser.Email,
-            AccessToken = existingUser.AccessToken
+            UserName = newUser.AuthUserName,
+            Email = newUser.Email,
+            AccessToken = newUser.AccessToken
         };
     }
 
-    // ===== إضافة مستخدم جديد =====
-    var newUser = new AuthUser
+
+
+    public async Task<IEnumerable<GitHubRepoDto>> SaveRepositories(string userName)
     {
-        Id = Guid.NewGuid(),
-        GitHubId = gitHubIdString,
-        AuthUserName = userDto.UserName ?? "Unknown",
-        Email = userDto.Email ?? string.Empty,
-        AccessToken = accessToken
-    };
+        _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Codience");
 
-    await userRepo.AddAsync(newUser);
-    await _authUow.SaveChangesAsync();
+        var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
+        var authUser = await userRepo.FirstOrDefaultAsync(u => u.AuthUserName == userName);
 
-    return new AuthUserDto
+
+
+        _httpClient.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Bearer", authUser!.AccessToken);
+
+
+        var response = await _httpClient.GetAsync("https://api.github.com/user/repos?visibility=all");
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorBody = await response.Content.ReadAsStringAsync();
+            throw new Exception($"GitHub API error: {response.StatusCode} - {errorBody}");
+        }
+
+        var reposJson = await response.Content.ReadFromJsonAsync<List<GitHubRepo>>(cancellationToken: CancellationToken.None);
+        if (reposJson == null)
+            throw new Exception("GitHub returned null repos list.");
+
+        var repoRepo = _authUow.GetGenericRepository<GitHubRepo, int>();
+
+        foreach (var repo in reposJson)
+        {
+            var existingRepo = await repoRepo.FirstOrDefaultAsync(r => r.Name == repo.Name && r.UserId == authUser.Id);
+            if (existingRepo == null)
+            {
+                repo.UserId = authUser.Id;
+                await repoRepo.AddAsync(repo);
+            }
+        }
+
+        await _authUow.SaveChangesAsync();
+
+        var result = reposJson.Select(r => new GitHubRepoDto(
+            r.Name,
+            r.HtmlUrl,
+            r.Description
+        ));
+
+        return result;
+    }
+
+
+
+    public async Task<IEnumerable<GitHubPullRequestDto>> GetPullRequestsAsync(string userName, string repoName)
     {
-        GitHubId = userDto.GitHubId,
-        UserName = newUser.AuthUserName,
-        Email = newUser.Email,
-        AccessToken = newUser.AccessToken
-    };
+
+        var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
+        var authUser = await userRepo.FirstOrDefaultAsync(u => u.AuthUserName == userName);
+        if (authUser == null)
+            throw new Exception($"User '{userName}' not found in database.");
+
+
+        _httpClient.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Bearer", authUser.AccessToken);
+        _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Codience");
+
+
+        var url = $"https://api.github.com/repos/{userName}/{repoName}/pulls?state=all";
+        var response = await _httpClient.GetAsync(url);
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorBody = await response.Content.ReadAsStringAsync();
+            throw new Exception($"GitHub API error: {response.StatusCode} - {errorBody}");
+        }
+
+
+        var pullsFromGitHub = await response.Content.ReadFromJsonAsync<List<GitHubPullRequestDto>>(cancellationToken: CancellationToken.None);
+        if (pullsFromGitHub == null)
+            throw new Exception("GitHub returned null pull requests list.");
+
+
+        var repoRepo = _authUow.GetGenericRepository<GitHubRepo, int>();
+        var repository = await repoRepo.FirstOrDefaultAsync(r => r.Name == repoName && r.UserId == authUser.Id);
+        if (repository == null)
+            throw new Exception("Repository not found in database.");
+
+
+        var prRepo = _authUow.GetGenericRepository<GitHubPullRequest, int>();
+        foreach (var prDto in pullsFromGitHub)
+        {
+            var existingPr = await prRepo.FirstOrDefaultAsync(
+                p => p.Number == prDto.Number &&
+                     p.RepositoryId == repository.Id &&
+                     p.UserId == authUser.Id
+            );
+
+            if (existingPr == null)
+            {
+                await prRepo.AddAsync(new GitHubPullRequest
+                {
+                    Number = prDto.Number,
+                    Title = prDto.Title,
+                    HtmlUrl = prDto.HtmlUrl,
+                    State = prDto.State,
+                    CreatedAt = prDto.CreatedAt,
+                    RepositoryId = repository.Id,
+                    UserId = authUser.Id
+                });
+            }
+        }
+
+        await _authUow.SaveChangesAsync();
+
+
+        return pullsFromGitHub;
+    }
+
+
+
+
+
+
 }
-
-
-
- 
-}
-
-
-
 

@@ -10,7 +10,7 @@ public class RepositoryConfigurations:IEntityTypeConfiguration<GitHubRepo>
     {
         builder.ToTable("Repository","GitHub");
         builder.HasKey(r => r.Id);
-
+          builder.Property(r => r.Id).UseIdentityColumn();
         builder.Property(r => r.Name)
             .IsRequired()
             .HasMaxLength(200);

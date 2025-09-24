@@ -60,13 +60,18 @@ namespace Infrastructure.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CreatedAt")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long>("GitHubId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("HtmlUrl")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<long>("Number")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("RepositoryId")
                         .HasColumnType("integer");
@@ -107,11 +112,13 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasAnnotation("Relational:JsonPropertyName", "full_name");
 
                     b.Property<string>("HtmlUrl")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasAnnotation("Relational:JsonPropertyName", "html_url");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -119,7 +126,8 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("character varying(200)");
 
                     b.Property<bool>("Private")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasAnnotation("Relational:JsonPropertyName", "private");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
