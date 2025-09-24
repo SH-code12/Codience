@@ -1,7 +1,7 @@
 {
   "name": "codience",
   "displayName": "Codience",
-  "description": "",
+  "description": "AI-powered prioritization tool that ranks tasks by business impact, complexity, and risk directly inside VS Code",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.103.0"
