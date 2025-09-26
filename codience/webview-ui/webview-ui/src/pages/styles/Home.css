@@ -1,0 +1,71 @@
+
+.home {
+    display: inline-block;
+    width: 100%;
+}
+
+h2.projectTitle{
+    color: #EEE;
+    text-align: start;
+    margin: 5px;
+
+}
+h2.tableCaption {
+    text-align: start;
+    font-weight: 100;
+    font-size: 18px;
+    color: #BEBABA;
+    margin: 5px;
+}
+
+.cardsContainer {
+    margin: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    height: 120px;
+    color:white;
+    gap: 5px;
+    justify-content: space-around;
+}
+.card {
+    background-color: #333;
+    width: 30%;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 13px;
+    color: #BEBABA;
+}
+
+.card span {
+    font-size: 60px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.card.open {
+    background-color: #1861187e;
+}
+
+.card.priority {
+    background-color: #7e17179c;
+}
+
+.card.risk span {
+    color: rgba(215, 11, 11, 0.735)
+}
+
+.card.open:hover {
+    background-color: #18611856;
+}
+
+.card.priority:hover {
+    background-color: #7e171766;
+}
+
+.card.risk:hover {
+    background-color: #333333b7;
+}
+

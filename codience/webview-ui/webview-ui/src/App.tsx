@@ -1,24 +1,20 @@
-import { useEffect } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
+import SideBar from "./components/SideBar";
+import Home from "./pages/Home";
 import Welcome from "./components/Welcome";
 
 function App() {
-  // Send a message to the extension
-  const vscode = (window as any).acquireVsCodeApi();
-
-  function sendMessage() {
-    vscode.postMessage({ text: "Hello from React + Vite!" });
-  }
-  // Listen for messages from the extension
-  useEffect(() => {
-    window.addEventListener("message", (event) => {
-      console.log("Message from extension:", event.data);
-    });
-  }, []);
-
   return (
     <>
-      <Welcome />
+      <BrowserRouter>
+        <SideBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<Welcome />} />
+          <Route path="*" element={<Navigate to='/'replace /> } />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
