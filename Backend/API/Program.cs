@@ -39,7 +39,18 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var db = services.GetRequiredService<AppDbContext>();
+    var apply = Environment.GetEnvironmentVariable("APPLY_MIGRATIONS");
+    if (apply == "true")
+    {
+        db.Database.Migrate(); // ينفّذ المِجريشنات على الـ DB المتصل بها (remote على Render)
+    }
+}
 
 
 app.Run();
