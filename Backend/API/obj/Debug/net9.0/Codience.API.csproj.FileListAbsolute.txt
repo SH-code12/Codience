@@ -16,7 +16,6 @@ d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.
 d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.OpenApi.dll
 d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Npgsql.dll
 d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\System.Text.Json.dll
 d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Core.Abstraction.dll
 d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Core.Domain.dll
 d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Core.Services.dll
@@ -125,12 +124,6 @@ D:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\scopedcss\bundle\Codi
 D:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\staticwebassets.build.json
 D:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\staticwebassets.development.json
 D:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\staticwebassets.build.endpoints.json
-D:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\staticwebassets\msbuild.Codience.API.Microsoft.AspNetCore.StaticWebAssets.props
-D:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\staticwebassets\msbuild.Codience.API.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-D:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\staticwebassets\msbuild.build.Codience.API.props
-D:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.Codience.API.props
-D:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.Codience.API.props
-D:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\staticwebassets.pack.json
 D:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\Codience.API.dll
 D:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\refint\Codience.API.dll
 D:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\Codience.API.pdb
@@ -143,3 +136,8 @@ d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Codience.API.pdb
 D:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\Codience.3B30C0E2.Up2Date
 D:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\Codience.API.genruntimeconfig.cache
 D:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\ref\Codience.API.dll
+d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\rpswa.dswa.cache.json
+d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\rjimswa.dswa.cache.json
+d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\staticwebassets.build.json.cache

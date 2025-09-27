@@ -5,7 +5,6 @@ public class GitHubPullRequestDto
     {
         Number = number;
         Title = title;
-        HtmlUrl = htmlUrl;
         State = state;
         CreatedAt = createdAt;
         Name = name;
@@ -13,7 +12,7 @@ public class GitHubPullRequestDto
 
     public long  Number { get; }
     public string Title { get; }
-    public string? HtmlUrl { get; }
+
     public string State { get; }
     public DateTime CreatedAt { get; }
     public string Name { get; }

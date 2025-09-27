@@ -12,7 +12,7 @@ public class GitHubPullRequest : BaseEntity<int>
 
     public long Number { get; set; } = default;
     public string Title { get; set; } = default!;
-    public string HtmlUrl { get; set; } = default!;
+
     public string State { get; set; } = default!;
     public DateTime CreatedAt { get; set; } = default!;
      public int RepositoryId { get; set; }
