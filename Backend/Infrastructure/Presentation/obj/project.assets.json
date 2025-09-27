@@ -241,8 +241,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "d:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj": {
-              "projectPath": "d:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj"
+            "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj": {
+              "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj"
             },
             "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj": {
               "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj"
