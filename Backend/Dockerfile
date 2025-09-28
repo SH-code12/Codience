@@ -12,8 +12,7 @@ WORKDIR /src
 COPY API/ API/
 COPY Core/ Core/
 COPY Infrastructure/ Infrastructure/
-COPY Solution.Core.sln .
-
+COPY Codience.sln .
 # Restore dependencies for the API project
 RUN dotnet restore "API/Codience.API.csproj"
 
