@@ -15,14 +15,17 @@ builder.Services.AddControllers()
        .AddApplicationPart(typeof(GitHubAuthController).Assembly);
 
 
-   
- builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
+                      ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
-  
-  builder.Services.AddHttpClient<IGithubAuthService, GitHubAuthService>();
-  builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-  builder.Services.AddScoped(typeof(IGenericRepository<AuthUser,Guid>), typeof(GenericRepository<AuthUser,Guid>));
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(connectionString));
+
+
+
+builder.Services.AddHttpClient<IGithubAuthService, GitHubAuthService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped(typeof(IGenericRepository<AuthUser, Guid>), typeof(GenericRepository<AuthUser, Guid>));
 
 
 
@@ -48,7 +51,7 @@ using (var scope = app.Services.CreateScope())
     var apply = Environment.GetEnvironmentVariable("APPLY_MIGRATIONS");
     if (apply == "true")
     {
-        db.Database.Migrate(); // ينفّذ المِجريشنات على الـ DB المتصل بها (remote على Render)
+        db.Database.Migrate(); 
     }
 }
 
