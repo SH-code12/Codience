@@ -274,7 +274,7 @@ public class GitHubAuthService : IGithubAuthService
                 {
                     Number = prDto.Number,
                     Title = prDto.Title,
-                    HtmlUrl = prDto.HtmlUrl,
+                   
                     State = prDto.State,
                     CreatedAt = prDto.CreatedAt,
                     RepositoryId = repository.Id,

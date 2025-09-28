@@ -1,7 +1,7 @@
 namespace Share;
 public class GitHubPullRequestDto
 {
-    public GitHubPullRequestDto(long number, string title, string htmlUrl, string state, DateTime createdAt, string name)
+    public GitHubPullRequestDto(long number, string title, string state, DateTime createdAt, string name)
     {
         Number = number;
         Title = title;

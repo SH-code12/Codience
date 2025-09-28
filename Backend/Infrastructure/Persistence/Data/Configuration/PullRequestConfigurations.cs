@@ -17,8 +17,7 @@ public class PullRequestConfigurations : IEntityTypeConfiguration<GitHubPullRequ
             .IsRequired()
             .HasMaxLength(300);
 
-        builder.Property(p => p.HtmlUrl)
-            .IsRequired();
+     
 
         builder.Property(p => p.State)
             .IsRequired()
