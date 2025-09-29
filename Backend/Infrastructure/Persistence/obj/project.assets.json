@@ -2956,11 +2956,11 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "d:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj": {
-              "projectPath": "d:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj"
+            "D:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj": {
+              "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj"
             },
-            "d:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj": {
-              "projectPath": "d:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj"
+            "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj": {
+              "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj"
             }
           }
         }

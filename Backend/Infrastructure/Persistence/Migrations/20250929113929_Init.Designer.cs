@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250923210918_changetypeofPK")]
-    partial class changetypeofPK
+    [Migration("20250929113929_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,7 +52,7 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", "Auth");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Core.Domain.Models.GitHubPullRequest", b =>
@@ -63,16 +63,14 @@ namespace Infrastructure.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CreatedAt")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("HtmlUrl")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<long>("GitHubId")
+                        .HasColumnType("bigint");
 
-                    b.Property<int>("Number")
-                        .HasColumnType("integer");
+                    b.Property<long>("Number")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("RepositoryId")
                         .HasColumnType("integer");

@@ -222,11 +222,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj",
+      "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj",
       "projectName": "Infrastructure.Presentation",
-      "projectPath": "d:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj",
+      "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj",
       "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "d:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\obj\\",
+      "outputPath": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -244,8 +244,8 @@
             "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj": {
               "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj"
             },
-            "d:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj": {
-              "projectPath": "d:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj"
+            "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj": {
+              "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj"
             },
             "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {
               "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj"

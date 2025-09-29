@@ -15,12 +15,8 @@ namespace Infrastructure.Persistence.Migrations
             migrationBuilder.EnsureSchema(
                 name: "GitHub");
 
-            migrationBuilder.EnsureSchema(
-                name: "Auth");
-
             migrationBuilder.CreateTable(
                 name: "Users",
-                schema: "Auth",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -55,7 +51,6 @@ namespace Infrastructure.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_Repository_Users_UserId",
                         column: x => x.UserId,
-                        principalSchema: "Auth",
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -69,10 +64,11 @@ namespace Infrastructure.Persistence.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    GitHubId = table.Column<long>(type: "bigint", nullable: false),
+                    Number = table.Column<long>(type: "bigint", nullable: false),
                     Title = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
-                    HtmlUrl = table.Column<string>(type: "text", nullable: false),
                     State = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    CreatedAt = table.Column<string>(type: "text", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     RepositoryId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -88,7 +84,6 @@ namespace Infrastructure.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_PullRequests_Users_UserId",
                         column: x => x.UserId,
-                        principalSchema: "Auth",
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -125,8 +120,7 @@ namespace Infrastructure.Persistence.Migrations
                 schema: "GitHub");
 
             migrationBuilder.DropTable(
-                name: "Users",
-                schema: "Auth");
+                name: "Users");
         }
     }
 }

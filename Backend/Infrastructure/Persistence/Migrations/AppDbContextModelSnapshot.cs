@@ -49,7 +49,7 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", "Auth");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Core.Domain.Models.GitHubPullRequest", b =>
@@ -65,10 +65,6 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.Property<long>("GitHubId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("HtmlUrl")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<long>("Number")
                         .HasColumnType("bigint");
