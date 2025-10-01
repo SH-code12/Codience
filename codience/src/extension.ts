@@ -71,12 +71,13 @@ class SidebarProvider implements vscode.WebviewViewProvider {
     html = html.replace(
       "<head>",
       `<head>
-        <meta http-equiv="Content-Security-Policy"
-          content="default-src 'none';
-                   img-src ${webview.cspSource} https:;
-                   style-src ${webview.cspSource} 'unsafe-inline';
-                   script-src ${webview.cspSource};"
-        >
+       <meta http-equiv="Content-Security-Policy"
+      content="default-src 'none';
+               img-src ${webview.cspSource} https:;
+               style-src ${webview.cspSource} 'unsafe-inline';
+               script-src ${webview.cspSource};
+               connect-src https://codience.onrender.com;">
+
       `
     );
 

@@ -9,7 +9,7 @@ table {
   display: inline-table;
   background-color: transparent;
   color: #BEBABA;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   overflow: auto;
   width: 100%;
   font-family: sans-serif;

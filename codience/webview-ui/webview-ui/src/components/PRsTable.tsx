@@ -10,23 +10,28 @@ const PRsTable = ({ prs }: props) => {
       <thead>
         <tr>
           <th>PR Title</th>
-          <th>Author</th>
-          <th>Risk Score</th>
-          <th>Priority</th>
+          {/* <th>Author</th> */}
+          {/* <th>Risk Score</th> */}
+          {/* <th>Priority</th> */}
+          <th>Created At</th>
           <th>Status</th>
         </tr>
       </thead>
       <tbody>
         {prs.map((pr) => (
           <tr>
-            <td className="titleCell"> {pr.pr_title} </td>
-            <td>{pr.auhtor}</td>
-            <RiskCell risk_score={pr.risk_score} />
-            <PriorityCell priority={pr.priority_score} />
-            {pr.status == "open" ? (
-              <td className="status open">{pr.status}</td>
+            <td className="titleCell"> {pr.title} </td>
+            {/* <td>{pr.auhtor}</td> */}
+            {/* <RiskCell risk_score={pr.risk_score} />
+            <PriorityCell priority={pr.priority_score} /> */}
+            <td>
+              {pr.createdAt}
+              {/* {pr.createdAt.getHours()}:{pr.createdAt.getMinutes()}{" "} */}
+            </td>
+            {pr.state == "open" ? (
+              <td className="status open">{pr.state}</td>
             ) : (
-              <td className="status closed">{pr.status}</td>
+              <td className="status closed">{pr.state}</td>
             )}
           </tr>
         ))}

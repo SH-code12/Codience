@@ -1,0 +1,20 @@
+h1 {
+    color: #eeeeee3b;
+    text-align: center;
+    margin: 30px;    
+}
+
+.loading {
+    color: #eee;
+    width: 100%;
+    text-align: center;
+    margin-top: 100px;
+}
+
+.error {
+     width: 100%;
+    text-align: center;
+    margin-top: 100px;
+   
+}
+

@@ -1,6 +1,6 @@
 .sideBar {
   background-color: #181B1F;
-  min-width: 150px;
+  min-width: 200px;
   max-width: 200px;
   height: calc(100vh - 20px);
   display: inline-flex;
@@ -34,8 +34,7 @@ a {
 
 a:hover, .active {
   background-color: #3D424C;
-  border: none;
-  outline: none;
+
 }
 
 button.signOut {
@@ -56,6 +55,5 @@ button.signOut {
 
 button.signOut:hover{
     background-color: #ad0303;
-
 }
 

@@ -3,9 +3,7 @@
   padding: 0;
 }
 
-body div {
-  display: flex;
-  flex-flow: row nowrap;
+body {
   font-family: sans-serif;
   background-color: #1e2227;
 }
