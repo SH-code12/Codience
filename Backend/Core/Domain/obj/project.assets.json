@@ -8,19 +8,19 @@
     "net9.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Malk\\.nuget\\packages\\": {}
+    "C:\\Users\\DELL\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Domain\\Core.Domain.csproj",
+      "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj",
       "projectName": "Core.Domain",
-      "projectPath": "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Domain\\Core.Domain.csproj",
-      "packagesPath": "C:\\Users\\Malk\\.nuget\\packages\\",
-      "outputPath": "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Domain\\obj\\",
+      "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj",
+      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+      "outputPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Malk\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
