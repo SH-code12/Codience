@@ -2,6 +2,6 @@ namespace Core.Domain.Models;
 
 public class RiskResult
 {
-    public string Prediction { get; set; } = string.Empty;
-    public double Score { get; set; }
+    public string risk_level { get; set; } = string.Empty;
+    public double risk_score { get; set; }
 }

@@ -60,8 +60,8 @@ public class CsvProcessor
                 try
                 {
                     var result = await _predictionService.GetPredictionAsync(input);
-                    results.Add((input.Repo, result.Prediction, result.Score));
-                    Console.WriteLine($"Repo: {input.Repo}, Prediction: {result.Prediction}, Score: {result.Score}");
+                    results.Add((input.Repo, result.risk_level, result.risk_score));
+                    Console.WriteLine($"Repo: {input.Repo}, Prediction: {result.risk_level}, Score: {result.risk_score}");
                 }
                 catch (Exception ex)
                 {

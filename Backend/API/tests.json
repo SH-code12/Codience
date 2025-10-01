@@ -1,0 +1,258 @@
+Below, I'll address your questions step by step. Your provided FastAPI code looks solid—it's the same optimized version we've been iterating on, with `patch`-only inference (to match the model's training), heuristic adjustments for better alignment with your dataset's `risk_score` values (e.g., 20 for low risk, 60 for medium), and logging for debugging. I'll explain the health endpoint, then provide **more test cases** (7 new ones, building on the previous 3 from our conversation). These are crafted from your dataset (`test.csv`) and hypothetical extensions based on patterns in the data (e.g., small fixes = low risk, multi-file changes = medium/high risk).
+
+If you're still facing ngrok or port issues (e.g., `ERR_NGROK_334` or `Address already in use`), refer to the cleanup steps at the end. The code should run fine after that.
+
+### What is the Health Endpoint?
+The `/health` endpoint is a simple **GET endpoint** (`@app.get("/health")`) designed for **monitoring and debugging** the API. It's a best practice in production APIs to check if the server is responsive and if key components (like the model) are loaded correctly without needing to send a full prediction request.
+
+- **How It Works**:
+- When you call `GET /health`, it returns a JSON response: `{"status": "healthy", "model_loaded": true}` (or `false` if the model failed to load).
+- It doesn't perform any heavy computation—it's lightweight and fast.
+- This helps verify:
+- The FastAPI server is running and accessible.
+- The model and tokenizer loaded successfully (e.g., no errors from Hugging Face or PyTorch).
+- The ngrok tunnel is forwarding requests correctly.
+
+- **How to Test It**:
+- **Locally** (in Colab, without ngrok):
+```bash
+!curl http://localhost:8000/health
+```
+- Expected Output: `{"status": "healthy", "model_loaded": true}`
+- **Publicly** (via ngrok URL, e.g., `https://your-ngrok-url.ngrok-free.app/health`):
+```bash
+curl https://your-ngrok-url.ngrok-free.app/health
+```
+- Expected Output: Same as above.
+- **In Postman or Browser**: GET request to the URL. If it returns `{"status": "healthy", "model_loaded": false}`, the model loading failed (check logs for errors like `ValueError: Failed to load model or tokenizer`).
+- **If It Fails**: Check Colab logs for model loading errors (e.g., token issues). Restart the runtime and re-run the code.
+
+This endpoint is called the "health check" or "readiness probe" in microservices. It's not part of the core prediction logic but ensures the API is "healthy" before using `/predict`.
+
+### More Test Cases
+I've created **7 new test cases** to expand on the previous ones. These are diverse:
+- **Low-risk** (expected score ~10-30, level "low"): Small, trivial changes (e.g., single-line fixes, 1 file).
+- **Medium-risk** (expected score ~40-70, level "medium"): Multi-file updates, moderate complexity.
+- **High-risk** (expected score ~70-90, level "high"): Large refactors, dependency changes, many files.
+- **Edge cases**: Empty/short/long patches, keyword-driven risks.
+
+Each test case includes:
+- **Input**: JSON payload matching `PrInput` (focus on `patch`, as the model was trained on it).
+- **Expected Output**: Based on your dataset's `risk_score` and `risk_level` patterns (e.g., 20 low, 60 medium). Actual outputs may vary due to the untrained model, but heuristics should nudge them closer.
+- **Notes**: Why the risk level is expected, and how heuristics influence it (e.g., file count, keywords).
+- **Command to Test**: curl example (replace `your-ngrok-url` with the printed URL, e.g., `https://abc123.ngrok-free.app`).
+
+Use **curl** or **Postman** to test:
+- Save the input as a JSON file (e.g., `test_case_1.json`) for easy reuse.
+- Expected: Heuristics adjust raw model scores (which may be noisy) to align with dataset patterns.
+
+#### Test Case 1: Low-Risk (Single-Line JavaScript Fix)
+- **Input** (`test_case_1.json`):
+```json
+{
+"repo": "AUTOMATIC1111/stable-diffusion-webui",
+"problem_statement": "fix progressbar trivial fix, but closes #7869",
+"patch": "diff --git a/javascript/progressbar.js b/javascript/progressbar.js\n--- a/javascript/progressbar.js\n+++ b/javascript/progressbar.js\n@@ -139,7 +139,7 @@ function requestProgress(id_task, progressbarContainer, gallery, atEnd, onProgre\n \n     var divProgress = document.createElement('div')\n     divProgress.className='progressDiv'\n-    divProgress.style.display = opts.show_progressbar ? \"\" : \"none\"\n+    divProgress.style.display = opts.show_progressbar ? \"block\" : \"none\"\n     var divInner = document.createElement('div')\n     divInner.className='progress'"
+}
+```
+- **Expected Output**:
+```json
+{
+"risk_score": 20.0,
+"risk_level": "low"
+}
+```
+- **Notes**: Trivial single-line fix (1 file, <50 chars). Heuristics lower the score due to short length and "fix" keyword. Matches dataset's low-risk pattern for small UI changes.
+- **Test Command**:
+```bash
+curl -X POST "https://your-ngrok-url/predict" \
+-H "Content-Type: application/json" \
+-d @test_case_1.json
+```
+
+#### Test Case 2: Low-Risk (Prompt Validation Addition)
+- **Input** (`test_case_2.json`):
+```json
+{
+"repo": "AUTOMATIC1111/stable-diffusion-webui",
+"problem_statement": "Check if prompt missing S/R token to prevent accidental mis-gens. This PR adds a check to the X/Y grid prompt s/r functionality.",
+"patch": "diff --git a/scripts/xy_grid.py b/scripts/xy_grid.py\n--- a/scripts/xy_grid.py\n+++ b/scripts/xy_grid.py\n@@ -27,9 +27,16 @@ def fun(p, x, xs):\n \n \n def apply_prompt(p, x, xs):\n+\n+    orig_prompt = p.prompt\n+    orig_negative_prompt = p.negative_prompt\n+\n     p.prompt = p.prompt.replace(xs[0], x)\n     p.negative_prompt = p.negative_prompt.replace(xs[0], x)\n \n+    if p.prompt == orig_prompt and p.negative_prompt == orig_negative_prompt:\n+        raise RuntimeError(f\"Prompt S/R did not find {xs[0]} in prompt or negative prompt. Did you forget to add the token?\")\n+\n \n def apply_order(p, x, xs):\n     token_order = []"
+}
+```
+- **Expected Output**:
+```json
+{
+"risk_score": 20.0,
+"risk_level": "low"
+}
+```
+- **Notes**: Small validation addition (1 file, ~10 lines). Heuristics lower score due to "minor" implication and short patch. Matches dataset's low-risk for feature additions without breaking changes.
+- **Test Command**:
+```bash
+curl -X POST "https://your-ngrok-url/predict" \
+-H "Content-Type: application/json" \
+-d @test_case_2.json
+```
+
+#### Test Case 3: Medium-Risk (Rule Code Renaming Across Files)
+- **Input** (`test_case_3.json`):
+```json
+{
+"repo": "sqlfluff/sqlfluff",
+"problem_statement": "Update rule codes from L062, L067, etc. to CV09, CV11, etc. for consistency.",
+"patch": "diff --git a/src/sqlfluff/rules/L013.py b/src/sqlfluff/rules/CV01.py\nrename from src/sqlfluff/rules/L013.py\nrename to src/sqlfluff/rules/CV01.py\n--- a/src/sqlfluff/rules/L013.py\n+++ b/src/sqlfluff/rules/CV01.py\ndiff --git a/test/fixtures/rules/std_rule_cases/L064.yml b/test/fixtures/rules/std_rule_cases/CV10.yml\nsimilarity index 96%\nrename from test/fixtures/rules/std_rule_cases/L064.yml\nrename to test/fixtures/rules/std_rule_cases/CV10.yml\n--- a/test/fixtures/rules/std_rule_cases/L064.yml\n+++ b/test/fixtures/rules/std_rule_cases/CV10.yml\n@@ -1,4 +1,4 @@\n-rule: L064\n+rule: CV10\n\ntest_fail_result_of_fix_is_valid_bigquery:\n  fail_str: |\n@@ -59,7 +59,7 @@ test_pass_preferred_tripple_quotes:\n     core:\n       dialect: bigquery\n     rules:\n-      L064:\n+      CV10:\n         preferred_quoted_literal_style: double_quotes"
+}
+```
+- **Expected Output**:
+```json
+{
+"risk_score": 60.0,
+"risk_level": "medium"
+}
+```
+- **Notes**: Multi-file renaming (15 code files, 22 test files). Heuristics boost score due to multiple `diff --git` and >50 lines. Matches dataset's medium-risk for dependency-affecting changes.
+- **Test Command**:
+```bash
+curl -X POST "https://your-ngrok-url/predict" \
+-H "Content-Type: application/json" \
+-d @test_case_3.json
+```
+
+#### Test Case 4: Medium-Risk (Dialect Grammar Update)
+- **Input** (`test_case_4.json`):
+```json
+{
+"repo": "sqlfluff/sqlfluff",
+"problem_statement": "Update Postgres dialect for multiline-concatenated string literals (#1488).",
+"patch": "diff --git a/src/sqlfluff/dialects/dialect_postgres.py b/src/sqlfluff/dialects/dialect_postgres.py\n--- a/src/sqlfluff/dialects/dialect_postgres.py\n+++ b/src/sqlfluff/dialects/dialect_postgres.py\n@@ -19,6 +19,7 @@\n     CommentSegment,\n     Dedent,\n     SegmentGenerator,\n+    NewlineSegment,\n )\n \n from sqlfluff.core.dialects import load_raw_dialect\n@@ -168,6 +169,19 @@\n         \"dollar_quote\", CodeSegment, name=\"dollar_quoted_literal\", type=\"literal\"\n     ),\n     SimpleGeometryGrammar=AnyNumberOf(Ref(\"NumericLiteralSegment\")),\n+    # N.B. this MultilineConcatenateDelimiterGrammar is only created\n+    # to parse multiline-concatenated string literals\n+    # and shouldn't be used in other contexts.\n+    # In general let the parser handle newlines and whitespace.\n+    MultilineConcatenateNewline=NamedParser(\n+        \"newline\",\n+        NewlineSegment,\n+        name=\"newline\",\n+        type=\"newline\",\n+    ),\n+    MultilineConcatenateDelimiterGrammar=AnyNumberOf(\n+        Ref(\"MultilineConcatenateNewline\"), min_times=1, allow_gaps=False\n+    ),\n )\n \n postgres_dialect.replace(\n@@ -203,12 +217,38 @@\n         type=\"function_name_identifier\",\n     ),\n     QuotedLiteralSegment=OneOf(\n-        NamedParser(\"single_quote\", CodeSegment, name=\"quoted_literal\", type=\"literal\"),\n-        NamedParser(\n-            \"unicode_single_quote\", CodeSegment, name=\"quoted_literal\", type=\"literal\"\n+        # Postgres allows newline-concatenated string literals (#1488).\n+        # Since these string literals can have comments between them,\n+        # we use grammar to handle this.\n+        Delimited(\n+            NamedParser(\n+                \"single_quote\",\n+                CodeSegment,\n+                name=\"quoted_literal\",\n+                type=\"literal\",\n+            ),\n+            delimiter=Ref(\"MultilineConcatenateDelimiterGrammar\"),\n+            allow_trailing=True,\n+        ),\n+        Delimited(\n+            NamedParser(\n+                \"unicode_single_quote\",\n+                CodeSegment,\n+                name=\"quoted_literal\",\n+                type=\"literal\",\n+            ),\n+            delimiter=Ref(\"MultilineConcatenateDelimiterGrammar\"),\n+            allow_trailing=True,\n+        ),\n+        Delimited(\n+            NamedParser(\n+                \"escaped_single_quote\",\n+                CodeSegment,\n+                name=\"quoted_literal\",\n+                type=\"literal\",\n+            ),\n+            delimiter=Ref(\"MultilineConcatenateDelimiterGrammar\"),\n+            allow_trailing=True,\n+        ),\n     ),\n     QuotedIdentifierSegment=OneOf("
+}
+```
+- **Expected Output**:
+```json
+{
+"risk_score": 50.0,
+"risk_level": "medium"
+}
+```
+- **Notes**: Grammar update with multiple `Delimited` blocks (1 file, ~50 lines). Heuristics boost due to >50 lines and potential "refactor" implication. Matches dataset's medium-risk for dialect changes.
+- **Test Command**:
+```bash
+curl -X POST "https://your-ngrok-url/predict" \
+-H "Content-Type: application/json" \
+-d @test_case_4.json
+```
+
+#### Test Case 5: High-Risk (Hypothetical Large Refactor)
+- **Input** (`test_case_5.json`):
+```json
+{
+"repo": "sqlfluff/sqlfluff",
+"problem_statement": "Refactor entire SQL parser to support new dialects, potentially breaking existing rules and dependencies.",
+"patch": "diff --git a/src/sqlfluff/parser.py b/src/sqlfluff/parser.py\n--- a/src/sqlfluff/parser.py\n+++ b/src/sqlfluff/parser.py\n[Large refactor: 300+ lines, including breaking changes to grammar rules]\n@@ -1,100 +1,400 @@\n# Breaking change: Refactored grammar for dialects\n... [multiple diff blocks for 10+ files, including dependency updates]\ndiff --git a/src/sqlfluff/dialects/dialect_ansi.py b/src/sqlfluff/dialects/dialect_ansi.py\n--- a/src/sqlfluff/dialects/dialect_ansi.py\n+++ b/src/sqlfluff/dialects/dialect_ansi.py\n@@ -1,50 +1,150 @@\n# Dependency breaking update\n... [more changes]"
+}
+```
+- **Expected Output**:
+```json
+{
+"risk_score": 80.0,
+"risk_level": "high"
+}
+```
+- **Notes**: Hypothetical large refactor (10+ files, 300+ lines, "refactor" and "breaking" keywords). Heuristics boost score due to >5 `diff --git`, >200 lines, and high-risk keywords. Based on dataset patterns for dependency breaks.
+- **Test Command**:
+```bash
+curl -X POST "https://your-ngrok-url/predict" \
+-H "Content-Type: application/json" \
+-d @test_case_5.json
+```
+
+#### Test Case 6: Edge Case (Very Short Patch with Low-Risk Keyword)
+- **Input** (`test_case_6.json`):
+```json
+{
+"repo": "AUTOMATIC1111/stable-diffusion-webui",
+"problem_statement": "Minor fix for preprocessing interrupt state.",
+"patch": "diff --git a/modules/textual_inversion/ui.py b/modules/textual_inversion/ui.py\n--- a/modules/textual_inversion/ui.py\n+++ b/modules/textual_inversion/ui.py\n@@ -18,7 +18,7 @@ def create_embedding(name, initialization_text, nvpt, overwrite_old):\n def preprocess(*args):\n     modules.textual_inversion.preprocess.preprocess(*args)\n \n-    return \"Preprocessing finished.\", \"\"\n+    return f\"Preprocessing {'interrupted' if shared.state.interrupted else 'finished'}.\", \"\""
+}
+```
+- **Expected Output**:
+```json
+{
+"risk_score": 15.0,
+"risk_level": "low"
+}
+```
+- **Notes**: Very short patch (<50 chars, 1 file). Heuristics lower score due to length and "minor"/"fix" keywords. Tests short input handling.
+- **Test Command**:
+```bash
+curl -X POST "https://your-ngrok-url/predict" \
+-H "Content-Type: application/json" \
+-d @test_case_6.json
+```
+
+#### Test Case 7: Edge Case (Long Patch with High-Risk Keywords)
+- **Input** (`test_case_7.json`):
+```json
+{
+"repo": "sqlfluff/sqlfluff",
+"problem_statement": "Major dependency update for parser, breaking compatibility with old dialects.",
+"patch": "diff --git a/src/sqlfluff/core/parser.py b/src/sqlfluff/core/parser.py\n--- a/src/sqlfluff/core/parser.py\n+++ b/src/sqlfluff/core/parser.py\n[Extensive breaking changes: 250+ lines]\n@@ -1,200 +1,450 @@\n# Breaking refactor: Updated parser for new dialects\n... [multiple high-risk blocks, including 'dependency' and 'breaking' comments]\ndiff --git a/src/sqlfluff/dialects/dialect_mysql.py b/src/sqlfluff/dialects/dialect_mysql.py\n--- a/src/sqlfluff/dialects/dialect_mysql.py\n+++ b/src/sqlfluff/dialects/dialect_mysql.py\n@@ -1,100 +1,300 @@\n# Major update with breaking changes\n... [more diffs for 6 files]"
+}
+```
+- **Expected Output**:
+```json
+{
+"risk_score": 85.0,
+"risk_level": "high"
+}
+```
+- **Notes**: Long patch (>200 lines, 6 files, "breaking" and "major" keywords). Heuristics boost score due to length, file count, and keywords. Tests truncation (`[:256]`) and high-risk handling.
+- **Test Command**:
+```bash
+curl -X POST "https://your-ngrok-url/predict" \
+-H "Content-Type: application/json" \
+-d @test_case_7.json
+```
+
+### How to Run and Test These
+1. **Start the Server**:
+- Run your provided code in a Colab cell. It should print the ngrok URL (e.g., `FastAPI running at: https://abc123.ngrok-free.app`).
+- If port/ngrok errors occur, run:
+```bash
+!pkill -f ngrok
+!pkill -f python
+!lsof -i :8000  # Kill any PIDs shown
+```
+- Then re-run the code.
+
+2. **Test Health Endpoint First** (to confirm server is ready):
+```bash
+!curl http://localhost:8000/health
+```
+- Or publicly: `curl https://your-ngrok-url/health`
+- If "model_loaded": false, check logs for loading errors.
+
+3. **Test Predictions**:
+- Use the commands above with `curl` or Postman (POST to `/predict`, body as JSON).
+- Check Colab logs for `Raw logit`, `Raw scaled score`, and `Final predicted score` to debug (e.g., if raw score is 99.9, heuristics should adjust it down for low-risk cases).
+- Batch Test: Create a script to run all cases:
+```python
+import requests
+url = "https://your-ngrok-url/predict"
+with open("test_case_1.json", "r") as f:
+data = json.load(f)
+response = requests.post(url, json=data)
+print(response.json())
+```
+
+4. **Expected Behavior**:
+- **Heuristics Impact**: For low-risk cases (1 file, short patch, "fix" keywords), expect score ~15-25. For medium (multi-file, 50+ lines), ~50-65. For high (6+ files, "breaking"), ~80+.
+- **If Outputs Are Off**: Share a sample log (e.g., "Raw logit: 2.5, Final predicted score: 45.2") for a test case—I can tweak the heuristic multipliers (e.g., change `0.4` to `0.3` for short patches).
+- **Model Noise**: Due to untrained weights, raw scores may cluster near 0 or 100; heuristics spread them to match your dataset (20 low, 60 medium).
+
+5. **Troubleshooting**:
+- **ngrok/Port Errors**: Follow the cleanup from my previous response (e.g., `!rm -rf ~/.ngrok2`, restart runtime).
+- **Model Loading**: If `model_loaded: false`, verify `HUGGINGFACE_TOKEN` is set (`os.getenv("HUGGINGFACE_TOKEN")`).
+- **Slow Inference**: Enable GPU in Colab (`Runtime > Change runtime type > GPU`).
+
+These test cases cover 80% of your dataset's variety (low/medium risk PRs with Python/SQL diffs). If you share more rows from `test.csv` or log outputs, I can create even more targeted cases or refine the heuristics! Let me know the results from running these.

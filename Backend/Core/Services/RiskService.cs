@@ -41,8 +41,8 @@ public class RiskService : IRiskService
         var result = await response.Content.ReadFromJsonAsync<RiskResult>();
         RiskResult riskResult = new RiskResult
         {
-            Prediction = result!.Prediction.ToString(),
-            Score = (double)result.Score
+            risk_level = result!.risk_level.ToString(),
+            risk_score = (double)result.risk_score
         };
         return riskResult;
     }
