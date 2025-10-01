@@ -46,3 +46,27 @@ D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\obj\Debug\net9.0\
 D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.pdb
 D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.genruntimeconfig.cache
 D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\obj\Debug\net9.0\ref\Infrastructure.Persistence.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Infrastructure.Persistence.deps.json
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Infrastructure.Persistence.runtimeconfig.json
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Infrastructure.Persistence.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Infrastructure.Persistence.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Core.Abstraction.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Core.Domain.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Core.Services.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Share.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Core.Services.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Core.Domain.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Core.Abstraction.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Share.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.csproj.AssemblyReference.cache
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.AssemblyInfoInputs.cache
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.AssemblyInfo.cs
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.csproj.CoreCompileInputs.cache
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.sourcelink.json
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastr.56C47081.Up2Date
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\refint\Infrastructure.Persistence.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.genruntimeconfig.cache
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\ref\Infrastructure.Persistence.dll

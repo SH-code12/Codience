@@ -950,19 +950,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\DELL\\.nuget\\packages\\": {}
+    "C:\\Users\\semse\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj",
+      "projectUniqueName": "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj",
       "projectName": "Infrastructure.Presentation",
-      "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj",
-      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\obj\\",
+      "projectPath": "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj",
+      "packagesPath": "C:\\Users\\semse\\.nuget\\packages\\",
+      "outputPath": "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Infrastructure\\Presentation\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\semse\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -974,14 +974,14 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj": {
-              "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj"
+            "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj": {
+              "projectPath": "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj"
             },
-            "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj": {
-              "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj"
+            "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Core\\Services\\Core.Services.csproj": {
+              "projectPath": "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Core\\Services\\Core.Services.csproj"
             },
-            "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {
-              "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj"
+            "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Share\\Share.csproj": {
+              "projectPath": "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Share\\Share.csproj"
             }
           }
         }

@@ -32,15 +32,14 @@ builder.Services.AddHttpClient("FastApiClient", client =>
 builder.Services.AddScoped<IRiskService, RiskService>();
 builder.Services.AddScoped<CsvProcessor>();
 
-// Configure CORS (restrictive policy for production)
+// ✅ Configure CORS (Allow all origins)
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigins", policy =>
+    options.AddPolicy("AllowAll", policy =>
     {
-        policy.WithOrigins("https://your-frontend-domain.com") // Specify allowed origins
+        policy.AllowAnyOrigin()
               .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials(); // If your app uses credentials (e.g., cookies, auth tokens)
+              .AllowAnyMethod();
     });
 });
 
@@ -50,6 +49,8 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// ✅ Enable CORS
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 
@@ -61,16 +62,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
-
-app.UseCors("AllowAll");
-
 app.MapControllers();
 
-
-
-
-
+// ✅ Run migrations automatically if APPLY_MIGRATIONS env var is true
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;

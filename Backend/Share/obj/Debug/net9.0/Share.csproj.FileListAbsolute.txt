@@ -22,3 +22,15 @@ D:\college\Senior Year\Demo\Backend\Share\obj\Debug\net9.0\Share.dll
 D:\college\Senior Year\Demo\Backend\Share\obj\Debug\net9.0\refint\Share.dll
 D:\college\Senior Year\Demo\Backend\Share\obj\Debug\net9.0\Share.pdb
 D:\college\Senior Year\Demo\Backend\Share\obj\Debug\net9.0\ref\Share.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Share\bin\Debug\net9.0\Share.deps.json
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Share\bin\Debug\net9.0\Share.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Share\bin\Debug\net9.0\Share.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Share\obj\Debug\net9.0\Share.GeneratedMSBuildEditorConfig.editorconfig
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Share\obj\Debug\net9.0\Share.AssemblyInfoInputs.cache
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Share\obj\Debug\net9.0\Share.AssemblyInfo.cs
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Share\obj\Debug\net9.0\Share.csproj.CoreCompileInputs.cache
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Share\obj\Debug\net9.0\Share.sourcelink.json
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Share\obj\Debug\net9.0\Share.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Share\obj\Debug\net9.0\refint\Share.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Share\obj\Debug\net9.0\Share.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Share\obj\Debug\net9.0\ref\Share.dll

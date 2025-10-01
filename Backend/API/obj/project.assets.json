@@ -3577,19 +3577,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\DELL\\.nuget\\packages\\": {}
+    "C:\\Users\\semse\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\API\\Codience.API.csproj",
+      "projectUniqueName": "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\API\\Codience.API.csproj",
       "projectName": "Codience.API",
-      "projectPath": "D:\\GraduationProject\\Codience\\Backend\\API\\Codience.API.csproj",
-      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "D:\\GraduationProject\\Codience\\Backend\\API\\obj\\",
+      "projectPath": "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\API\\Codience.API.csproj",
+      "packagesPath": "C:\\Users\\semse\\.nuget\\packages\\",
+      "outputPath": "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\semse\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -3601,11 +3601,11 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj": {
-              "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj"
+            "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj": {
+              "projectPath": "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj"
             },
-            "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj": {
-              "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj"
+            "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj": {
+              "projectPath": "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj"
             }
           }
         }

@@ -22,3 +22,15 @@ D:\college\Senior Year\Demo\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.dll
 D:\college\Senior Year\Demo\Backend\Core\Domain\obj\Debug\net9.0\refint\Core.Domain.dll
 D:\college\Senior Year\Demo\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.pdb
 D:\college\Senior Year\Demo\Backend\Core\Domain\obj\Debug\net9.0\ref\Core.Domain.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Domain\bin\Debug\net9.0\Core.Domain.deps.json
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Domain\bin\Debug\net9.0\Core.Domain.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Domain\bin\Debug\net9.0\Core.Domain.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.GeneratedMSBuildEditorConfig.editorconfig
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.AssemblyInfoInputs.cache
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.AssemblyInfo.cs
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.csproj.CoreCompileInputs.cache
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.sourcelink.json
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Domain\obj\Debug\net9.0\refint\Core.Domain.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Domain\obj\Debug\net9.0\ref\Core.Domain.dll

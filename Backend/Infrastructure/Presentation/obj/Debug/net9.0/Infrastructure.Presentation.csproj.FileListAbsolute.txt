@@ -42,3 +42,25 @@ D:\college\Senior Year\Demo\Backend\Infrastructure\Presentation\obj\Debug\net9.0
 D:\college\Senior Year\Demo\Backend\Infrastructure\Presentation\obj\Debug\net9.0\refint\Infrastructure.Presentation.dll
 D:\college\Senior Year\Demo\Backend\Infrastructure\Presentation\obj\Debug\net9.0\Infrastructure.Presentation.pdb
 D:\college\Senior Year\Demo\Backend\Infrastructure\Presentation\obj\Debug\net9.0\ref\Infrastructure.Presentation.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\bin\Debug\net9.0\Infrastructure.Presentation.deps.json
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\bin\Debug\net9.0\Infrastructure.Presentation.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\bin\Debug\net9.0\Infrastructure.Presentation.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\bin\Debug\net9.0\Core.Abstraction.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\bin\Debug\net9.0\Core.Domain.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\bin\Debug\net9.0\Core.Services.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\bin\Debug\net9.0\Share.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\bin\Debug\net9.0\Core.Abstraction.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\bin\Debug\net9.0\Core.Services.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\bin\Debug\net9.0\Share.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\bin\Debug\net9.0\Core.Domain.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\obj\Debug\net9.0\Infrastructure.Presentation.csproj.AssemblyReference.cache
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\obj\Debug\net9.0\Infrastructure.Presentation.GeneratedMSBuildEditorConfig.editorconfig
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\obj\Debug\net9.0\Infrastructure.Presentation.AssemblyInfoInputs.cache
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\obj\Debug\net9.0\Infrastructure.Presentation.AssemblyInfo.cs
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\obj\Debug\net9.0\Infrastructure.Presentation.csproj.CoreCompileInputs.cache
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\obj\Debug\net9.0\Infrastructure.Presentation.sourcelink.json
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\obj\Debug\net9.0\Infrastr.37C9053F.Up2Date
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\obj\Debug\net9.0\Infrastructure.Presentation.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\obj\Debug\net9.0\refint\Infrastructure.Presentation.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\obj\Debug\net9.0\Infrastructure.Presentation.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Presentation\obj\Debug\net9.0\ref\Infrastructure.Presentation.dll

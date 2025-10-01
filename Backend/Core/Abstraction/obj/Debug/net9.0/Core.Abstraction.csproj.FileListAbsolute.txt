@@ -30,3 +30,19 @@ D:\college\Senior Year\Demo\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstr
 D:\college\Senior Year\Demo\Backend\Core\Abstraction\obj\Debug\net9.0\refint\Core.Abstraction.dll
 D:\college\Senior Year\Demo\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.pdb
 D:\college\Senior Year\Demo\Backend\Core\Abstraction\obj\Debug\net9.0\ref\Core.Abstraction.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\bin\Debug\net9.0\Core.Abstraction.deps.json
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\bin\Debug\net9.0\Core.Abstraction.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\bin\Debug\net9.0\Core.Abstraction.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\bin\Debug\net9.0\Share.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\bin\Debug\net9.0\Share.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.csproj.AssemblyReference.cache
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.GeneratedMSBuildEditorConfig.editorconfig
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.AssemblyInfoInputs.cache
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.AssemblyInfo.cs
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.csproj.CoreCompileInputs.cache
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.sourcelink.json
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abs.06A93CCD.Up2Date
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\refint\Core.Abstraction.dll
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.pdb
+E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\ref\Core.Abstraction.dll
