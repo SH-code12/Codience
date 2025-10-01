@@ -10,3 +10,15 @@ D:\GraduationProject\Codience\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.d
 D:\GraduationProject\Codience\Backend\Core\Domain\obj\Debug\net9.0\refint\Core.Domain.dll
 D:\GraduationProject\Codience\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.pdb
 D:\GraduationProject\Codience\Backend\Core\Domain\obj\Debug\net9.0\ref\Core.Domain.dll
+D:\college\Senior Year\Demo\Backend\Core\Domain\bin\Debug\net9.0\Core.Domain.deps.json
+D:\college\Senior Year\Demo\Backend\Core\Domain\bin\Debug\net9.0\Core.Domain.dll
+D:\college\Senior Year\Demo\Backend\Core\Domain\bin\Debug\net9.0\Core.Domain.pdb
+D:\college\Senior Year\Demo\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\college\Senior Year\Demo\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.AssemblyInfoInputs.cache
+D:\college\Senior Year\Demo\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.AssemblyInfo.cs
+D:\college\Senior Year\Demo\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.csproj.CoreCompileInputs.cache
+D:\college\Senior Year\Demo\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.sourcelink.json
+D:\college\Senior Year\Demo\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.dll
+D:\college\Senior Year\Demo\Backend\Core\Domain\obj\Debug\net9.0\refint\Core.Domain.dll
+D:\college\Senior Year\Demo\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.pdb
+D:\college\Senior Year\Demo\Backend\Core\Domain\obj\Debug\net9.0\ref\Core.Domain.dll

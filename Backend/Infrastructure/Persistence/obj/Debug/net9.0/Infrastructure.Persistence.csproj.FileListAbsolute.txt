@@ -22,3 +22,27 @@ D:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.
 D:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.pdb
 D:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.genruntimeconfig.cache
 D:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\ref\Infrastructure.Persistence.dll
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Infrastructure.Persistence.deps.json
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Infrastructure.Persistence.runtimeconfig.json
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Infrastructure.Persistence.dll
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Infrastructure.Persistence.pdb
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Core.Abstraction.dll
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Core.Domain.dll
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Core.Services.dll
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Share.dll
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Core.Services.pdb
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Core.Domain.pdb
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Core.Abstraction.pdb
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Share.pdb
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.csproj.AssemblyReference.cache
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.AssemblyInfoInputs.cache
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.AssemblyInfo.cs
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.csproj.CoreCompileInputs.cache
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.sourcelink.json
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastr.56C47081.Up2Date
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.dll
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\obj\Debug\net9.0\refint\Infrastructure.Persistence.dll
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.pdb
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.genruntimeconfig.cache
+D:\college\Senior Year\Demo\Backend\Infrastructure\Persistence\obj\Debug\net9.0\ref\Infrastructure.Persistence.dll

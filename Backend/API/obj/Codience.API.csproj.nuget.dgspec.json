@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GraduationProject\\Codience\\Backend\\API\\Codience.API.csproj": {}
+    "D:\\college\\Senior Year\\Demo\\Backend\\API\\Codience.API.csproj": {}
   },
   "projects": {
-    "D:\\GraduationProject\\Codience\\Backend\\API\\Codience.API.csproj": {
+    "D:\\college\\Senior Year\\Demo\\Backend\\API\\Codience.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\API\\Codience.API.csproj",
+        "projectUniqueName": "D:\\college\\Senior Year\\Demo\\Backend\\API\\Codience.API.csproj",
         "projectName": "Codience.API",
-        "projectPath": "D:\\GraduationProject\\Codience\\Backend\\API\\Codience.API.csproj",
-        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\GraduationProject\\Codience\\Backend\\API\\obj\\",
+        "projectPath": "D:\\college\\Senior Year\\Demo\\Backend\\API\\Codience.API.csproj",
+        "packagesPath": "C:\\Users\\Malk\\.nuget\\packages\\",
+        "outputPath": "D:\\college\\Senior Year\\Demo\\Backend\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Malk\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -26,11 +26,11 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj": {
-                "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj"
+              "D:\\college\\Senior Year\\Demo\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj": {
+                "projectPath": "D:\\college\\Senior Year\\Demo\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj"
               },
-              "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj": {
-                "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj"
+              "D:\\college\\Senior Year\\Demo\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj": {
+                "projectPath": "D:\\college\\Senior Year\\Demo\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj"
               }
             }
           }
@@ -60,6 +60,18 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.9, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerGen": {
+              "target": "Package",
+              "version": "[9.0.5, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerUI": {
+              "target": "Package",
+              "version": "[9.0.5, )"
             }
           },
           "imports": [
@@ -85,17 +97,17 @@
         }
       }
     },
-    "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj": {
+    "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj",
+        "projectUniqueName": "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj",
         "projectName": "Core.Abstraction",
-        "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj",
-        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\obj\\",
+        "projectPath": "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj",
+        "packagesPath": "C:\\Users\\Malk\\.nuget\\packages\\",
+        "outputPath": "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Abstraction\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Malk\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -107,8 +119,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {
-                "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj"
+              "D:\\college\\Senior Year\\Demo\\Backend\\Share\\Share.csproj": {
+                "projectPath": "D:\\college\\Senior Year\\Demo\\Backend\\Share\\Share.csproj"
               }
             }
           }
@@ -148,17 +160,17 @@
         }
       }
     },
-    "D:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj": {
+    "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Domain\\Core.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj",
+        "projectUniqueName": "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Domain\\Core.Domain.csproj",
         "projectName": "Core.Domain",
-        "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj",
-        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\obj\\",
+        "projectPath": "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Domain\\Core.Domain.csproj",
+        "packagesPath": "C:\\Users\\Malk\\.nuget\\packages\\",
+        "outputPath": "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Malk\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -207,17 +219,17 @@
         }
       }
     },
-    "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj": {
+    "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Services\\Core.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj",
+        "projectUniqueName": "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Services\\Core.Services.csproj",
         "projectName": "Core.Services",
-        "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj",
-        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\obj\\",
+        "projectPath": "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Services\\Core.Services.csproj",
+        "packagesPath": "C:\\Users\\Malk\\.nuget\\packages\\",
+        "outputPath": "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Services\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Malk\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -229,11 +241,11 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj": {
-                "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj"
+              "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj": {
+                "projectPath": "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj"
               },
-              "D:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj": {
-                "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj"
+              "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Domain\\Core.Domain.csproj": {
+                "projectPath": "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Domain\\Core.Domain.csproj"
               }
             }
           }
@@ -254,13 +266,25 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[33.1.0, )"
+            },
             "Microsoft.Extensions.Configuration.Abstractions": {
               "target": "Package",
               "version": "[9.0.9, )"
             },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[9.0.5, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.4, )"
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[8.6.4, )"
             }
           },
           "imports": [
@@ -283,17 +307,17 @@
         }
       }
     },
-    "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj": {
+    "D:\\college\\Senior Year\\Demo\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj",
+        "projectUniqueName": "D:\\college\\Senior Year\\Demo\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj",
         "projectName": "Infrastructure.Persistence",
-        "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj",
-        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Persistence\\obj\\",
+        "projectPath": "D:\\college\\Senior Year\\Demo\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj",
+        "packagesPath": "C:\\Users\\Malk\\.nuget\\packages\\",
+        "outputPath": "D:\\college\\Senior Year\\Demo\\Backend\\Infrastructure\\Persistence\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Malk\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -305,11 +329,11 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj": {
-                "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj"
+              "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Domain\\Core.Domain.csproj": {
+                "projectPath": "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Domain\\Core.Domain.csproj"
               },
-              "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj": {
-                "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj"
+              "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Services\\Core.Services.csproj": {
+                "projectPath": "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Services\\Core.Services.csproj"
               }
             }
           }
@@ -330,6 +354,10 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[33.1.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[9.0.9, )"
@@ -345,9 +373,17 @@
               "target": "Package",
               "version": "[9.0.9, )"
             },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[9.0.5, )"
+            },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[9.0.4, )"
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[8.6.4, )"
             }
           },
           "imports": [
@@ -370,17 +406,17 @@
         }
       }
     },
-    "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj": {
+    "D:\\college\\Senior Year\\Demo\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj",
+        "projectUniqueName": "D:\\college\\Senior Year\\Demo\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj",
         "projectName": "Infrastructure.Presentation",
-        "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj",
-        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\obj\\",
+        "projectPath": "D:\\college\\Senior Year\\Demo\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj",
+        "packagesPath": "C:\\Users\\Malk\\.nuget\\packages\\",
+        "outputPath": "D:\\college\\Senior Year\\Demo\\Backend\\Infrastructure\\Presentation\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Malk\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -392,14 +428,14 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj": {
-                "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj"
+              "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj": {
+                "projectPath": "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj"
               },
-              "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj": {
-                "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj"
+              "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Services\\Core.Services.csproj": {
+                "projectPath": "D:\\college\\Senior Year\\Demo\\Backend\\Core\\Services\\Core.Services.csproj"
               },
-              "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {
-                "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj"
+              "D:\\college\\Senior Year\\Demo\\Backend\\Share\\Share.csproj": {
+                "projectPath": "D:\\college\\Senior Year\\Demo\\Backend\\Share\\Share.csproj"
               }
             }
           }
@@ -419,6 +455,16 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[9.0.5, )"
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[8.6.4, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -442,17 +488,17 @@
         }
       }
     },
-    "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {
+    "D:\\college\\Senior Year\\Demo\\Backend\\Share\\Share.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj",
+        "projectUniqueName": "D:\\college\\Senior Year\\Demo\\Backend\\Share\\Share.csproj",
         "projectName": "Share",
-        "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj",
-        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\GraduationProject\\Codience\\Backend\\Share\\obj\\",
+        "projectPath": "D:\\college\\Senior Year\\Demo\\Backend\\Share\\Share.csproj",
+        "packagesPath": "C:\\Users\\Malk\\.nuget\\packages\\",
+        "outputPath": "D:\\college\\Senior Year\\Demo\\Backend\\Share\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Malk\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"

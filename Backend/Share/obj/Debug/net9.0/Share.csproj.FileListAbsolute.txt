@@ -10,3 +10,15 @@ D:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\Share.dll
 D:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\refint\Share.dll
 D:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\Share.pdb
 D:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\ref\Share.dll
+D:\college\Senior Year\Demo\Backend\Share\bin\Debug\net9.0\Share.deps.json
+D:\college\Senior Year\Demo\Backend\Share\bin\Debug\net9.0\Share.dll
+D:\college\Senior Year\Demo\Backend\Share\bin\Debug\net9.0\Share.pdb
+D:\college\Senior Year\Demo\Backend\Share\obj\Debug\net9.0\Share.GeneratedMSBuildEditorConfig.editorconfig
+D:\college\Senior Year\Demo\Backend\Share\obj\Debug\net9.0\Share.AssemblyInfoInputs.cache
+D:\college\Senior Year\Demo\Backend\Share\obj\Debug\net9.0\Share.AssemblyInfo.cs
+D:\college\Senior Year\Demo\Backend\Share\obj\Debug\net9.0\Share.csproj.CoreCompileInputs.cache
+D:\college\Senior Year\Demo\Backend\Share\obj\Debug\net9.0\Share.sourcelink.json
+D:\college\Senior Year\Demo\Backend\Share\obj\Debug\net9.0\Share.dll
+D:\college\Senior Year\Demo\Backend\Share\obj\Debug\net9.0\refint\Share.dll
+D:\college\Senior Year\Demo\Backend\Share\obj\Debug\net9.0\Share.pdb
+D:\college\Senior Year\Demo\Backend\Share\obj\Debug\net9.0\ref\Share.dll

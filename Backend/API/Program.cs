@@ -1,6 +1,7 @@
 using Core.Abstraction;
 using Core.Domain.Contracts;
 using Core.Domain.Models;
+using Core.Services;
 using Infrastructure.Persistence.Data;
 using Infrastructure.Persistence.Repositories;
 using Infrastructure.Presentation.Controllers;
@@ -26,6 +27,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddHttpClient<IGithubAuthService, GitHubAuthService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<AuthUser, Guid>), typeof(GenericRepository<AuthUser, Guid>));
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddHttpClient("FastApiClient", client =>
+{
+    client.BaseAddress = new Uri("https://fordless-samella-unexpendable.ngrok-free.dev/"); // Replace with your actual ngrok URL
+    client.Timeout = TimeSpan.FromSeconds(30);
+});
+builder.Services.AddScoped<IRiskService, RiskService>();
+builder.Services.AddScoped<CsvProcessor>();
 
 
 builder.Services.AddCors(options =>
@@ -51,6 +61,8 @@ app.MapControllers();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 
