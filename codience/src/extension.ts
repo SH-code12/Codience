@@ -39,7 +39,6 @@ class SidebarProvider implements vscode.WebviewViewProvider {
       ],
     };
 
-    // Path to your React build's index.html
     const indexPath = path.join(
       this._extensionUri.fsPath,
       "webview-ui",
@@ -50,10 +49,9 @@ class SidebarProvider implements vscode.WebviewViewProvider {
 
     let html = fs.readFileSync(indexPath, "utf-8");
 
-    // Replace local paths (JS/CSS) with vscode webview URIs
     html = html.replace(/(src|href)="(.+?)"/g, (match, attr, link) => {
       if (/^https?:\/\//.test(link)) {
-        return match; // leave absolute URLs untouched
+        return match; 
       }
       const uri = webview.asWebviewUri(
         vscode.Uri.joinPath(
@@ -77,7 +75,6 @@ class SidebarProvider implements vscode.WebviewViewProvider {
                style-src ${webview.cspSource} 'unsafe-inline';
                script-src ${webview.cspSource};
                connect-src https://codience.onrender.com;">
-
       `
     );
 
