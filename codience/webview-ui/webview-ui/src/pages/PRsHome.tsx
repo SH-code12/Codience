@@ -13,6 +13,7 @@ const PRsHome = ({ prs, projectName}: props) => {
 
   prs.forEach((element) => {
     if (element.state == "open") openPrs++;
+    if (element.risk?.risk_level == "high") highRisk++;
     // if (element.risk_score > 60) highRisk++;
     // if (element.priority_score > 60) highPriority++;
   });

@@ -1,7 +1,7 @@
-import React from 'react'
-import SideBar from '../components/SideBar'
-import { Outlet } from 'react-router-dom'
-import './styles/SideBarLayout.css'
+import React from "react";
+import SideBar from "../components/SideBar";
+import { Outlet } from "react-router-dom";
+import "./styles/SideBarLayout.css";
 const SideBarLayout = () => {
   return (
     <div className="sideBarLayout">
@@ -9,6 +9,6 @@ const SideBarLayout = () => {
       <Outlet />
     </div>
   );
-}
+};
 
-export default SideBarLayout
+export default SideBarLayout;

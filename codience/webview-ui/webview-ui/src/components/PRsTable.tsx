@@ -1,17 +1,53 @@
+import axios from "axios";
 import type { PullRequest } from "../types/PullRequest";
 import "./styles/PRsTable.css";
+import { useEffect, useState } from "react";
+import type { RiskType } from "../types/RiskType";
 type props = {
   prs: PullRequest[] | null;
 };
 const PRsTable = ({ prs }: props) => {
   if (!prs) return null;
+  const repoName: string | null = localStorage.getItem("RepoName");
+  const [riskData, setRiskData] = useState<RiskType | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [myLoading, setLoading] = useState<boolean>(true);
+  useEffect(() => {
+    const ComputeRiskScores = async () => {
+      try {
+        prs.map(async (pr) => {
+          setLoading(true);
+          const response = await axios.post<RiskType>(
+            "https://codience.onrender.com/api/risk",
+            {
+              repo: repoName,
+              problem_statement: "",
+              patch: pr.title,
+            }
+          );
+          console.log(response.data);
+          setRiskData(response.data);
+          pr.risk = response.data;
+        });
+      } catch (e) {
+        setError("error");
+        console.log("error", e);
+      } finally {
+        setLoading(false);
+        console.log(myLoading);
+      }
+      console.log(myLoading);
+    };
+    ComputeRiskScores();
+  }, []);
   return (
     <table className="prsTable">
       <thead>
         <tr>
           <th>PR Title</th>
           {/* <th>Author</th> */}
-          {/* <th>Risk Score</th> */}
+          <th>Risk Score</th>
+          <th>Risk Level</th>
           {/* <th>Priority</th> */}
           <th>Created At</th>
           <th>Status</th>
@@ -24,6 +60,11 @@ const PRsTable = ({ prs }: props) => {
             {/* <td>{pr.auhtor}</td> */}
             {/* <RiskCell risk_score={pr.risk_score} />
             <PriorityCell priority={pr.priority_score} /> */}
+            {myLoading && <td>Calc..</td>}
+            {myLoading && <td>Calc..</td>}
+            {!myLoading && <td>{pr.risk?.risk_score}</td>}
+            {!myLoading && <RiskCell risk_level={pr.risk?.risk_level} />}
+            {/* <td>{ pr.risk_level}</td> */}
             <td>
               {pr.createdAt}
               {/* {pr.createdAt.getHours()}:{pr.createdAt.getMinutes()}{" "} */}
@@ -43,12 +84,13 @@ const PRsTable = ({ prs }: props) => {
 export default PRsTable;
 
 type risk = {
-  risk_score: number;
+  risk_level: string | null | undefined;
 };
-const RiskCell = ({ risk_score }: risk) => {
-  if (risk_score < 30) {
+const RiskCell = ({ risk_level }: risk) => {
+  const risk_score = risk_level;
+  if (risk_score == "low") {
     return <td className="riskCell low">{risk_score}</td>;
-  } else if (risk_score < 60) {
+  } else if (risk_score == "medium") {
     return <td className="riskCell med">{risk_score}</td>;
   }
   return <td className="riskCell high">{risk_score}</td>;

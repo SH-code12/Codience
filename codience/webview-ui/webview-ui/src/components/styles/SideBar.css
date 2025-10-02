@@ -1,5 +1,5 @@
 .sideBar {
-  background-color: #181B1F;
+  background-color: #181b1f;
   min-width: 200px;
   max-width: 200px;
   height: calc(100vh - 20px);
@@ -8,7 +8,7 @@
   gap: 15px;
   padding: 10px;
   position: sticky;
-  top:  0;
+  top: 0;
 }
 h2.logo {
   text-align: center;
@@ -16,7 +16,7 @@ h2.logo {
   font-family: "Courier New", Courier, monospace;
 }
 .navBar {
-    width: 100%;
+  width: 100%;
 }
 
 a {
@@ -32,28 +32,27 @@ a {
   transition: 0.2s;
 }
 
-a:hover, .active {
-  background-color: #3D424C;
-
+a:hover,
+.active {
+  background-color: #3d424c;
 }
 
 button.signOut {
-    background-color: #960101;
-    outline: none;
-    border: none;
-    padding: 10px;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    border-radius: 8px;
-    transition: 0.1s;
-    position: absolute;
-    width: calc(100% - 20px);
-    margin-bottom: 10px;
-    bottom: 0;
+  background-color: #960101;
+  outline: none;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  border-radius: 8px;
+  transition: 0.1s;
+  position: absolute;
+  width: calc(100% - 20px);
+  margin-bottom: 10px;
+  bottom: 0;
 }
 
-button.signOut:hover{
-    background-color: #ad0303;
+button.signOut:hover {
+  background-color: #ad0303;
 }
-
