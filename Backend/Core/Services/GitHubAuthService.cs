@@ -288,7 +288,32 @@ public class GitHubAuthService : IGithubAuthService
 
         return pullsFromGitHub;
     }
+    
+    public async Task<IEnumerable<GitHubFileDto>> GetChangedFilesAsync(string owner, string repo, int pullNumber)
+    {
+        var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
+        var authUser = await userRepo.FirstOrDefaultAsync(u => u.AuthUserName == owner);
+        if (authUser == null)
+            throw new Exception($"User '{owner}' not found in database.");
 
+        _httpClient.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Bearer", authUser.AccessToken);
+        _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Codience");
+
+        var url = $"https://api.github.com/repos/{owner}/{repo}/pulls/{pullNumber}/files";
+        var response = await _httpClient.GetAsync(url);
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorBody = await response.Content.ReadAsStringAsync();
+            throw new Exception($"GitHub API error: {response.StatusCode} - {errorBody}");
+        }
+
+        var filesFromGitHub = await response.Content.ReadFromJsonAsync<List<GitHubFileDto>>(cancellationToken: CancellationToken.None);
+        if (filesFromGitHub == null)
+            throw new Exception("GitHub returned null changed files list.");
+
+        return filesFromGitHub;
+    }
 
 
 

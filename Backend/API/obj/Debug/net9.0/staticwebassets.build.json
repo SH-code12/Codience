@@ -1,12 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "+NkZzWLfuSUmOEFefZcUBJbHF+N0G/kZowb6okzCSJA=",
-  "Source": "Codience.API",
-  "BasePath": "_content/Codience.API",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
-}
+{"Version":1,"Hash":"+NkZzWLfuSUmOEFefZcUBJbHF+N0G/kZowb6okzCSJA=","Source":"Codience.API","BasePath":"_content/Codience.API","Mode":"Default","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}

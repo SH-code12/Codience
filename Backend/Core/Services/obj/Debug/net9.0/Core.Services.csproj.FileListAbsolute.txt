@@ -1,23 +1,3 @@
-D:\GraduationProject\Codience\Backend\Core\Services\bin\Debug\net9.0\Core.Services.deps.json
-D:\GraduationProject\Codience\Backend\Core\Services\bin\Debug\net9.0\Core.Services.dll
-D:\GraduationProject\Codience\Backend\Core\Services\bin\Debug\net9.0\Core.Services.pdb
-D:\GraduationProject\Codience\Backend\Core\Services\bin\Debug\net9.0\Core.Abstraction.dll
-D:\GraduationProject\Codience\Backend\Core\Services\bin\Debug\net9.0\Core.Domain.dll
-D:\GraduationProject\Codience\Backend\Core\Services\bin\Debug\net9.0\Share.dll
-D:\GraduationProject\Codience\Backend\Core\Services\bin\Debug\net9.0\Core.Domain.pdb
-D:\GraduationProject\Codience\Backend\Core\Services\bin\Debug\net9.0\Core.Abstraction.pdb
-D:\GraduationProject\Codience\Backend\Core\Services\bin\Debug\net9.0\Share.pdb
-D:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Services.csproj.AssemblyReference.cache
-D:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Services.GeneratedMSBuildEditorConfig.editorconfig
-D:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Services.AssemblyInfoInputs.cache
-D:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Services.AssemblyInfo.cs
-D:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Services.csproj.CoreCompileInputs.cache
-D:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Services.sourcelink.json
-D:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Ser.A05880D6.Up2Date
-D:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Services.dll
-D:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\refint\Core.Services.dll
-D:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Services.pdb
-D:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\ref\Core.Services.dll
 D:\college\Senior Year\Demo\Backend\Core\Services\bin\Debug\net9.0\Core.Services.deps.json
 D:\college\Senior Year\Demo\Backend\Core\Services\bin\Debug\net9.0\Core.Services.dll
 D:\college\Senior Year\Demo\Backend\Core\Services\bin\Debug\net9.0\Core.Services.pdb
@@ -58,3 +38,23 @@ E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\S
 E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Services\obj\Debug\net9.0\refint\Core.Services.dll
 E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Services.pdb
 E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Services\obj\Debug\net9.0\ref\Core.Services.dll
+d:\GraduationProject\Codience\Backend\Core\Services\bin\Debug\net9.0\Core.Services.deps.json
+d:\GraduationProject\Codience\Backend\Core\Services\bin\Debug\net9.0\Core.Services.dll
+d:\GraduationProject\Codience\Backend\Core\Services\bin\Debug\net9.0\Core.Services.pdb
+d:\GraduationProject\Codience\Backend\Core\Services\bin\Debug\net9.0\Core.Abstraction.dll
+d:\GraduationProject\Codience\Backend\Core\Services\bin\Debug\net9.0\Core.Domain.dll
+d:\GraduationProject\Codience\Backend\Core\Services\bin\Debug\net9.0\Share.dll
+d:\GraduationProject\Codience\Backend\Core\Services\bin\Debug\net9.0\Core.Domain.pdb
+d:\GraduationProject\Codience\Backend\Core\Services\bin\Debug\net9.0\Core.Abstraction.pdb
+d:\GraduationProject\Codience\Backend\Core\Services\bin\Debug\net9.0\Share.pdb
+d:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Services.csproj.AssemblyReference.cache
+d:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Services.GeneratedMSBuildEditorConfig.editorconfig
+d:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Services.AssemblyInfoInputs.cache
+d:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Services.AssemblyInfo.cs
+d:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Services.csproj.CoreCompileInputs.cache
+d:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Services.sourcelink.json
+d:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Ser.A05880D6.Up2Date
+d:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Services.dll
+d:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\refint\Core.Services.dll
+d:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\Core.Services.pdb
+d:\GraduationProject\Codience\Backend\Core\Services\obj\Debug\net9.0\ref\Core.Services.dll

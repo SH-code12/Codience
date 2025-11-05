@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Share\\Share.csproj": {}
+    "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {}
   },
   "projects": {
-    "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Share\\Share.csproj": {
+    "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Share\\Share.csproj",
+        "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj",
         "projectName": "Share",
-        "projectPath": "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Share\\Share.csproj",
-        "packagesPath": "C:\\Users\\semse\\.nuget\\packages\\",
-        "outputPath": "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Share\\obj\\",
+        "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "D:\\GraduationProject\\Codience\\Backend\\Share\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\semse\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"

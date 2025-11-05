@@ -10,5 +10,5 @@ public interface IGithubAuthService
     Task<AuthUserDto> SaveUserAsync(string accessToken, CancellationToken ct = default);
     Task<IEnumerable<GitHubRepoDto>> SaveRepositories(string UserName);
     Task<IEnumerable<GitHubPullRequestDto>> GetPullRequestsAsync(string userName, string repoName);
-
+    Task<IEnumerable<GitHubFileDto>> GetChangedFilesAsync(string owner, string repo, int pullNumber);
 }

@@ -8,19 +8,19 @@
     "net9.0": []
   },
   "packageFolders": {
-    "C:\\Users\\semse\\.nuget\\packages\\": {}
+    "C:\\Users\\DELL\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj",
+      "projectUniqueName": "d:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj",
       "projectName": "Core.Domain",
-      "projectPath": "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj",
-      "packagesPath": "C:\\Users\\semse\\.nuget\\packages\\",
-      "outputPath": "E:\\Graduation Project\\Codience\\backend test\\backend 1-10\\Codience\\Backend\\Core\\Domain\\obj\\",
+      "projectPath": "d:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj",
+      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+      "outputPath": "d:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\semse\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"

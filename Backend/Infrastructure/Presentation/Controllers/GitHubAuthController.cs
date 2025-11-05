@@ -74,5 +74,21 @@ public class GitHubAuthController : ControllerBase
         }
     }
 
-
+    [HttpGet("{owner}/{repo}/pulls/{pullNumber}/files")]
+    public async Task<ActionResult<IEnumerable<GitHubFileDto>>> GetChangedFiles(
+        string owner,
+        string repo,
+        int pullNumber,
+        CancellationToken ct)
+    {
+        try
+        {
+            var files = await _gitHubAuthService.GetChangedFilesAsync(owner, repo, pullNumber);
+            return Ok(files);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
 }
