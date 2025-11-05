@@ -52,6 +52,49 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
+            modelBuilder.Entity("Core.Domain.Models.GitHubFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Additions")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("BlobUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Changes")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Deletions")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Filename")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("PullRequestId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("RawUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PullRequestId");
+
+                    b.ToTable("GitHubFiles");
+                });
+
             modelBuilder.Entity("Core.Domain.Models.GitHubPullRequest", b =>
                 {
                     b.Property<int>("Id")
@@ -135,6 +178,17 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Repository", "GitHub");
                 });
 
+            modelBuilder.Entity("Core.Domain.Models.GitHubFile", b =>
+                {
+                    b.HasOne("Core.Domain.Models.GitHubPullRequest", "PullRequest")
+                        .WithMany("Files")
+                        .HasForeignKey("PullRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PullRequest");
+                });
+
             modelBuilder.Entity("Core.Domain.Models.GitHubPullRequest", b =>
                 {
                     b.HasOne("Core.Domain.Models.GitHubRepo", "Repository")
@@ -170,6 +224,11 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("PullRequests");
 
                     b.Navigation("Repositories");
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.GitHubPullRequest", b =>
+                {
+                    b.Navigation("Files");
                 });
 
             modelBuilder.Entity("Core.Domain.Models.GitHubRepo", b =>

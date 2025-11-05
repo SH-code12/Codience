@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250923165000_Init")]
-    partial class Init
+    [Migration("20251105171514_add files")]
+    partial class addfiles
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,7 +52,50 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", "Auth");
+                    b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.GitHubFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Additions")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("BlobUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Changes")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Deletions")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Filename")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("PullRequestId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("RawUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PullRequestId");
+
+                    b.ToTable("GitHubFiles");
                 });
 
             modelBuilder.Entity("Core.Domain.Models.GitHubPullRequest", b =>
@@ -63,13 +106,14 @@ namespace Infrastructure.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CreatedAt")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("HtmlUrl")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<long>("GitHubId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("Number")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("RepositoryId")
                         .HasColumnType("integer");
@@ -110,11 +154,13 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasAnnotation("Relational:JsonPropertyName", "full_name");
 
                     b.Property<string>("HtmlUrl")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasAnnotation("Relational:JsonPropertyName", "html_url");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -122,7 +168,8 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("character varying(200)");
 
                     b.Property<bool>("Private")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasAnnotation("Relational:JsonPropertyName", "private");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -132,6 +179,17 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Repository", "GitHub");
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.GitHubFile", b =>
+                {
+                    b.HasOne("Core.Domain.Models.GitHubPullRequest", "PullRequest")
+                        .WithMany("Files")
+                        .HasForeignKey("PullRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PullRequest");
                 });
 
             modelBuilder.Entity("Core.Domain.Models.GitHubPullRequest", b =>
@@ -169,6 +227,11 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("PullRequests");
 
                     b.Navigation("Repositories");
+                });
+
+            modelBuilder.Entity("Core.Domain.Models.GitHubPullRequest", b =>
+                {
+                    b.Navigation("Files");
                 });
 
             modelBuilder.Entity("Core.Domain.Models.GitHubRepo", b =>

@@ -9,6 +9,7 @@ namespace Infrastructure.Persistence.Data
          public DbSet<AuthUser> Users { get; set; }
         public DbSet<GitHubRepo> Repositories { get; set; }
         public DbSet<GitHubPullRequest> PullRequests { get; set; }
+        public DbSet<GitHubFile> GitHubFiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

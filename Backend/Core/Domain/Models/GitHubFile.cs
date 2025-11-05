@@ -10,4 +10,6 @@ public class GitHubFile:BaseEntity<int>
     public int Changes { get; set; }
     public string BlobUrl { get; set; }
     public string RawUrl { get; set; }
+    public int PullRequestId { get; set; }
+    public GitHubPullRequest PullRequest { get; set; } = default!;
 }

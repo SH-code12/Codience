@@ -16,5 +16,9 @@ public class GitHubPullRequest : BaseEntity<int>
     public string State { get; set; } = default!;
     public DateTime CreatedAt { get; set; } = default!;
      public int RepositoryId { get; set; }
-    public GitHubRepo Repository { get; set; } = null!;
+    public GitHubRepo Repository { get; set; } = null!;   
+     public List<GitHubFile> Files { get; set; } = new();
+
+
+
 }
