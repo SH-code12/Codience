@@ -1,79 +1,181 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 import type { PullRequest } from "../types/PullRequest";
 import "./styles/PRsTable.css";
-import { useEffect, useState } from "react";
-import type { RiskType } from "../types/RiskType";
-type props = {
+
+type Props = {
   prs: PullRequest[] | null;
+  onSelect?: (pr: PullRequest) => void;
+  onRiskUpdate?: (updated: PullRequest[]) => void;
 };
-const PRsTable = ({ prs }: props) => {
+
+type FileData = {
+  additions: number;
+  deletions: number;
+  changes: number;
+};
+
+const PRsTable = ({ prs, onSelect, onRiskUpdate }: Props) => {
   if (!prs) return null;
-  const repoName: string | null = localStorage.getItem("RepoName");
-  const [riskData, setRiskData] = useState<RiskType | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [myLoading, setLoading] = useState<boolean>(true);
+
+  const [updatedPRs, setUpdatedPRs] = useState<PullRequest[]>(
+    prs.map((pr) => ({
+      ...pr,
+      files_changed: 0,
+      risk: {
+        risk_score: "Loading...",
+        risk_level: "unknown",
+        comments: 0,
+        files_changed: 0,
+      } as any,
+    }))
+  );
+
+  const [selectedPR, setSelectedPR] = useState<number | null>(null);
+
+  const repoName = localStorage.getItem("RepoName");
+  const userName = localStorage.getItem("User");
+
   useEffect(() => {
-    const ComputeRiskScores = async () => {
-      try {
-        prs.map(async (pr) => {
-          setLoading(true);
-          const response = await axios.post<RiskType>(
-            "https://codience.onrender.com/api/risk",
-            {
-              repo: repoName,
-              problem_statement: "",
-              patch: pr.title,
+    if (!prs || !userName || !repoName) return;
+
+    let isCancelled = false;
+
+    const computeRiskScores = async () => {
+      const newPRs = [...updatedPRs];
+
+      await Promise.all(
+        prs.map(async (pr, index) => {
+          try {
+            const filesResponse = await axios.get<FileData[]>(
+              `https://codience.onrender.com/api/GitHubAuth/${userName}/${repoName}/pulls/${pr.number}/files`
+            );
+
+            const files = filesResponse.data;
+            const lines_added = files.reduce((sum, f) => sum + f.additions, 0);
+            const lines_deleted = files.reduce(
+              (sum, f) => sum + f.deletions,
+              0
+            );
+            const total_changes = files.reduce((sum, f) => sum + f.changes, 0);
+            const files_changed = files.length;
+
+            const comments = 0;
+            const commits = 0;
+            const reverted = 0;
+            const merged = pr.state === "closed" ? 1 : 0;
+            const change_density =
+              files_changed > 0 ? total_changes / files_changed : 0;
+            const commit_density =
+              commits > 0 ? total_changes / commits : total_changes;
+
+            let score = 0;
+            try {
+              const riskResponse = await axios.post(
+                "https://sphery-arlen-nondecorative.ngrok-free.dev/predict",
+                {
+                  title: pr.title,
+                  lines_added,
+                  lines_deleted,
+                  files_changed,
+                  comments,
+                  commits,
+                  reverted,
+                  merged,
+                  total_changes,
+                  change_density: parseFloat(change_density.toFixed(2)),
+                  commit_density: parseFloat(commit_density.toFixed(2)),
+                  is_security: pr.title.toLowerCase().includes("security")
+                    ? 1
+                    : 0,
+                  is_database: pr.title.toLowerCase().includes("db") ? 1 : 0,
+                }
+              );
+              score = riskResponse.data.risk_score ?? 0;
+            } catch {
+              score = 15;
             }
-          );
-          console.log(response.data);
-          setRiskData(response.data);
-          pr.risk = response.data;
-        });
-      } catch (e) {
-        setError("error");
-        console.log("error", e);
-      } finally {
-        setLoading(false);
-        console.log(myLoading);
-      }
-      console.log(myLoading);
+
+            const risk_level =
+              score <= 30 ? "low" : score <= 40 ? "medium" : "high";
+
+            if (!isCancelled) {
+              newPRs[index] = {
+                ...pr,
+                files_changed,
+                risk: {
+                  risk_score: score.toFixed(2),
+                  risk_level,
+                  comments,
+                  files_changed,
+                } as any,
+              };
+
+              setUpdatedPRs([...newPRs]);
+              onRiskUpdate?.([...newPRs]);
+            }
+          } catch (error) {
+            console.error(`Error updating PR #${pr.number}:`, error);
+
+            if (!isCancelled) {
+              newPRs[index] = {
+                ...pr,
+                files_changed: 0,
+                risk: {
+                  risk_score: "N/A",
+                  risk_level: "unknown",
+                  comments: 0,
+                  files_changed: 0,
+                } as any,
+              };
+
+              setUpdatedPRs([...newPRs]);
+              onRiskUpdate?.([...newPRs]);
+            }
+          }
+        })
+      );
     };
-    ComputeRiskScores();
-  }, []);
+
+    computeRiskScores();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [prs, userName, repoName, onRiskUpdate]);
+
+  const handleSelect = (pr: PullRequest) => {
+    setSelectedPR(pr.number);
+    if (onSelect) onSelect(pr);
+  };
+
   return (
     <table className="prsTable">
       <thead>
         <tr>
           <th>PR Title</th>
-          {/* <th>Author</th> */}
           <th>Risk Score</th>
           <th>Risk Level</th>
-          {/* <th>Priority</th> */}
+          <th>Files Changed</th>
+          <th>Comments</th>
           <th>Created At</th>
           <th>Status</th>
         </tr>
       </thead>
       <tbody>
-        {prs.map((pr) => (
-          <tr>
-            <td className="titleCell"> {pr.title} </td>
-            {/* <td>{pr.auhtor}</td> */}
-            {/* <RiskCell risk_score={pr.risk_score} />
-            <PriorityCell priority={pr.priority_score} /> */}
-            {myLoading && <td>Calc..</td>}
-            {myLoading && <td>Calc..</td>}
-            {!myLoading && <td>{pr.risk?.risk_score}</td>}
-            {!myLoading && <RiskCell risk_level={pr.risk?.risk_level} />}
-            {/* <td>{ pr.risk_level}</td> */}
-            <td>
-              {pr.createdAt}
-              {/* {pr.createdAt.getHours()}:{pr.createdAt.getMinutes()}{" "} */}
-            </td>
-            {pr.state == "open" ? (
-              <td className="status open">{pr.state}</td>
-            ) : (
-              <td className="status closed">{pr.state}</td>
-            )}
+        {updatedPRs.map((pr) => (
+          <tr
+            key={pr.number}
+            onClick={() => handleSelect(pr)}
+            className={selectedPR === pr.number ? "selected-row" : ""}
+          >
+            <td className="titleCell">{pr.title}</td>
+            <td>{pr.risk?.risk_score ?? "N/A"}</td>
+            <RiskCell risk_level={pr.risk?.risk_level ?? "unknown"} />
+            <td>{pr.files_changed ?? 0}</td>
+            <td>{pr.risk?.comments ?? 0}</td>
+            <td>{pr.createdAt}</td>
+            <td className={`status ${pr.state}`}>{pr.state}</td>
           </tr>
         ))}
       </tbody>
@@ -83,36 +185,13 @@ const PRsTable = ({ prs }: props) => {
 
 export default PRsTable;
 
-type risk = {
-  risk_level: string | null | undefined;
-};
-const RiskCell = ({ risk_level }: risk) => {
-  const risk_score = risk_level;
-  if (risk_score == "low") {
-    return <td className="riskCell low">{risk_score}</td>;
-  } else if (risk_score == "medium") {
-    return <td className="riskCell med">{risk_score}</td>;
-  }
-  return <td className="riskCell high">{risk_score}</td>;
+type RiskProps = {
+  risk_level: string;
 };
 
-type priority = {
-  priority: number;
-};
-
-const PriorityCell = ({ priority }: priority) => {
-  let pr: string = "priorityCell ";
-
-  if (priority < 30) {
-    pr += "low";
-  } else if (priority < 60) {
-    pr += "med";
-  } else {
-    pr += "high";
-  }
-  return (
-    <td className={pr}>
-      <span>{priority}</span>
-    </td>
-  );
+const RiskCell = ({ risk_level }: RiskProps) => {
+  if (risk_level === "low") return <td className="riskCell low">Low</td>;
+  if (risk_level === "medium") return <td className="riskCell med">Medium</td>;
+  if (risk_level === "high") return <td className="riskCell high">High</td>;
+  return <td className="riskCell unknown">Unknown</td>;
 };

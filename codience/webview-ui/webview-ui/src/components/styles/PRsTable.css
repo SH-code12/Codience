@@ -81,3 +81,17 @@ td.status{
 table tbody tr:hover {
     background-color: #40404d6b;
 }
+
+.prsTable tr {
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.prsTable tr:hover {
+  background-color: #1e1e26;
+}
+
+.selected-row {
+  background-color: #45576933 !important;
+  border-left: 4px solid #404d5c;
+}

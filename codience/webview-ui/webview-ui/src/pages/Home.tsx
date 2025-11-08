@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import type { PullRequest } from "../types/PullRequest";
+import { useLocation } from "react-router-dom"; // ✅ detect current route
 import axios from "axios";
+import type { PullRequest } from "../types/PullRequest";
 import PRsHome from "./PRsHome";
+import Dashboard from "./Dashboard";
 
 const Home = () => {
   const user: string | null = localStorage.getItem("User");
@@ -9,31 +11,36 @@ const Home = () => {
   const [prs, setPrs] = useState<PullRequest[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const location = useLocation(); 
+
   useEffect(() => {
-    const fetchDeviceCode = async () => {
-      console.log("fn");
+    const fetchPRs = async () => {
       try {
-        const response = await axios.get<[PullRequest]>(
+        const response = await axios.get<PullRequest[]>(
           `https://codience.onrender.com/api/GitHubAuth/${user}/${repoName}/pulls`
         );
         setPrs(response.data);
       } catch (err) {
-        setPrs([]);
         console.error(err);
+        setPrs([]);
       } finally {
         setLoading(false);
       }
     };
-    fetchDeviceCode();
-  }, []);
+    fetchPRs();
+  }, [user, repoName]);
+
+  const renderContent = () => {
+    if (location.pathname.includes("dashboard")) {
+      return <Dashboard prs={prs} projectName={repoName} />;
+    }
+    return <PRsHome prs={prs} projectName={repoName} />;
+  };
 
   return (
-    <>
-      <div className="Home">
-        {loading && <p className="loading">Loading...</p>}
-        {!loading && <PRsHome prs={prs} projectName={repoName} />}
-      </div>
-    </>
+    <div className="Home">
+      {loading ? <p className="loading">Loading...</p> : renderContent()}
+    </div>
   );
 };
 

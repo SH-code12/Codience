@@ -2,7 +2,8 @@
   background-color: #181b1f;
   min-width: 200px;
   max-width: 200px;
-  height: calc(100vh - 20px);
+  min-height: calc(100vh - 20px);
+  height: max-content;
   display: inline-flex;
   flex-flow: column nowrap;
   gap: 15px;

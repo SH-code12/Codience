@@ -4,10 +4,8 @@ export interface PullRequest {
   number: number;
   title: string;
   state: string;
-  // auhtor: string,
-  // status: string,
   createdAt: string;
   name: string;
+  files_changed: number;
   risk: RiskType | null;
-  // priority_score: number,
 }

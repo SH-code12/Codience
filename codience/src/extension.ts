@@ -51,7 +51,7 @@ class SidebarProvider implements vscode.WebviewViewProvider {
 
     html = html.replace(/(src|href)="(.+?)"/g, (match, attr, link) => {
       if (/^https?:\/\//.test(link)) {
-        return match; 
+        return match;
       }
       const uri = webview.asWebviewUri(
         vscode.Uri.joinPath(
@@ -69,13 +69,18 @@ class SidebarProvider implements vscode.WebviewViewProvider {
     html = html.replace(
       "<head>",
       `<head>
-       <meta http-equiv="Content-Security-Policy"
-      content="default-src 'none';
-               img-src ${webview.cspSource} https:;
-               style-src ${webview.cspSource} 'unsafe-inline';
-               script-src ${webview.cspSource};
-               connect-src https://codience.onrender.com;">
-      `
+    <meta http-equiv="Content-Security-Policy"
+      content="
+        default-src 'none';
+        img-src ${webview.cspSource} https:;
+        style-src ${webview.cspSource} 'unsafe-inline';
+        script-src ${webview.cspSource};
+        connect-src
+          https://codience.onrender.com
+          https://sphery-arlen-nondecorative.ngrok-free.dev
+          https://fordless-samella-unexpendable.ngrok-free.dev;
+      ">
+  `
     );
 
     webview.html = html;

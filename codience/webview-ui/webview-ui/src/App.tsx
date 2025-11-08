@@ -3,9 +3,8 @@ import "./App.css";
 import UserCode from "./components/UserCode";
 import WelcomePage from "./pages/WelcomePage";
 import Home from "./pages/Home";
-import GetRepoName from "./pages/getRepoName";
+import GetRepoName from "./pages/GetRepoName";
 import SideBarLayout from "./pages/SideBarLayout";
-import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -18,7 +17,7 @@ function App() {
 
           <Route element={<SideBarLayout />}>
             <Route path="/home" element={<Home />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Home />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

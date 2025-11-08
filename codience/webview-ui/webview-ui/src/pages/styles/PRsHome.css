@@ -2,6 +2,7 @@
 .home {
     display: inline-block;
     width: 100%;
+    background-color: #161719;
 }
 
 h2.projectTitle{

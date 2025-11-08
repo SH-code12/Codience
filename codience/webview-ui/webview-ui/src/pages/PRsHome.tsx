@@ -1,28 +1,42 @@
+import { useEffect, useState } from "react";
 import PRsTable from "../components/PRsTable";
 import type { PullRequest } from "../types/PullRequest";
 import "./styles/PRsHome.css";
-interface props  {
+
+interface Props {
   prs: PullRequest[] | null;
   projectName: string | null;
 }
-const PRsHome = ({ prs, projectName}: props) => {
-  if (!prs) return;
-  let openPrs: number = 0;
-  let highPriority: number = 0;
-  let highRisk: number = 0;
 
-  prs.forEach((element) => {
-    if (element.state == "open") openPrs++;
-    if (element.risk?.risk_level == "high") highRisk++;
-    // if (element.risk_score > 60) highRisk++;
-    // if (element.priority_score > 60) highPriority++;
-  });
+const PRsHome = ({ prs, projectName }: Props) => {
+  const [localPRs, setLocalPRs] = useState<PullRequest[] | null>(prs);
+  const [openPrs, setOpenPrs] = useState(0);
+  const [highPriority] = useState(0);
+  const [highRisk, setHighRisk] = useState(0);
+
+  // Update counts whenever PRs (or their risk) change
+  useEffect(() => {
+    if (!localPRs) return;
+    let openCount = 0;
+    let highRiskCount = 0;
+
+    localPRs.forEach((pr) => {
+      if (pr.state === "open") openCount++;
+      if (pr.risk?.risk_level === "high") highRiskCount++;
+    });
+
+    setOpenPrs(openCount);
+    setHighRisk(highRiskCount);
+  }, [localPRs]);
+
+  if (!localPRs) return null;
+
   return (
     <div className="home">
       <h2 className="projectTitle">{projectName}</h2>
       <div className="cardsContainer">
         <div className="card open">
-          <p>Open Prs</p>
+          <p>Open PRs</p>
           <span>{openPrs}</span>
         </div>
         <div className="card priority">
@@ -35,7 +49,7 @@ const PRsHome = ({ prs, projectName}: props) => {
         </div>
       </div>
       <h2 className="tableCaption">Pull Requests</h2>
-      <PRsTable prs={prs} />
+      <PRsTable prs={localPRs} onRiskUpdate={setLocalPRs} />
     </div>
   );
 };
