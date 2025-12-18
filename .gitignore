@@ -1,3 +1,6 @@
 node_modules/
 dist/
 .env
+Risk/Model/bert_final_best.pth
+Risk/Model/bert_final_model.pth
+Risk/Model/scaler.pkl
