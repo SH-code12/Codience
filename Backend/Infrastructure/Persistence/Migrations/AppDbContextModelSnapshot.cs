@@ -44,6 +44,12 @@ namespace Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("JiraAccessToken")
+                        .HasColumnType("text");
+
+                    b.Property<string>("JiraAccountId")
+                        .HasColumnType("text");
+
                     b.Property<string>("Password")
                         .HasColumnType("text");
 
@@ -178,6 +184,42 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Repository", "GitHub");
                 });
 
+            modelBuilder.Entity("Core.Domain.Models.JiraIssue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("IssueType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("JiraKey")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JiraIssues");
+                });
+
+            modelBuilder.Entity("GitHubPullRequestJiraIssue", b =>
+                {
+                    b.Property<int>("JiraIssuesId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PullRequestsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("JiraIssuesId", "PullRequestsId");
+
+                    b.HasIndex("PullRequestsId");
+
+                    b.ToTable("GitHubPullRequestJiraIssue");
+                });
+
             modelBuilder.Entity("Core.Domain.Models.GitHubFile", b =>
                 {
                     b.HasOne("Core.Domain.Models.GitHubPullRequest", "PullRequest")
@@ -217,6 +259,21 @@ namespace Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("GitHubPullRequestJiraIssue", b =>
+                {
+                    b.HasOne("Core.Domain.Models.JiraIssue", null)
+                        .WithMany()
+                        .HasForeignKey("JiraIssuesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Domain.Models.GitHubPullRequest", null)
+                        .WithMany()
+                        .HasForeignKey("PullRequestsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Domain.Models.AuthUser", b =>

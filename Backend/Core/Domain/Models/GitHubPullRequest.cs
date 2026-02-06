@@ -17,7 +17,8 @@ public class GitHubPullRequest : BaseEntity<int>
     public DateTime CreatedAt { get; set; } = default!;
      public int RepositoryId { get; set; }
     public GitHubRepo Repository { get; set; } = null!;   
-     public List<GitHubFile> Files { get; set; } = new();
+    public List<GitHubFile> Files { get; set; } = new();
+     public ICollection<JiraIssue> JiraIssues { get; set; } = new List<JiraIssue>();
 
 
 

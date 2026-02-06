@@ -46,6 +46,12 @@ E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infras
 E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.pdb
 E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.genruntimeconfig.cache
 E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\ref\Infrastructure.Persistence.dll
+d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.csproj.AssemblyReference.cache
+d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.AssemblyInfoInputs.cache
+d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.AssemblyInfo.cs
+d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.csproj.CoreCompileInputs.cache
+d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.sourcelink.json
 d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Infrastructure.Persistence.deps.json
 d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Infrastructure.Persistence.runtimeconfig.json
 d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Infrastructure.Persistence.dll
@@ -58,12 +64,6 @@ d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.
 d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Core.Domain.pdb
 d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Core.Abstraction.pdb
 d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\bin\Debug\net9.0\Share.pdb
-d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.csproj.AssemblyReference.cache
-d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.GeneratedMSBuildEditorConfig.editorconfig
-d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.AssemblyInfoInputs.cache
-d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.AssemblyInfo.cs
-d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.csproj.CoreCompileInputs.cache
-d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.sourcelink.json
 d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastr.56C47081.Up2Date
 d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\Infrastructure.Persistence.dll
 d:\GraduationProject\Codience\Backend\Infrastructure\Persistence\obj\Debug\net9.0\refint\Infrastructure.Persistence.dll
