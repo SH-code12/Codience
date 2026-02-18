@@ -27,32 +27,33 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\DELL\\.nuget\\packages\\": {}
+    "/home/shahd/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj",
+      "projectUniqueName": "/home/shahd/Desktop/Grduation/Backend/Core/Abstraction/Core.Abstraction.csproj",
       "projectName": "Core.Abstraction",
-      "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj",
-      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\obj\\",
+      "projectPath": "/home/shahd/Desktop/Grduation/Backend/Core/Abstraction/Core.Abstraction.csproj",
+      "packagesPath": "/home/shahd/.nuget/packages/",
+      "outputPath": "/home/shahd/Desktop/Grduation/Backend/Core/Abstraction/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/shahd/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
+        "/usr/lib/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {
-              "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj"
+            "/home/shahd/Desktop/Grduation/Backend/Share/Share.csproj": {
+              "projectPath": "/home/shahd/Desktop/Grduation/Backend/Share/Share.csproj"
             }
           }
         }
@@ -67,7 +68,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net9.0": {
@@ -88,7 +89,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.114/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

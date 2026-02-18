@@ -1,0 +1,59 @@
+.sideBar {
+  background-color: #181b1f;
+  min-width: 200px;
+  max-width: 200px;
+  min-height: calc(100vh - 20px);
+  height: max-content;
+  display: inline-flex;
+  flex-flow: column nowrap;
+  gap: 15px;
+  padding: 10px;
+  position: sticky;
+  top: 0;
+}
+h2.logo {
+  text-align: center;
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+}
+.navBar {
+  width: 100%;
+}
+
+a {
+  display: inline-block;
+  text-decoration: none;
+  color: #eee;
+  width: calc(100% - 10px);
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 5px;
+  margin-block: 5px;
+  font-family: sans-serif;
+  transition: 0.2s;
+}
+
+a:hover,
+.active {
+  background-color: #3d424c;
+}
+
+button.signOut {
+  background-color: #960101;
+  outline: none;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  border-radius: 8px;
+  transition: 0.1s;
+  position: absolute;
+  width: calc(100% - 20px);
+  margin-bottom: 10px;
+  bottom: 0;
+}
+
+button.signOut:hover {
+  background-color: #ad0303;
+}

@@ -779,7 +779,7 @@
         },
         "runtime": {
           "Core.Abstraction.dll": {
-            "assemblyVersion": "1.0.0.0",
+            "assemblyVersion": "1.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -787,7 +787,7 @@
       "Core.Domain/1.0.0": {
         "runtime": {
           "Core.Domain.dll": {
-            "assemblyVersion": "1.0.0.0",
+            "assemblyVersion": "1.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -804,7 +804,7 @@
         },
         "runtime": {
           "Core.Services.dll": {
-            "assemblyVersion": "1.0.0.0",
+            "assemblyVersion": "1.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -821,7 +821,7 @@
         },
         "runtime": {
           "Infrastructure.Persistence.dll": {
-            "assemblyVersion": "1.0.0.0",
+            "assemblyVersion": "1.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -836,7 +836,7 @@
         },
         "runtime": {
           "Infrastructure.Presentation.dll": {
-            "assemblyVersion": "1.0.0.0",
+            "assemblyVersion": "1.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -844,7 +844,7 @@
       "Share/1.0.0": {
         "runtime": {
           "Share.dll": {
-            "assemblyVersion": "1.0.0.0",
+            "assemblyVersion": "1.0.0",
             "fileVersion": "1.0.0.0"
           }
         }

@@ -1,0 +1,97 @@
+:root{
+    --high: #821B1B;
+    --low: #298f22;
+    --med:#B06A35;
+
+}
+
+table {
+  display: inline-table;
+  background-color: transparent;
+  color: #BEBABA;
+  /* min-height: 100vh; */
+  overflow: auto;
+  width: 100%;
+  font-family: sans-serif;
+  border-spacing: 0;
+}
+table tr {
+  width: 100%;
+  height: 50px;
+}
+
+table thead tr {
+  background-color: #181B1F;
+  color: #5D6065;
+  font-size: 14px;
+}
+
+table th {
+  padding: 10px;
+  width: 20%;
+}
+table td {
+  text-align: center;
+  border-bottom: 1px #eeeeee41 solid;
+}
+td.titleCell {
+  text-align: start;
+  padding-left: 10px;
+  text-transform: capitalize;
+}
+
+.riskCell.low {
+  color: var(--low);
+}
+
+.riskCell.med {
+  color: var(--med);
+}
+.riskCell.high {
+  color: var(--high);
+}
+
+.priorityCell span {
+  display: inline-block;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 100px;
+  padding-block: 5px;
+  color: #eee;
+}
+
+.priorityCell.high span {
+  background-color: var(--high);
+}
+.priorityCell.low span {
+  background-color: var(--low);
+}
+.priorityCell.med span {
+  background-color: var(--med);
+}
+td.open {
+    color: var(--low);
+}
+td.closed {
+    color: var(--high);
+}
+td.status{
+    text-transform: capitalize;
+}
+table tbody tr:hover {
+    background-color: #40404d6b;
+}
+
+.prsTable tr {
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.prsTable tr:hover {
+  background-color: #1e1e26;
+}
+
+.selected-row {
+  background-color: #45576933 !important;
+  border-left: 4px solid #404d5c;
+}

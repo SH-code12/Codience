@@ -1,0 +1,44 @@
+.getRepoName {
+  margin: auto;
+  height: 100vh;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+.repoNameContainer {
+  background-color: #e4e4e404;
+  width: 70%;
+  max-width: 450px;
+  height: 500px;
+  border-radius: 8px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: space-around;
+  color: #eee;
+}
+.repoNameContainer input {
+  width: 80%;
+  height: 30px;
+  outline: none;
+  border: none;
+  padding-inline: 5px;
+  border-radius: 3px;
+  background-color: #eee;
+  font-size: 18px;
+}
+.repoNameContainer button {
+  width: 90%;
+  padding-block: 5px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: #0f6824;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.repoNameContainer button:hover {
+  background-color: #09b7319c;
+}
