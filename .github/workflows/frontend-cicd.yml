@@ -2,9 +2,7 @@ name: Frontend CI/CD
 
 on:
   push:
-    branches: [ DevOps ]
-    paths:
-      - 'codience/webview-ui/webview-ui/**'
+    branches: [ devops ]   # exact branch name
 
 jobs:
   build-frontend:
