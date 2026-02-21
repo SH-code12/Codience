@@ -4,8 +4,8 @@ name: Backend CI/CD
 on:
   push:
     branches: [ DevOps ]   # exact branch name
-    paths:
-      - 'Backend/**'       # only trigger if backend files change
+  #  paths:
+    #  - 'Backend/**'       # only trigger if backend files change
 
 jobs:
   build-backend:
