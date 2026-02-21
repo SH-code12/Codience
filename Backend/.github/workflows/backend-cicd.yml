@@ -21,14 +21,14 @@ jobs:
         run: dotnet restore Backend/Codience.sln
 
       - name: Build
-        run: dotnet build Backend/Codience.sln --configuration Release --no-restore
+        run: dotnet build Backend/Codience.sln --configuration Release 
 
       - name: Test
         run: dotnet test Backend/Codience.sln --no-build --verbosity normal
 
       - name: Build Docker Image
         run: |
-          docker build -t codience:latest Backend/
+          docker build -t codience:backCI Backend/
 
       - name: Login to DockerHub
         uses: docker/login-action@v2
@@ -37,5 +37,5 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Push Docker Image
-        run: docker tag codiencelatest shahdelnassag/codience:latest
-      - run: docker push shahdelnassag/codience:latest
+        run: docker tag codiencebackCI shahdelnassag/codience:backCI
+      - run: docker push shahdelnassag/codience:backCI

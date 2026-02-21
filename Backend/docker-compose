@@ -1,18 +1,42 @@
 version: '3.9'
+
 services:
+
   db:
     image: postgres:16
+    container_name: codience-db
+    restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: codience
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   api:
-    build: ./Backend
+    build:
+      context: ./Backend
+    container_name: codience-api
+    restart: always
     ports:
-      - "5000:5000"
+      - "8080:8080"
     environment:
-      ConnectionStrings__Default: "Host=db;Port=5432;Database=codience;Username=postgres;Password=postgres"
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__Default: Host=db;Port=5432;Database=codience;Username=postgres;Password=postgres
     depends_on:
       - db
+
+  frontend:
+    image: shahdelnassag/codience:latest
+    container_name: codience-frontend
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+
+
+volumes:
+  postgres_data:

@@ -3,8 +3,8 @@
 # ========================
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 WORKDIR /app
-EXPOSE 8080
-ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 7070
+ENV ASPNETCORE_URLS=http://+:7070
 
 # ========================
 # Build stage
@@ -25,14 +25,15 @@ COPY Infrastructure/Presentation/Infrastructure.Presentation.csproj Infrastructu
 COPY Share/Share.csproj Share/
 
 # Restore dependencies
-RUN dotnet restore API/Codience.API.csproj
+RUN dotnet restore "API/Codience.API.csproj"
 
 # Now copy everything
 COPY . .
 
 # Publish
-WORKDIR /src/API
-RUN dotnet publish Codience.API.csproj -c Release -o /app/publish --no-restore
+WORKDIR "/src/API"
+#RUN dotnet publish Codience.API.csproj -c Release -o /app/publish --no-restore
+RUN dotnet publish "Codience.API.csproj" -c Release -o /app/publish 
 
 # ========================
 # Final image

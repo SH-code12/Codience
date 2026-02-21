@@ -1,0 +1,42 @@
+name: Frontend CI/CD
+
+on:
+  push:
+    branches: [ DevOps ]
+    paths:
+      - 'codience/webview-ui/webview-ui/**'
+
+jobs:
+  build-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: |
+          cd codience/webview-ui/webview-ui
+          npm install
+
+      - name: Build Frontend
+        run: |
+          cd codience/webview-ui/webview-ui
+          npm run build
+
+      - name: Build Docker Image
+        run: |
+          docker build -t shahdelnassag/codience:frontCI codience/webview-ui/webview-ui
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push Image
+        run: docker push shahdelnassag/codience:frontCI

@@ -4,3 +4,7 @@ obj/
 .git
 .gitignore
 Dockerfile
+codience/webview-ui/webview-ui/.dockerignore
+node_modules
+dist
+.git
