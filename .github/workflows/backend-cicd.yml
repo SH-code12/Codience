@@ -1,41 +1,56 @@
-name: .NET CI/CD
+# Backend CI/CD
+name: Backend CI/CD
 
 on:
   push:
-    branches: [ DevOps ]
-  pull_request:
-    branches: [ DevOps ]
+    branches: [ devops ]   # exact branch name
+    paths:
+      - 'Backend/**'       # only trigger if backend files change
 
 jobs:
-  build:
+  build-backend:
     runs-on: ubuntu-latest
+
     steps:
+      # 1️⃣ Checkout code
       - uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+      # 2️⃣ Setup Node (if needed)
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          dotnet-version: '9.0.x'
+          node-version: 20
 
-      - name: Restore dependencies
-        run: dotnet restore Backend/Codience.sln
+      # 3️⃣ Install backend dependencies
+      - name: Install Dependencies
+        run: |
+          cd Backend
+          npm install
 
-      - name: Build
-        run: dotnet build Backend/Codience.sln --configuration Release 
+      # 4️⃣ Build backend (if applicable)
+      - name: Build Backend
+        run: |
+          cd Backend
+          npm run build
 
-      - name: Test
-        run: dotnet test Backend/Codience.sln --no-build --verbosity normal
-
+      # 5️⃣ Build Docker image
       - name: Build Docker Image
         run: |
-          docker build -t codience:backCI Backend/
+          docker build -t codiencebackci ./Backend
 
+      # 6️⃣ Tag Docker image for DockerHub
+      - name: Tag Docker Image
+        run: |
+          docker tag codiencebackci shahdelnassag/codience:backci
+
+      # 7️⃣ Login to DockerHub
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      # 8️⃣ Push Docker image
       - name: Push Docker Image
-        run: docker tag codiencebackCI shahdelnassag/codience:backCI
-      - run: docker push shahdelnassag/codience:backCI
+        run: |
+          docker push shahdelnassag/codience:backci

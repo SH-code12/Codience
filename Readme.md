@@ -1,5 +1,9 @@
 # Codience --> Sudonators Team ^_^
 
+[![.NET CI/CD](https://github.com/SH-code12/Codience/actions/workflows/backend-cicd.yml/badge.svg)](https://github.com/SH-code12/Codience/actions/workflows/backend-cicd.yml)
+
+[![Frontend CI/CD](https://github.com/SH-code12/Codience/actions/workflows/frontend-cicd.yml/badge.svg)](https://github.com/SH-code12/Codience/actions/workflows/frontend-cicd.yml)
+
 ## Abstract
 Codience is an intelligent VS Code extension that helps developers and tech leads decide what to work on next by analyzing technical complexity, business impact, dependencies, code health, risk of delay, and skill alignment.
 
