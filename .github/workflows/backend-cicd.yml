@@ -1,11 +1,9 @@
-# Backend CI/CD
+# Backend CI/CD for .NET
 name: Backend CI/CD
 
 on:
   push:
     branches: [ DevOps ]   # exact branch name
-  #  paths:
-    #  - 'Backend/**'       # only trigger if backend files change
 
 jobs:
   build-backend:
@@ -15,42 +13,48 @@ jobs:
       # 1️⃣ Checkout code
       - uses: actions/checkout@v4
 
-      # 2️⃣ Setup Node (if needed)
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      # 2️⃣ Setup .NET SDK
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
         with:
-          node-version: 20
+          dotnet-version: 9.0  # adjust if using another version
 
-      # 3️⃣ Install backend dependencies
-      - name: Install Dependencies
+      # 3️⃣ Restore dependencies
+      - name: Restore .NET dependencies
         run: |
           cd Backend
-          npm install
+          dotnet restore
 
-      # 4️⃣ Build backend (if applicable)
+      # 4️⃣ Build backend
       - name: Build Backend
         run: |
           cd Backend
-          npm run build
+          dotnet build --configuration Release
 
-      # 5️⃣ Build Docker image
+      # 5️⃣ Publish backend (creates self-contained files for Docker)
+      - name: Publish Backend
+        run: |
+          cd Backend
+          dotnet publish -c Release -o publish
+
+      # 6️⃣ Build Docker image
       - name: Build Docker Image
         run: |
           docker build -t codiencebackci ./Backend
 
-      # 6️⃣ Tag Docker image for DockerHub
+      # 7️⃣ Tag Docker image for DockerHub
       - name: Tag Docker Image
         run: |
           docker tag codiencebackci shahdelnassag/codience:backci
 
-      # 7️⃣ Login to DockerHub
+      # 8️⃣ Login to DockerHub
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 8️⃣ Push Docker image
+      # 9️⃣ Push Docker image
       - name: Push Docker Image
         run: |
           docker push shahdelnassag/codience:backci
