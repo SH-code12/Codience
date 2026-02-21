@@ -2,9 +2,9 @@ name: .NET CI/CD
 
 on:
   push:
-    branches: [ devops ]
+    branches: [ DevOps ]
   pull_request:
-    branches: [ devops ]
+    branches: [ DevOps ]
 
 jobs:
   build:

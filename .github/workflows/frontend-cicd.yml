@@ -2,7 +2,7 @@ name: Frontend CI/CD
 
 on:
   push:
-    branches: [ devops ]   # exact branch name
+    branches: [ DevOps ]   # exact branch name
 
 jobs:
   build-frontend:
