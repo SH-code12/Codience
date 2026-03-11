@@ -31,9 +31,35 @@ else:
     print("\n--- Running Test Search ---")
     query = "Who has experience with Python and data visualization?"
     
-    # k=2 returns the top 2 matches
+    # 
     results = vectorstore.similarity_search(query, k=4)
 
     for i, res in enumerate(results):
         print(f"\nResult #{i+1}:")
         print(res.page_content)
+
+
+# 6. NEW: Deduplication Logic
+query = "Python and Data Science"
+results = vectorstore.similarity_search(query, k=10) # Ask for 10 to find enough unique ones
+
+unique_roles = []
+seen_roles = set() 
+
+for res in results:
+    # Extract the Role name from the page_content string
+    # (Assuming your text starts with "Role: RoleName | ...")
+    role_name = res.page_content.split('|')[0].replace("rag_content: Role:", "").strip()
+    
+    if role_name not in seen_roles:
+        unique_roles.append(res)
+        seen_roles.add(role_name)
+    
+    # Stop once we have 3 unique recommendations
+    if len(unique_roles) == 3:
+        break
+
+print("\n--- Top 3 Unique Recommendations ---")
+for i, res in enumerate(unique_roles):
+    print(f"\nRecommendation #{i+1}:")
+    print(res.page_content)
