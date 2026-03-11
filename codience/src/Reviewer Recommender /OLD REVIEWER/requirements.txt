@@ -1,0 +1,9 @@
+tensorflow==2.19.0
+keras
+transformers==4.40.0
+flask
+flask-cors
+huggingface_hub
+numpy
+gunicorn
+tf-keras
