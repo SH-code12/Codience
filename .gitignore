@@ -2,3 +2,6 @@ node_modules/
 dist/
 .env
 Risk/Model/
+.venv
+my_vector_db
+.env
