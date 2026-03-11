@@ -79,4 +79,3 @@ The Role Knowledge Base consists of structured personas used for vector similari
 * **Framework:** LangChain / LlamaIndex
 * **API:** GitHub GraphQL API
 
-```
