@@ -1,35 +1,32 @@
 from codience.src.Reviewer_Recommender.Process.analysis_PR import extract_pr_skills
 from codience.src.Reviewer_Recommender.Data.searching_into_vectordb import search_vector_db
-mock_pr_data = {
-        "title": "Fix: Optimized SQL Query for User Dashboard",
-        "description": "I added an index to the User table and refactored the Entity Framework query to avoid N+1 issues.",
-        "diff": """
-        --- a/Data/UserRepository.cs
-        +++ b/Data/UserRepository.cs
-        @@ -10,5 +10,5 @@
-        - var users = context.Users.ToList();
-        + var users = context.Users.Include(u => u.Posts).AsNoTracking().ToList();
-        """
-    }
+from codience.src.Reviewer_Recommender.Process.tests_prs import test_prs
 
 
 def main():
-        # 1. Get the skills from Step 1 (What we just did)
-    extraction_result = extract_pr_skills(mock_pr_data)
-    skills_to_search = extraction_result['rag_query']
+    for mock_pr_data in test_prs:
+        print(f"\nProcessing PR: {mock_pr_data['title']}")
+        extraction_result = extract_pr_skills(mock_pr_data)
+        print(f"Extracted Skills: {extraction_result['required_skills']}")
+        print(f"RAG Query: {extraction_result['rag_query']}")
+        skills_to_search = extraction_result['rag_query']
 
-    unified_query = ", ".join(skills_to_search) 
 
-    role_matches = search_vector_db(unified_query, k=5)
+        role_matches = search_vector_db(skills_to_search, k=20)
 
-    # 3. Final Step: Rank your reviewers based on these roles
-# 4. Check the results
-    if not role_matches:
-        print("⚠️ No direct match found. System might need to fallback to general roles.")
-    else:
-        for i, match in enumerate(role_matches):
-            print(f"Rank {i+1}: {match['metadata']['name']} (Score: {match['score']})")
-
+        # 3. Final Step: Rank your reviewers based on these roles
+    # 4. Check the results
+        if not role_matches:
+            print("⚠️ No direct match found. System might need to fallback to general roles.")
+        else:
+            for i, match in enumerate(role_matches):
+                # Extract the role title from the page_content string
+                content = match.page_content
+                role_title = content.split('|')[0].replace("rag_content: Role:", "").strip()
+                
+                print(f"Rank {i+1}: {role_title}")
+                    # Show more details for verification
+                print(f"   Matches: {content.split('|')[1][:100]}...")
 
 if __name__ == "__main__":
         main()
