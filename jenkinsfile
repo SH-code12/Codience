@@ -1,0 +1,11 @@
+stage('Frontend Build') {
+    steps {
+        dir('codience/webview-ui/webview-ui') {
+            sh 'npm install'
+            sh 'npm run build'
+            sh 'docker build -t shahdelnassag/codience:Jenkins .'
+            sh 'docker push shahdelnassag/codience:Jenkins'
+        }
+    }
+}
+
