@@ -9,7 +9,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.registerWebviewViewProvider(
       SidebarProvider.viewType,
       provider
-    )
+    ) 
   );
 }
 
