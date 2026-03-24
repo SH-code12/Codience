@@ -1,7 +1,7 @@
 datasets
 pandas
 langchain 
-langchain-community 
+langchain-community
 sentence-transformers 
 chromadb
 google-genai>=0.7.0
