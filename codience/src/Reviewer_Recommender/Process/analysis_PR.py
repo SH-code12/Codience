@@ -1,7 +1,7 @@
 import json
 import re
-from llm import get_model
-from prompts import SKILL_EXTRACTION_PROMPT
+from codience.src.Reviewer_Recommender.Process.llm import get_model
+from codience.src.Reviewer_Recommender.Process.prompts import SKILL_EXTRACTION_PROMPT
 
 def extract_pr_skills(pr_data):
     client = get_model()

@@ -5,9 +5,11 @@ import requests
 from google import genai
 from google.genai import errors
 from dotenv import load_dotenv
+from analysis_PR import extract_pr_skills
 
 # Import your history logic
 from Reviewer_Engine_Helper import fetch_commits, map_commits_to_skills
+from codience.src.Reviewer_Recommender.Process.prompts import SKILL_EXTRACTION_PROMPT
 
 load_dotenv()
 
@@ -35,40 +37,36 @@ def fetch_real_pr_data(owner, repo, pr_number):
     }
 
 # --- 2. AI SKILL EXTRACTION ---
-def extract_pr_skills(pr_data):
-    client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+# -----------function already implemented in analysis_PR.py for better modularity and testing-----------
+# def extract_pr_skills(pr_data):
+#     client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
     
-    # FIX: Using the direct model name string to avoid 404
-    model_name = "gemini-1.5-flash" 
+#     # FIX: Using the direct model name string to avoid 404
+#     model_name = "gemini-3.1-flash-lite-preview" 
 
-    prompt = f"""
-    Analyze the following Pull Request. Identify the technical skills required to review this code.
-    
-    PR Title: {pr_data['title']}
-    Description: {pr_data['description']}
-    Code Changes: {pr_data['diff']}
-    
-    Return ONLY a JSON object:
-    {{"required_skills": ["Skill1", "Skill2"], "rag_query": "search query"}}
-    """
+#     prompt = SKILL_EXTRACTION_PROMPT.format(
+#         title=pr_data['title'],
+#         description=pr_data['description'],
+#         diff=pr_data['diff']
+#     )
 
-    try:
-        time.sleep(1) # Small delay
-        response = client.models.generate_content(model=model_name, contents=prompt)
-        text = response.text.strip()
+#     try:
+#         time.sleep(1) # Small delay
+#         response = client.models.generate_content(model=model_name, contents=prompt)
+#         text = response.text.strip()
         
-        # Robust JSON cleaning
-        if "```json" in text:
-            text = text.split("```json")[1].split("```")[0].strip()
-        elif "```" in text:
-            text = text.split("```")[1].strip()
+#         # Robust JSON cleaning
+#         if "```json" in text:
+#             text = text.split("```json")[1].split("```")[0].strip()
+#         elif "```" in text:
+#             text = text.split("```")[1].strip()
             
-        return json.loads(text)
-    except Exception as e:
-        # FIX: Dynamic fallback based on the actual repository language
-        main_lang = pr_data.get('repo_lang', 'Python')
-        print(f"⚠️ AI Error: {e}. Falling back to {main_lang}.")
-        return {"required_skills": [main_lang], "rag_query": f"{main_lang} expert"}
+#         return json.loads(text)
+#     except Exception as e:
+#         # FIX: Dynamic fallback based on the actual repository language
+#         main_lang = pr_data.get('repo_lang', 'Python')
+#         print(f"⚠️ AI Error: {e}. Falling back to {main_lang}.")
+#         return {"required_skills": [main_lang], "rag_query": f"{main_lang} expert"}
 
 # --- 3. THE UPDATED ENGINE ---
 class ReviewerRecommender:
