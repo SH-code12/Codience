@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj": {}
+    "/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/Core.Abstraction.csproj": {}
   },
   "projects": {
-    "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj": {
+    "/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/Core.Abstraction.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj",
+        "projectUniqueName": "/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/Core.Abstraction.csproj",
         "projectName": "Core.Abstraction",
-        "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj",
-        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Abstraction\\obj\\",
+        "projectPath": "/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/Core.Abstraction.csproj",
+        "packagesPath": "/home/malak-hisham/.nuget/packages/",
+        "outputPath": "/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/malak-hisham/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -26,8 +26,11 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {
-                "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj"
+              "/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/Core.Domain.csproj": {
+                "projectPath": "/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/Core.Domain.csproj"
+              },
+              "/home/malak-hisham/RiderProjects/Codience/Backend/Share/Share.csproj": {
+                "projectPath": "/home/malak-hisham/RiderProjects/Codience/Backend/Share/Share.csproj"
               }
             }
           }
@@ -42,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -63,21 +66,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/malak-hisham/.dotnet/sdk/10.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {
+    "/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/Core.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj",
-        "projectName": "Share",
-        "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj",
-        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\GraduationProject\\Codience\\Backend\\Share\\obj\\",
+        "projectUniqueName": "/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/Core.Domain.csproj",
+        "projectName": "Core.Domain",
+        "projectPath": "/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/Core.Domain.csproj",
+        "packagesPath": "/home/malak-hisham/.nuget/packages/",
+        "outputPath": "/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/malak-hisham/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -101,7 +104,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -122,7 +125,66 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/malak-hisham/.dotnet/sdk/10.0.201/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/malak-hisham/RiderProjects/Codience/Backend/Share/Share.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/malak-hisham/RiderProjects/Codience/Backend/Share/Share.csproj",
+        "projectName": "Share",
+        "projectPath": "/home/malak-hisham/RiderProjects/Codience/Backend/Share/Share.csproj",
+        "packagesPath": "/home/malak-hisham/.nuget/packages/",
+        "outputPath": "/home/malak-hisham/RiderProjects/Codience/Backend/Share/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/malak-hisham/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/home/malak-hisham/.dotnet/sdk/10.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

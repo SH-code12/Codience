@@ -14,6 +14,11 @@ builder.Services.AddControllers()
        .AddApplicationPart(typeof(GitHubAuthController).Assembly)
        .AddApplicationPart(typeof(JiraController).Assembly); 
 
+var fastApiConfig = builder.Configuration.GetSection("FastApi");
+
+
+builder.Services.AddScoped<IReviewerService, ReviewerService>();
+
 var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
                        ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -31,12 +36,13 @@ builder.Services.AddScoped(typeof(IGenericRepository<AuthUser, Guid>), typeof(Ge
 
 builder.Services.AddHttpClient("FastApiClient", client =>
 {
-    client.BaseAddress = new Uri("https://fordless-samella-unexpendable.ngrok-free.dev/"); 
-    client.Timeout = TimeSpan.FromSeconds(30);
+    client.BaseAddress = new Uri("http://127.0.0.1:8000/");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
 builder.Services.AddScoped<IRiskService, RiskService>();
 builder.Services.AddScoped<CsvProcessor>();
+builder.Services.AddScoped<IReviewerService, ReviewerService>();
 
 builder.Services.AddCors(options =>
 {
@@ -47,6 +53,12 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
+builder.Services.AddHttpClient("ReviewerApiClient", client =>
+    {
+        client.BaseAddress = new Uri("http://127.0.0.1:8000/"); 
+        client.DefaultRequestHeaders.Add("Accept", "application/json");
+    
+    });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

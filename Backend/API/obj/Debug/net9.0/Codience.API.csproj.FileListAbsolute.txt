@@ -1,468 +1,625 @@
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\appsettings.Development.json
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\appsettings.json
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Codience.API.staticwebassets.endpoints.json
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Codience.API.exe
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Codience.API.deps.json
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Codience.API.runtimeconfig.json
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Codience.API.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Codience.API.pdb
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Humanizer.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.Build.Locator.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.CodeAnalysis.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Abstractions.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Design.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Relational.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Caching.Abstractions.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Caching.Memory.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.DependencyModel.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Logging.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Logging.Abstractions.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Options.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Primitives.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.OpenApi.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Mono.TextTemplating.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Newtonsoft.Json.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Npgsql.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\System.CodeDom.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\System.Composition.AttributedModel.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\System.Composition.Convention.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\System.Composition.Hosting.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\System.Composition.Runtime.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\System.Composition.TypedParts.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Core.Abstraction.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Core.Domain.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Core.Services.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Infrastructure.Persistence.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Infrastructure.Presentation.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Share.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Infrastructure.Persistence.pdb
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Infrastructure.Presentation.pdb
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Core.Abstraction.pdb
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Core.Domain.pdb
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Core.Services.pdb
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Share.pdb
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\Codience.API.csproj.AssemblyReference.cache
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\rpswa.dswa.cache.json
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\Codience.API.GeneratedMSBuildEditorConfig.editorconfig
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\Codience.API.AssemblyInfoInputs.cache
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\Codience.API.AssemblyInfo.cs
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\Codience.API.csproj.CoreCompileInputs.cache
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\Codience.API.MvcApplicationPartsAssemblyInfo.cs
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\Codience.API.MvcApplicationPartsAssemblyInfo.cache
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\Codience.API.sourcelink.json
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\rjimswa.dswa.cache.json
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\scopedcss\bundle\Codience.API.styles.css
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\staticwebassets.build.json
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\staticwebassets.build.json.cache
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\staticwebassets.development.json
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\staticwebassets.build.endpoints.json
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\Codience.3B30C0E2.Up2Date
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\Codience.API.dll
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\refint\Codience.API.dll
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\Codience.API.pdb
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\Codience.API.genruntimeconfig.cache
-D:\college\Senior Year\Demo\Backend\API\obj\Debug\net9.0\ref\Codience.API.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\CsvHelper.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Configuration.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Binder.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Diagnostics.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Http.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Polly.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Polly.Core.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-D:\college\Senior Year\Demo\Backend\API\bin\Debug\net9.0\tests.json
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\appsettings.Development.json
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\appsettings.json
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\tests.json
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Codience.API.staticwebassets.endpoints.json
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Codience.API.exe
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Codience.API.deps.json
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Codience.API.runtimeconfig.json
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Codience.API.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Codience.API.pdb
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\CsvHelper.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Humanizer.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Build.Locator.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.CodeAnalysis.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Abstractions.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Design.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Relational.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Caching.Abstractions.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Caching.Memory.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Configuration.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Binder.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.DependencyModel.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Diagnostics.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Http.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Logging.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Logging.Abstractions.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Options.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Primitives.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Microsoft.OpenApi.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Mono.TextTemplating.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Newtonsoft.Json.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Npgsql.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Polly.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Polly.Core.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\System.CodeDom.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\System.Composition.AttributedModel.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\System.Composition.Convention.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\System.Composition.Hosting.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\System.Composition.Runtime.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\System.Composition.TypedParts.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Core.Abstraction.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Core.Domain.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Core.Services.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Infrastructure.Persistence.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Infrastructure.Presentation.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Share.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Infrastructure.Persistence.pdb
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Infrastructure.Presentation.pdb
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Core.Abstraction.pdb
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Core.Domain.pdb
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Core.Services.pdb
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\bin\Debug\net9.0\Share.pdb
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\Codience.API.csproj.AssemblyReference.cache
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\rpswa.dswa.cache.json
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\Codience.API.GeneratedMSBuildEditorConfig.editorconfig
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\Codience.API.AssemblyInfoInputs.cache
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\Codience.API.AssemblyInfo.cs
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\Codience.API.csproj.CoreCompileInputs.cache
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\Codience.API.MvcApplicationPartsAssemblyInfo.cs
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\Codience.API.MvcApplicationPartsAssemblyInfo.cache
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\Codience.API.sourcelink.json
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\rjimswa.dswa.cache.json
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\scopedcss\bundle\Codience.API.styles.css
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\staticwebassets.build.json
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\staticwebassets.build.json.cache
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\staticwebassets.development.json
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\staticwebassets.build.endpoints.json
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\Codience.3B30C0E2.Up2Date
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\Codience.API.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\refint\Codience.API.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\Codience.API.pdb
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\Codience.API.genruntimeconfig.cache
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\API\obj\Debug\net9.0\ref\Codience.API.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\appsettings.Development.json
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\appsettings.json
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\tests.json
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Codience.API.staticwebassets.endpoints.json
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Codience.API.exe
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Codience.API.deps.json
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Codience.API.runtimeconfig.json
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Codience.API.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Codience.API.pdb
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\CsvHelper.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Humanizer.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Build.Locator.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.CodeAnalysis.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Abstractions.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Design.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Relational.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Caching.Abstractions.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Caching.Memory.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Configuration.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Binder.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.DependencyModel.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Diagnostics.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Http.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Logging.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Logging.Abstractions.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Options.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.Extensions.Primitives.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Microsoft.OpenApi.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Mono.TextTemplating.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Newtonsoft.Json.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Npgsql.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Polly.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Polly.Core.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\System.CodeDom.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\System.Composition.AttributedModel.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\System.Composition.Convention.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\System.Composition.Hosting.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\System.Composition.Runtime.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\System.Composition.TypedParts.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Core.Abstraction.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Core.Domain.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Core.Services.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Infrastructure.Persistence.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Infrastructure.Presentation.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Share.dll
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Infrastructure.Persistence.pdb
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Infrastructure.Presentation.pdb
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Core.Abstraction.pdb
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Core.Domain.pdb
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Core.Services.pdb
-d:\GraduationProject\Codience\Backend\API\bin\Debug\net9.0\Share.pdb
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\Codience.API.csproj.AssemblyReference.cache
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\rpswa.dswa.cache.json
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\Codience.API.GeneratedMSBuildEditorConfig.editorconfig
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\Codience.API.AssemblyInfoInputs.cache
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\Codience.API.AssemblyInfo.cs
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\Codience.API.csproj.CoreCompileInputs.cache
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\Codience.API.MvcApplicationPartsAssemblyInfo.cs
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\Codience.API.MvcApplicationPartsAssemblyInfo.cache
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\Codience.API.sourcelink.json
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\rjimswa.dswa.cache.json
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\scopedcss\bundle\Codience.API.styles.css
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\staticwebassets.build.json
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\staticwebassets.build.json.cache
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\staticwebassets.development.json
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\staticwebassets.build.endpoints.json
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\Codience.3B30C0E2.Up2Date
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\Codience.API.dll
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\refint\Codience.API.dll
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\Codience.API.pdb
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\Codience.API.genruntimeconfig.cache
-d:\GraduationProject\Codience\Backend\API\obj\Debug\net9.0\ref\Codience.API.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/appsettings.Development.json
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/appsettings.json
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Codience.API.staticwebassets.endpoints.json
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Codience.API.exe
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Codience.API.deps.json
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Codience.API.runtimeconfig.json
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Codience.API.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Codience.API.pdb
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Humanizer.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.AspNetCore.OpenApi.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.Bcl.AsyncInterfaces.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.Build.Locator.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.CSharp.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.Workspaces.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Design.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Relational.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Caching.Abstractions.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Caching.Memory.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Configuration.Abstractions.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.DependencyModel.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Logging.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Logging.Abstractions.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Options.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Primitives.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.OpenApi.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Mono.TextTemplating.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Newtonsoft.Json.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Npgsql.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/System.CodeDom.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/System.Composition.AttributedModel.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/System.Composition.Convention.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/System.Composition.Hosting.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/System.Composition.Runtime.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/System.Composition.TypedParts.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.CSharp.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.CSharp.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.CSharp.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.CSharp.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.CSharp.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.CSharp.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Core.Abstraction.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Core.Domain.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Core.Services.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Infrastructure.Persistence.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Infrastructure.Presentation.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Share.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Infrastructure.Persistence.pdb
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Infrastructure.Presentation.pdb
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Core.Abstraction.pdb
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Core.Domain.pdb
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Core.Services.pdb
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Share.pdb
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/Codience.API.csproj.AssemblyReference.cache
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/rpswa.dswa.cache.json
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/Codience.API.GeneratedMSBuildEditorConfig.editorconfig
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/Codience.API.AssemblyInfoInputs.cache
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/Codience.API.AssemblyInfo.cs
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/Codience.API.csproj.CoreCompileInputs.cache
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/Codience.API.MvcApplicationPartsAssemblyInfo.cs
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/Codience.API.MvcApplicationPartsAssemblyInfo.cache
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/Codience.API.sourcelink.json
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/rjimswa.dswa.cache.json
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/rjsmrazor.dswa.cache.json
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/rjsmcshtml.dswa.cache.json
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/scopedcss/bundle/Codience.API.styles.css
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/staticwebassets.build.json
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/staticwebassets.build.json.cache
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/staticwebassets.development.json
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/staticwebassets.build.endpoints.json
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/Codience.3B30C0E2.Up2Date
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/Codience.API.dll
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/refint/Codience.API.dll
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/Codience.API.pdb
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/Codience.API.genruntimeconfig.cache
+D:/college/Senior Year/Demo/Backend/API/obj/Debug/net9.0/ref/Codience.API.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/CsvHelper.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Configuration.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Configuration.Binder.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Diagnostics.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Diagnostics.Abstractions.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Http.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Options.ConfigurationExtensions.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Polly.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Polly.Core.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Swashbuckle.AspNetCore.Swagger.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+D:/college/Senior Year/Demo/Backend/API/bin/Debug/net9.0/tests.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/appsettings.Development.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/appsettings.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/tests.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Codience.API.staticwebassets.endpoints.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Codience.API.exe
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Codience.API.deps.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Codience.API.runtimeconfig.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Codience.API.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Codience.API.pdb
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/CsvHelper.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Humanizer.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.AspNetCore.OpenApi.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Bcl.AsyncInterfaces.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Build.Locator.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.CSharp.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.Workspaces.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Design.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Relational.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Caching.Abstractions.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Caching.Memory.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Configuration.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Configuration.Abstractions.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Configuration.Binder.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.DependencyModel.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Diagnostics.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Diagnostics.Abstractions.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Http.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Logging.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Logging.Abstractions.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Options.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Options.ConfigurationExtensions.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Primitives.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Microsoft.OpenApi.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Mono.TextTemplating.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Newtonsoft.Json.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Npgsql.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Polly.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Polly.Core.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Swashbuckle.AspNetCore.Swagger.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/System.CodeDom.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/System.Composition.AttributedModel.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/System.Composition.Convention.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/System.Composition.Hosting.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/System.Composition.Runtime.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/System.Composition.TypedParts.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.CSharp.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.CSharp.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.CSharp.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.CSharp.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.CSharp.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.CSharp.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Core.Abstraction.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Core.Domain.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Core.Services.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Infrastructure.Persistence.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Infrastructure.Presentation.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Share.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Infrastructure.Persistence.pdb
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Infrastructure.Presentation.pdb
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Core.Abstraction.pdb
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Core.Domain.pdb
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Core.Services.pdb
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/bin/Debug/net9.0/Share.pdb
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/Codience.API.csproj.AssemblyReference.cache
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/rpswa.dswa.cache.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/Codience.API.GeneratedMSBuildEditorConfig.editorconfig
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/Codience.API.AssemblyInfoInputs.cache
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/Codience.API.AssemblyInfo.cs
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/Codience.API.csproj.CoreCompileInputs.cache
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/Codience.API.MvcApplicationPartsAssemblyInfo.cs
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/Codience.API.MvcApplicationPartsAssemblyInfo.cache
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/Codience.API.sourcelink.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/rjimswa.dswa.cache.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/rjsmrazor.dswa.cache.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/rjsmcshtml.dswa.cache.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/scopedcss/bundle/Codience.API.styles.css
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/staticwebassets.build.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/staticwebassets.build.json.cache
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/staticwebassets.development.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/staticwebassets.build.endpoints.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/Codience.3B30C0E2.Up2Date
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/Codience.API.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/refint/Codience.API.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/Codience.API.pdb
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/Codience.API.genruntimeconfig.cache
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/API/obj/Debug/net9.0/ref/Codience.API.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/appsettings.Development.json
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/appsettings.json
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/tests.json
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Codience.API.staticwebassets.endpoints.json
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Codience.API.exe
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Codience.API.deps.json
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Codience.API.runtimeconfig.json
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Codience.API.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Codience.API.pdb
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/CsvHelper.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Humanizer.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.AspNetCore.OpenApi.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Bcl.AsyncInterfaces.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Build.Locator.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.CSharp.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.Workspaces.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Design.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Relational.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Caching.Abstractions.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Caching.Memory.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Configuration.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Configuration.Abstractions.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Configuration.Binder.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.DependencyModel.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Diagnostics.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Diagnostics.Abstractions.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Http.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Logging.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Logging.Abstractions.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Options.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Options.ConfigurationExtensions.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Primitives.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Microsoft.OpenApi.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Mono.TextTemplating.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Newtonsoft.Json.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Npgsql.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Polly.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Polly.Core.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Swashbuckle.AspNetCore.Swagger.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/System.CodeDom.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/System.Composition.AttributedModel.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/System.Composition.Convention.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/System.Composition.Hosting.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/System.Composition.Runtime.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/System.Composition.TypedParts.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.CSharp.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.CSharp.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.CSharp.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.CSharp.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.CSharp.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.CSharp.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Core.Abstraction.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Core.Domain.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Core.Services.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Infrastructure.Persistence.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Infrastructure.Presentation.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Share.dll
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Infrastructure.Persistence.pdb
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Infrastructure.Presentation.pdb
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Core.Abstraction.pdb
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Core.Domain.pdb
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Core.Services.pdb
+d:/GraduationProject/Codience/Backend/API/bin/Debug/net9.0/Share.pdb
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/Codience.API.csproj.AssemblyReference.cache
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/rpswa.dswa.cache.json
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/Codience.API.GeneratedMSBuildEditorConfig.editorconfig
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/Codience.API.AssemblyInfoInputs.cache
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/Codience.API.AssemblyInfo.cs
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/Codience.API.csproj.CoreCompileInputs.cache
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/Codience.API.MvcApplicationPartsAssemblyInfo.cs
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/Codience.API.MvcApplicationPartsAssemblyInfo.cache
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/Codience.API.sourcelink.json
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/rjimswa.dswa.cache.json
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/rjsmrazor.dswa.cache.json
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/rjsmcshtml.dswa.cache.json
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/scopedcss/bundle/Codience.API.styles.css
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/staticwebassets.build.json
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/staticwebassets.build.json.cache
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/staticwebassets.development.json
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/staticwebassets.build.endpoints.json
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/Codience.3B30C0E2.Up2Date
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/Codience.API.dll
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/refint/Codience.API.dll
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/Codience.API.pdb
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/Codience.API.genruntimeconfig.cache
+d:/GraduationProject/Codience/Backend/API/obj/Debug/net9.0/ref/Codience.API.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/appsettings.Development.json
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/appsettings.json
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/tests.json
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Codience.API.staticwebassets.endpoints.json
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Codience.API
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Codience.API.deps.json
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Codience.API.runtimeconfig.json
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Codience.API.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Codience.API.pdb
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/CsvHelper.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Humanizer.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.AspNetCore.OpenApi.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Bcl.AsyncInterfaces.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Build.Locator.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.CSharp.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.Workspaces.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Design.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Relational.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Caching.Abstractions.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Caching.Memory.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Configuration.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Configuration.Abstractions.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Configuration.Binder.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.DependencyModel.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Diagnostics.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Diagnostics.Abstractions.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Http.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Logging.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Logging.Abstractions.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Options.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Options.ConfigurationExtensions.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.Extensions.Primitives.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Microsoft.OpenApi.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Mono.TextTemplating.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Newtonsoft.Json.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Npgsql.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Polly.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Polly.Core.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Swashbuckle.AspNetCore.Swagger.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/System.CodeDom.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/System.Composition.AttributedModel.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/System.Composition.Convention.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/System.Composition.Hosting.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/System.Composition.Runtime.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/System.Composition.TypedParts.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.CSharp.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.CSharp.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.CSharp.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.CSharp.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.CSharp.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.CSharp.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Core.Abstraction.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Core.Domain.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Core.Services.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Infrastructure.Persistence.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Infrastructure.Presentation.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Share.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Infrastructure.Persistence.pdb
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Infrastructure.Presentation.pdb
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Core.Abstraction.pdb
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Core.Domain.pdb
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Core.Services.pdb
+/home/malak-hisham/RiderProjects/Codience/Backend/API/bin/Debug/net9.0/Share.pdb
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/Codience.API.csproj.AssemblyReference.cache
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/rpswa.dswa.cache.json
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/Codience.API.GeneratedMSBuildEditorConfig.editorconfig
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/Codience.API.AssemblyInfoInputs.cache
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/Codience.API.AssemblyInfo.cs
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/Codience.API.csproj.CoreCompileInputs.cache
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/Codience.API.MvcApplicationPartsAssemblyInfo.cs
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/Codience.API.MvcApplicationPartsAssemblyInfo.cache
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/Codience.API.sourcelink.json
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/rjimswa.dswa.cache.json
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/rjsmrazor.dswa.cache.json
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/rjsmcshtml.dswa.cache.json
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/scopedcss/bundle/Codience.API.styles.css
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/staticwebassets.build.json
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/staticwebassets.build.json.cache
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/staticwebassets.development.json
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/staticwebassets.build.endpoints.json
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/swae.build.ex.cache
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/Codience.3B30C0E2.Up2Date
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/Codience.API.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/refint/Codience.API.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/Codience.API.pdb
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/Codience.API.genruntimeconfig.cache
+/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/Debug/net9.0/ref/Codience.API.dll
