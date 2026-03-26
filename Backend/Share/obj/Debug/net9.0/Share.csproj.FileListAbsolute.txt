@@ -22,7 +22,7 @@ E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Share\
 E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Share\obj\Debug\net9.0\refint\Share.dll
 E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Share\obj\Debug\net9.0\Share.pdb
 E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Share\obj\Debug\net9.0\ref\Share.dll
-D:\GraduationProject\Codience\Backend\Share\bin\Debug\net9.0\Share.deps.json
+d:\GraduationProject\Codience\Backend\Share\bin\Debug\net9.0\Share.deps.json
 d:\GraduationProject\Codience\Backend\Share\bin\Debug\net9.0\Share.dll
 d:\GraduationProject\Codience\Backend\Share\bin\Debug\net9.0\Share.pdb
 d:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\Share.GeneratedMSBuildEditorConfig.editorconfig
@@ -33,4 +33,4 @@ d:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\Share.sourcelink.js
 d:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\Share.dll
 d:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\refint\Share.dll
 d:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\Share.pdb
-D:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\ref\Share.dll
+d:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\ref\Share.dll

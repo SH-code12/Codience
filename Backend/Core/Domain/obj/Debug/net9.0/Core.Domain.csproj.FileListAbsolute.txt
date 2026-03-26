@@ -22,7 +22,7 @@ E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\D
 E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Domain\obj\Debug\net9.0\refint\Core.Domain.dll
 E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.pdb
 E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Domain\obj\Debug\net9.0\ref\Core.Domain.dll
-D:\GraduationProject\Codience\Backend\Core\Domain\bin\Debug\net9.0\Core.Domain.deps.json
+d:\GraduationProject\Codience\Backend\Core\Domain\bin\Debug\net9.0\Core.Domain.deps.json
 d:\GraduationProject\Codience\Backend\Core\Domain\bin\Debug\net9.0\Core.Domain.dll
 d:\GraduationProject\Codience\Backend\Core\Domain\bin\Debug\net9.0\Core.Domain.pdb
 d:\GraduationProject\Codience\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.GeneratedMSBuildEditorConfig.editorconfig
@@ -33,4 +33,4 @@ d:\GraduationProject\Codience\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.s
 d:\GraduationProject\Codience\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.dll
 d:\GraduationProject\Codience\Backend\Core\Domain\obj\Debug\net9.0\refint\Core.Domain.dll
 d:\GraduationProject\Codience\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.pdb
-D:\GraduationProject\Codience\Backend\Core\Domain\obj\Debug\net9.0\ref\Core.Domain.dll
+d:\GraduationProject\Codience\Backend\Core\Domain\obj\Debug\net9.0\ref\Core.Domain.dll

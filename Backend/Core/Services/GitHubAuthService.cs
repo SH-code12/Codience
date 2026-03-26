@@ -288,7 +288,44 @@ public class GitHubAuthService : IGithubAuthService
 
         return pullsFromGitHub;
     }
-    
+    public async Task<GitHubPullRequestDto> GetPullRequest(string owner,int pullNumber,string repo)
+{
+    var userRepo =
+        _authUow.GetGenericRepository<AuthUser, Guid>();
+
+    var authUser =
+        await userRepo.FirstOrDefaultAsync(
+            u=>u.AuthUserName==owner);
+
+    if(authUser==null)
+        throw new Exception("User not found");
+
+    _httpClient.DefaultRequestHeaders.Authorization =
+        new AuthenticationHeaderValue(
+            "Bearer",
+            authUser.AccessToken);
+
+    _httpClient.DefaultRequestHeaders.UserAgent
+        .ParseAdd("Codience");
+
+    var url =
+$"https://api.github.com/repos/{owner}/{repo}/pulls/{pullNumber}";
+
+    var response =
+        await _httpClient.GetAsync(url);
+
+    if(!response.IsSuccessStatusCode)
+    {
+        var error =
+            await response.Content.ReadAsStringAsync();
+
+        throw new Exception(
+            $"GitHub error: {response.StatusCode} {error}");
+    }
+
+    return await response.Content
+        .ReadFromJsonAsync<GitHubPullRequestDto>();
+}
     public async Task<IEnumerable<GitHubFileDto>> GetChangedFilesAsync(string owner, string repo, int pullNumber)
     {
         var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
@@ -315,9 +352,96 @@ public class GitHubAuthService : IGithubAuthService
         return filesFromGitHub;
     }
 
+    public async Task<IEnumerable<GitHubCommitDto>> GetCommitsByPath(string owner, string repo, string filePath)
+    {
+        var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
+        var authUser = await userRepo.FirstOrDefaultAsync(u => u.AuthUserName == owner);
+        if (authUser == null)
+            throw new Exception($"User '{owner}' not found in database.");
 
+        _httpClient.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Bearer", authUser.AccessToken);
+        _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Codience");
 
+        var url = $"https://api.github.com/repos/{owner}/{repo}/commits?path={filePath}";
+        var response = await _httpClient.GetAsync(url);
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorBody = await response.Content.ReadAsStringAsync();
+            throw new Exception($"GitHub API error: {response.StatusCode} - {errorBody}");
+        }
 
+        var commitsFromGitHub = await response.Content.ReadFromJsonAsync<List<GitHubCommitDto>>(cancellationToken: CancellationToken.None);
+        if (commitsFromGitHub == null)
+            throw new Exception("GitHub returned null commits list.");
+
+        return commitsFromGitHub;
+    }
+
+   public async Task<IEnumerable<GitHubCommitDto>> GetAllCommits(string owner,string repo, string author)
+   {
+    var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
+
+    var authUser = await userRepo
+        .FirstOrDefaultAsync(u => u.AuthUserName == owner);
+
+    if(authUser == null)
+        throw new Exception("User not found");
+
+    _httpClient.DefaultRequestHeaders.Authorization =
+        new AuthenticationHeaderValue("Bearer", authUser.AccessToken);
+
+    _httpClient.DefaultRequestHeaders.UserAgent
+        .ParseAdd("Codience");
+
+    var url =
+        $"https://api.github.com/repos/{owner}/{repo}/commits?author={author}";
+
+    var response = await _httpClient.GetAsync(url);
+
+    response.EnsureSuccessStatusCode();
+
+    var commits =
+        await response.Content
+        .ReadFromJsonAsync<List<GitHubCommitDto>>();
+
+    return commits ?? new List<GitHubCommitDto>();
+}
+    public async Task<IEnumerable<GitHubCommitDto>>
+GetPullRequestCommits(string owner,string repo,int pullNumber)
+{
+    var userRepo =
+        _authUow.GetGenericRepository<AuthUser, Guid>();
+
+    var authUser =
+        await userRepo.FirstOrDefaultAsync(
+            u=>u.AuthUserName==owner);
+
+    if(authUser==null)
+        throw new Exception("User not found");
+
+    _httpClient.DefaultRequestHeaders.Authorization=
+        new AuthenticationHeaderValue(
+            "Bearer",
+            authUser.AccessToken);
+
+    _httpClient.DefaultRequestHeaders.UserAgent
+        .ParseAdd("Codience");
+
+    var url=
+$"https://api.github.com/repos/{owner}/{repo}/pulls/{pullNumber}/commits";
+
+    var response=
+        await _httpClient.GetAsync(url);
+
+    response.EnsureSuccessStatusCode();
+
+    var commits=
+        await response.Content
+        .ReadFromJsonAsync<List<GitHubCommitDto>>();
+
+    return commits ?? new List<GitHubCommitDto>();
+}
 
 }
 

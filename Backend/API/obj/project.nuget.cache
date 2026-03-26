@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EH8lmsm6SyU=",
+  "dgSpecHash": "8NEpF/rNIWI=",
   "success": true,
-  "projectFilePath": "D:\\GraduationProject\\Codience\\Backend\\API\\Codience.API.csproj",
+  "projectFilePath": "d:\\GraduationProject\\Codience\\Backend\\API\\Codience.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DELL\\.nuget\\packages\\csvhelper\\33.1.0\\csvhelper.33.1.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lYiPk81H0RE=",
+  "dgSpecHash": "tVehyiAVGL8=",
   "success": true,
-  "projectFilePath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj",
+  "projectFilePath": "d:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DELL\\.nuget\\packages\\csvhelper\\33.1.0\\csvhelper.33.1.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.extensions.configuration\\9.0.5\\microsoft.extensions.configuration.9.0.5.nupkg.sha512",

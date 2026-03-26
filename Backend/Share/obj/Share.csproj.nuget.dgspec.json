@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {}
+    "d:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {}
   },
   "projects": {
-    "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {
+    "d:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj",
+        "projectUniqueName": "d:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj",
         "projectName": "Share",
-        "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj",
+        "projectPath": "d:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj",
         "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\GraduationProject\\Codience\\Backend\\Share\\obj\\",
+        "outputPath": "d:\\GraduationProject\\Codience\\Backend\\Share\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"

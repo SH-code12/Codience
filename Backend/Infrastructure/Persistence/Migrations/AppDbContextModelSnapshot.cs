@@ -184,7 +184,22 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Repository", "GitHub");
                 });
 
-            modelBuilder.Entity("Core.Domain.Models.JiraIssue", b =>
+            modelBuilder.Entity("GitHubPullRequestJiraIssue", b =>
+                {
+                    b.Property<int>("JiraIssuesId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PullRequestsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("JiraIssuesId", "PullRequestsId");
+
+                    b.HasIndex("PullRequestsId");
+
+                    b.ToTable("PRJiraLinks", "Jira");
+                });
+
+            modelBuilder.Entity("JiraIssue", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -198,26 +213,32 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.Property<string>("JiraKey")
                         .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Priority")
+                        .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.ToTable("JiraIssues");
-                });
+                    b.HasIndex("JiraKey")
+                        .IsUnique();
 
-            modelBuilder.Entity("GitHubPullRequestJiraIssue", b =>
-                {
-                    b.Property<int>("JiraIssuesId")
-                        .HasColumnType("integer");
+                    b.HasIndex("UserId");
 
-                    b.Property<int>("PullRequestsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("JiraIssuesId", "PullRequestsId");
-
-                    b.HasIndex("PullRequestsId");
-
-                    b.ToTable("GitHubPullRequestJiraIssue");
+                    b.ToTable("JiraIssues", "Jira");
                 });
 
             modelBuilder.Entity("Core.Domain.Models.GitHubFile", b =>
@@ -263,7 +284,7 @@ namespace Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("GitHubPullRequestJiraIssue", b =>
                 {
-                    b.HasOne("Core.Domain.Models.JiraIssue", null)
+                    b.HasOne("JiraIssue", null)
                         .WithMany()
                         .HasForeignKey("JiraIssuesId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -276,8 +297,21 @@ namespace Infrastructure.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("JiraIssue", b =>
+                {
+                    b.HasOne("Core.Domain.Models.AuthUser", "User")
+                        .WithMany("JiraIssues")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Core.Domain.Models.AuthUser", b =>
                 {
+                    b.Navigation("JiraIssues");
+
                     b.Navigation("PullRequests");
 
                     b.Navigation("Repositories");
