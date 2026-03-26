@@ -1,8 +1,13 @@
 datasets
 pandas
-langchain 
-langchain-community 
+langchain
+langchain-community
 sentence-transformers 
 chromadb
 google-genai>=0.7.0
 python-dotenv
+fastapi
+uvicorn[standard]
+google-genai
+python-dotenv
+requests

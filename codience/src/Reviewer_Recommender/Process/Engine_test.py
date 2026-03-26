@@ -5,9 +5,11 @@ import requests
 from google import genai
 from google.genai import errors
 from dotenv import load_dotenv
+from codience.src.Reviewer_Recommender.Process.analysis_PR import extract_pr_skills
 
 # Import your history logic
-from Reviewer_Engine_Helper import fetch_commits, map_commits_to_skills
+from codience.src.Reviewer_Recommender.Process.Reviewer_Engine_Helper import fetch_commits, map_commits_to_skills
+from codience.src.Reviewer_Recommender.Process.prompts import SKILL_EXTRACTION_PROMPT
 
 load_dotenv()
 
@@ -35,40 +37,36 @@ def fetch_real_pr_data(owner, repo, pr_number):
     }
 
 # --- 2. AI SKILL EXTRACTION ---
-def extract_pr_skills(pr_data):
-    client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+# -----------function already implemented in analysis_PR.py for better modularity and testing-----------
+# def extract_pr_skills(pr_data):
+#     client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
     
-    # FIX: Using the direct model name string to avoid 404
-    model_name = "gemini-1.5-flash" 
+#     # FIX: Using the direct model name string to avoid 404
+#     model_name = "gemini-3.1-flash-lite-preview" 
 
-    prompt = f"""
-    Analyze the following Pull Request. Identify the technical skills required to review this code.
-    
-    PR Title: {pr_data['title']}
-    Description: {pr_data['description']}
-    Code Changes: {pr_data['diff']}
-    
-    Return ONLY a JSON object:
-    {{"required_skills": ["Skill1", "Skill2"], "rag_query": "search query"}}
-    """
+#     prompt = SKILL_EXTRACTION_PROMPT.format(
+#         title=pr_data['title'],
+#         description=pr_data['description'],
+#         diff=pr_data['diff']
+#     )
 
-    try:
-        time.sleep(1) # Small delay
-        response = client.models.generate_content(model=model_name, contents=prompt)
-        text = response.text.strip()
+#     try:
+#         time.sleep(1) # Small delay
+#         response = client.models.generate_content(model=model_name, contents=prompt)
+#         text = response.text.strip()
         
-        # Robust JSON cleaning
-        if "```json" in text:
-            text = text.split("```json")[1].split("```")[0].strip()
-        elif "```" in text:
-            text = text.split("```")[1].strip()
+#         # Robust JSON cleaning
+#         if "```json" in text:
+#             text = text.split("```json")[1].split("```")[0].strip()
+#         elif "```" in text:
+#             text = text.split("```")[1].strip()
             
-        return json.loads(text)
-    except Exception as e:
-        # FIX: Dynamic fallback based on the actual repository language
-        main_lang = pr_data.get('repo_lang', 'Python')
-        print(f"⚠️ AI Error: {e}. Falling back to {main_lang}.")
-        return {"required_skills": [main_lang], "rag_query": f"{main_lang} expert"}
+#         return json.loads(text)
+#     except Exception as e:
+#         # FIX: Dynamic fallback based on the actual repository language
+#         main_lang = pr_data.get('repo_lang', 'Python')
+#         print(f"⚠️ AI Error: {e}. Falling back to {main_lang}.")
+#         return {"required_skills": [main_lang], "rag_query": f"{main_lang} expert"}
 
 # --- 3. THE UPDATED ENGINE ---
 class ReviewerRecommender:
@@ -86,28 +84,31 @@ class ReviewerRecommender:
 
     def recommend(self, pr_data):
         analysis = extract_pr_skills(pr_data)
-        req_skills = set(analysis['required_skills'])
-        print(f"🎯 Target Skills for this PR: {list(req_skills)}")
+        # The LLM returns full names like "Python", "JavaScript"
+        # Ensure they are formatted to match your helper's mapping (Title Case)
+        required_languages = {lang.strip().title() for lang in analysis.get('detected_languages', [])}
         
+        # Fix for C# specifically if needed
+        if "C#" in required_languages:
+            required_languages.remove("C#")
+            required_languages.add(".NET")
+
         rankings = []
-        # Check ALL developers found in history
         for name, dev_skills in self.history_profiles.items():
-            matches = req_skills.intersection(dev_skills)
-            missing = req_skills - dev_skills
+            # dev_skills now contains {"Python", "Java"} etc. from the helper
+            matched_skills = required_languages.intersection(dev_skills)
             
-            # Weighted score
-            score = len(matches) / len(req_skills) if req_skills else 0
+            score = len(matched_skills) / len(required_languages) if required_languages else 0
             
             rankings.append({
                 "name": name,
                 "score": round(score, 2),
-                "skills": list(matches),
-                "missing": list(missing)
+                "skills": list(matched_skills), 
+                "analysis_summary": analysis.get('rag_query', '')
             })
 
         return sorted(rankings, key=lambda x: x['score'], reverse=True)
 
-# --- 4. EXECUTION ---
 if __name__ == "__main__":
     # Test on a repo that uses your skills (Java/SQL/Web)
     # https://api.github.com/repos/huggingface/transformers # 44935

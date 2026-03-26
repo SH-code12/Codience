@@ -5,3 +5,4 @@ Risk/Model/
 .venv
 my_vector_db
 .env
+__pycache__/

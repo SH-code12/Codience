@@ -9,28 +9,32 @@ def search_vector_db(query, k):
     current_dir = os.path.dirname(os.path.abspath(__file__))
     db_dir = os.path.join(current_dir, "my_vector_db")
 
+
+    print(current_dir)
+    print(db_dir)
+
     # 2. Setup the "Brain"
     embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
     # 3. Load the existing database
-    print("--- Checking Vector Database ---")
+    # print("--- Checking Vector Database ---")
     vectorstore = Chroma(persist_directory=db_dir, embedding_function=embeddings)
 
     # 4. VERIFY: Count the items
     # Accessing the internal collection to see how many rows were indexed
     item_count = vectorstore._collection.count()
-    print(f"Status: Database Loaded Successfully.")
-    print(f"Items Found: {item_count} documents are in the database.")
+    # print(f"Status: Database Loaded Successfully.")
+    # print(f"Items Found: {item_count} documents are in the database.")
 
-    if item_count == 0:
-        print("Warning: The database is empty. You might need to re-run your 'Save' script.")
-    else:
-                # 
-        results = vectorstore.similarity_search(query, k=4)
+    # if item_count == 0:
+    #     # print("Warning: The database is empty. You might need to re-run your 'Save' script.")
+    # else:
+    #             # 
+    #     results = vectorstore.similarity_search(query, k=4)
 
-        for i, res in enumerate(results):
-            print(f"\nResult #{i+1}:")
-            print(res.page_content)
+    #     for i, res in enumerate(results):
+    #         # print(f"\nResult #{i+1}:")
+    #         # print(res.page_content)
 
     results = vectorstore.similarity_search(query, k=k) # Ask for 10 to find enough unique ones
 
@@ -50,7 +54,11 @@ def search_vector_db(query, k):
         if len(unique_roles) == 3:
             break
     
-    print("\n--- Top 3 Unique Recommendations ---")
-    for i, res in enumerate(unique_roles):
-        print(f"\nRecommendation #{i+1}:")
-        print(res.page_content)
+    # print("\n--- Top 3 Unique Recommendations ---")
+    # for i, res in enumerate(unique_roles):
+        # print(f"\nRecommendation #{i+1}:")
+        # print(res.page_content)
+    return unique_roles
+
+if __name__ == "__main__":
+        search_vector_db("biometric authentication, Flutter, local_auth", k=10)
