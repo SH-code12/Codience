@@ -5,10 +5,10 @@ import requests
 from google import genai
 from google.genai import errors
 from dotenv import load_dotenv
-from analysis_PR import extract_pr_skills
+from codience.src.Reviewer_Recommender.Process.analysis_PR import extract_pr_skills
 
 # Import your history logic
-from Reviewer_Engine_Helper import fetch_commits, map_commits_to_skills
+from codience.src.Reviewer_Recommender.Process.Reviewer_Engine_Helper import fetch_commits, map_commits_to_skills
 from codience.src.Reviewer_Recommender.Process.prompts import SKILL_EXTRACTION_PROMPT
 
 load_dotenv()
@@ -84,28 +84,31 @@ class ReviewerRecommender:
 
     def recommend(self, pr_data):
         analysis = extract_pr_skills(pr_data)
-        req_skills = set(analysis['required_skills'])
-        print(f"🎯 Target Skills for this PR: {list(req_skills)}")
+        # The LLM returns full names like "Python", "JavaScript"
+        # Ensure they are formatted to match your helper's mapping (Title Case)
+        required_languages = {lang.strip().title() for lang in analysis.get('detected_languages', [])}
         
+        # Fix for C# specifically if needed
+        if "C#" in required_languages:
+            required_languages.remove("C#")
+            required_languages.add(".NET")
+
         rankings = []
-        # Check ALL developers found in history
         for name, dev_skills in self.history_profiles.items():
-            matches = req_skills.intersection(dev_skills)
-            missing = req_skills - dev_skills
+            # dev_skills now contains {"Python", "Java"} etc. from the helper
+            matched_skills = required_languages.intersection(dev_skills)
             
-            # Weighted score
-            score = len(matches) / len(req_skills) if req_skills else 0
+            score = len(matched_skills) / len(required_languages) if required_languages else 0
             
             rankings.append({
                 "name": name,
                 "score": round(score, 2),
-                "skills": list(matches),
-                "missing": list(missing)
+                "skills": list(matched_skills), 
+                "analysis_summary": analysis.get('rag_query', '')
             })
 
         return sorted(rankings, key=lambda x: x['score'], reverse=True)
 
-# --- 4. EXECUTION ---
 if __name__ == "__main__":
     # Test on a repo that uses your skills (Java/SQL/Web)
     # https://api.github.com/repos/huggingface/transformers # 44935
