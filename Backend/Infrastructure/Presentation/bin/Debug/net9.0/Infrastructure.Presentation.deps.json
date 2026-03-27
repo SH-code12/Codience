@@ -208,6 +208,7 @@
       },
       "Core.Abstraction/1.0.0": {
         "dependencies": {
+          "Core.Domain": "1.0.0",
           "Share": "1.0.0"
         },
         "runtime": {
