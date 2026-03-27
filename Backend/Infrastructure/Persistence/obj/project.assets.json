@@ -1107,7 +1107,6 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
-          "Core.Domain": "1.0.0",
           "Share": "1.0.0"
         },
         "compile": {
@@ -3366,19 +3365,19 @@
     ]
   },
   "packageFolders": {
-    "/home/malak-hisham/.nuget/packages/": {}
+    "C:\\Users\\DELL\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/malak-hisham/RiderProjects/Codience/Backend/Infrastructure/Persistence/Infrastructure.Persistence.csproj",
+      "projectUniqueName": "d:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj",
       "projectName": "Infrastructure.Persistence",
-      "projectPath": "/home/malak-hisham/RiderProjects/Codience/Backend/Infrastructure/Persistence/Infrastructure.Persistence.csproj",
-      "packagesPath": "/home/malak-hisham/.nuget/packages/",
-      "outputPath": "/home/malak-hisham/RiderProjects/Codience/Backend/Infrastructure/Persistence/obj/",
+      "projectPath": "d:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj",
+      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+      "outputPath": "d:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Persistence\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/malak-hisham/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -3390,11 +3389,11 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/Core.Domain.csproj": {
-              "projectPath": "/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/Core.Domain.csproj"
+            "d:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj": {
+              "projectPath": "d:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj"
             },
-            "/home/malak-hisham/RiderProjects/Codience/Backend/Core/Services/Core.Services.csproj": {
-              "projectPath": "/home/malak-hisham/RiderProjects/Codience/Backend/Core/Services/Core.Services.csproj"
+            "d:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj": {
+              "projectPath": "d:\\GraduationProject\\Codience\\Backend\\Core\\Services\\Core.Services.csproj"
             }
           }
         }
@@ -3409,7 +3408,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "10.0.200"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net9.0": {
@@ -3463,7 +3462,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/home/malak-hisham/.dotnet/sdk/10.0.201/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

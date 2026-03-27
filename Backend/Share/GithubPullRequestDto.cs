@@ -16,5 +16,11 @@ public class GitHubPullRequestDto
     public string State { get; }
     public DateTime CreatedAt { get; }
     public string Name { get; }
-
+    public GitHubUserDto User {get;set;}
 }
+
+public class GitHubUserDto
+{
+    public string Login {get;set;}
+}
+
