@@ -1,48 +1,66 @@
-D:\college\Senior Year\Demo\Backend\Core\Abstraction\bin\Debug\net9.0\Core.Abstraction.deps.json
-D:\college\Senior Year\Demo\Backend\Core\Abstraction\bin\Debug\net9.0\Core.Abstraction.dll
-D:\college\Senior Year\Demo\Backend\Core\Abstraction\bin\Debug\net9.0\Core.Abstraction.pdb
-D:\college\Senior Year\Demo\Backend\Core\Abstraction\bin\Debug\net9.0\Share.dll
-D:\college\Senior Year\Demo\Backend\Core\Abstraction\bin\Debug\net9.0\Share.pdb
-D:\college\Senior Year\Demo\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.csproj.AssemblyReference.cache
-D:\college\Senior Year\Demo\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.GeneratedMSBuildEditorConfig.editorconfig
-D:\college\Senior Year\Demo\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.AssemblyInfoInputs.cache
-D:\college\Senior Year\Demo\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.AssemblyInfo.cs
-D:\college\Senior Year\Demo\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.csproj.CoreCompileInputs.cache
-D:\college\Senior Year\Demo\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.sourcelink.json
-D:\college\Senior Year\Demo\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abs.06A93CCD.Up2Date
-D:\college\Senior Year\Demo\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.dll
-D:\college\Senior Year\Demo\Backend\Core\Abstraction\obj\Debug\net9.0\refint\Core.Abstraction.dll
-D:\college\Senior Year\Demo\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.pdb
-D:\college\Senior Year\Demo\Backend\Core\Abstraction\obj\Debug\net9.0\ref\Core.Abstraction.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\bin\Debug\net9.0\Core.Abstraction.deps.json
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\bin\Debug\net9.0\Core.Abstraction.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\bin\Debug\net9.0\Core.Abstraction.pdb
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\bin\Debug\net9.0\Share.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\bin\Debug\net9.0\Share.pdb
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.csproj.AssemblyReference.cache
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.GeneratedMSBuildEditorConfig.editorconfig
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.AssemblyInfoInputs.cache
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.AssemblyInfo.cs
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.csproj.CoreCompileInputs.cache
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.sourcelink.json
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abs.06A93CCD.Up2Date
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\refint\Core.Abstraction.dll
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.pdb
-E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\ref\Core.Abstraction.dll
-d:\GraduationProject\Codience\Backend\Core\Abstraction\bin\Debug\net9.0\Core.Abstraction.deps.json
-d:\GraduationProject\Codience\Backend\Core\Abstraction\bin\Debug\net9.0\Core.Abstraction.dll
-d:\GraduationProject\Codience\Backend\Core\Abstraction\bin\Debug\net9.0\Core.Abstraction.pdb
-d:\GraduationProject\Codience\Backend\Core\Abstraction\bin\Debug\net9.0\Share.dll
-d:\GraduationProject\Codience\Backend\Core\Abstraction\bin\Debug\net9.0\Share.pdb
-d:\GraduationProject\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.csproj.AssemblyReference.cache
-d:\GraduationProject\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.GeneratedMSBuildEditorConfig.editorconfig
-d:\GraduationProject\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.AssemblyInfoInputs.cache
-d:\GraduationProject\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.AssemblyInfo.cs
-d:\GraduationProject\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.csproj.CoreCompileInputs.cache
-d:\GraduationProject\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.sourcelink.json
-d:\GraduationProject\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abs.06A93CCD.Up2Date
-d:\GraduationProject\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.dll
-d:\GraduationProject\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\refint\Core.Abstraction.dll
-d:\GraduationProject\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\Core.Abstraction.pdb
-d:\GraduationProject\Codience\Backend\Core\Abstraction\obj\Debug\net9.0\ref\Core.Abstraction.dll
+D:/college/Senior Year/Demo/Backend/Core/Abstraction/bin/Debug/net9.0/Core.Abstraction.deps.json
+D:/college/Senior Year/Demo/Backend/Core/Abstraction/bin/Debug/net9.0/Core.Abstraction.dll
+D:/college/Senior Year/Demo/Backend/Core/Abstraction/bin/Debug/net9.0/Core.Abstraction.pdb
+D:/college/Senior Year/Demo/Backend/Core/Abstraction/bin/Debug/net9.0/Share.dll
+D:/college/Senior Year/Demo/Backend/Core/Abstraction/bin/Debug/net9.0/Share.pdb
+D:/college/Senior Year/Demo/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.csproj.AssemblyReference.cache
+D:/college/Senior Year/Demo/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.GeneratedMSBuildEditorConfig.editorconfig
+D:/college/Senior Year/Demo/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.AssemblyInfoInputs.cache
+D:/college/Senior Year/Demo/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.AssemblyInfo.cs
+D:/college/Senior Year/Demo/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.csproj.CoreCompileInputs.cache
+D:/college/Senior Year/Demo/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.sourcelink.json
+D:/college/Senior Year/Demo/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abs.06A93CCD.Up2Date
+D:/college/Senior Year/Demo/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.dll
+D:/college/Senior Year/Demo/Backend/Core/Abstraction/obj/Debug/net9.0/refint/Core.Abstraction.dll
+D:/college/Senior Year/Demo/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.pdb
+D:/college/Senior Year/Demo/Backend/Core/Abstraction/obj/Debug/net9.0/ref/Core.Abstraction.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Abstraction/bin/Debug/net9.0/Core.Abstraction.deps.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Abstraction/bin/Debug/net9.0/Core.Abstraction.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Abstraction/bin/Debug/net9.0/Core.Abstraction.pdb
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Abstraction/bin/Debug/net9.0/Share.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Abstraction/bin/Debug/net9.0/Share.pdb
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.csproj.AssemblyReference.cache
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.GeneratedMSBuildEditorConfig.editorconfig
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.AssemblyInfoInputs.cache
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.AssemblyInfo.cs
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.csproj.CoreCompileInputs.cache
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.sourcelink.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abs.06A93CCD.Up2Date
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/refint/Core.Abstraction.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.pdb
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/ref/Core.Abstraction.dll
+d:/GraduationProject/Codience/Backend/Core/Abstraction/bin/Debug/net9.0/Core.Abstraction.deps.json
+d:/GraduationProject/Codience/Backend/Core/Abstraction/bin/Debug/net9.0/Core.Abstraction.dll
+d:/GraduationProject/Codience/Backend/Core/Abstraction/bin/Debug/net9.0/Core.Abstraction.pdb
+d:/GraduationProject/Codience/Backend/Core/Abstraction/bin/Debug/net9.0/Share.dll
+d:/GraduationProject/Codience/Backend/Core/Abstraction/bin/Debug/net9.0/Share.pdb
+d:/GraduationProject/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.csproj.AssemblyReference.cache
+d:/GraduationProject/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.GeneratedMSBuildEditorConfig.editorconfig
+d:/GraduationProject/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.AssemblyInfoInputs.cache
+d:/GraduationProject/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.AssemblyInfo.cs
+d:/GraduationProject/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.csproj.CoreCompileInputs.cache
+d:/GraduationProject/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.sourcelink.json
+d:/GraduationProject/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abs.06A93CCD.Up2Date
+d:/GraduationProject/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.dll
+d:/GraduationProject/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/refint/Core.Abstraction.dll
+d:/GraduationProject/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.pdb
+d:/GraduationProject/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/ref/Core.Abstraction.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/bin/Debug/net9.0/Core.Abstraction.deps.json
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/bin/Debug/net9.0/Core.Abstraction.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/bin/Debug/net9.0/Core.Abstraction.pdb
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/bin/Debug/net9.0/Core.Domain.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/bin/Debug/net9.0/Share.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/bin/Debug/net9.0/Share.pdb
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/bin/Debug/net9.0/Core.Domain.pdb
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.csproj.AssemblyReference.cache
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.GeneratedMSBuildEditorConfig.editorconfig
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.AssemblyInfoInputs.cache
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.AssemblyInfo.cs
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.csproj.CoreCompileInputs.cache
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.sourcelink.json
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abs.06A93CCD.Up2Date
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/refint/Core.Abstraction.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/Core.Abstraction.pdb
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Abstraction/obj/Debug/net9.0/ref/Core.Abstraction.dll
