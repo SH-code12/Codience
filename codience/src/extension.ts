@@ -8,8 +8,8 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider(
       SidebarProvider.viewType,
-      provider
-    )
+      provider,
+    ),
   );
 }
 
@@ -23,7 +23,7 @@ class SidebarProvider implements vscode.WebviewViewProvider {
   resolveWebviewView(
     webviewView: vscode.WebviewView,
     context: vscode.WebviewViewResolveContext,
-    _token: vscode.CancellationToken
+    _token: vscode.CancellationToken,
   ) {
     const webview = webviewView.webview;
 
@@ -34,7 +34,7 @@ class SidebarProvider implements vscode.WebviewViewProvider {
           this._extensionUri,
           "webview-ui",
           "webview-ui",
-          "dist"
+          "dist",
         ),
       ],
     };
@@ -44,7 +44,7 @@ class SidebarProvider implements vscode.WebviewViewProvider {
       "webview-ui",
       "webview-ui",
       "dist",
-      "index.html"
+      "index.html",
     );
 
     let html = fs.readFileSync(indexPath, "utf-8");
@@ -59,8 +59,8 @@ class SidebarProvider implements vscode.WebviewViewProvider {
           "webview-ui",
           "webview-ui",
           "dist",
-          link
-        )
+          link,
+        ),
       );
       return `${attr}="${uri}"`;
     });
@@ -80,7 +80,7 @@ class SidebarProvider implements vscode.WebviewViewProvider {
           https://sphery-arlen-nondecorative.ngrok-free.dev
           https://fordless-samella-unexpendable.ngrok-free.dev;
       ">
-  `
+  `,
     );
 
     webview.html = html;

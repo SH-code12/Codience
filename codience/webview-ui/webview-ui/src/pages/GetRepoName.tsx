@@ -1,30 +1,35 @@
-import { useState } from 'react';
-import {  useNavigate } from 'react-router-dom';
-import './styles/GetRepoName.css'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./styles/GetRepoName.css";
+import { useRepo } from "../hooks/useRepo";
+
 const GetRepoName = () => {
-    const [repo, setRepo] = useState<string>("");
-    const navigate = useNavigate();
-    const getRepo = (name:string) => {
-        setRepo(name);
-    }
-    const submit = () =>{
-        localStorage.setItem('RepoName', repo);
-        navigate("/home");
-    }
+  const [local, setLocal] = useState("");
+  const navigate = useNavigate();
+  const { setRepo } = useRepo();
+
+  const submit = () => {
+    if (!local) return;
+    setRepo(local);
+    navigate("/home");
+  };
+
   return (
     <div className="getRepoName">
       <div className="repoNameContainer">
         <h3>Enter Repo Name</h3>
         <input
           type="text"
-          onKeyUp={(name) => {
-            getRepo(name.currentTarget.value);
-          }}
+          value={local}
+          onChange={(e) => setLocal(e.currentTarget.value)}
+          placeholder="owner/repo"
         />
-        <button onClick={submit}>Submit</button>
+        <button onClick={submit} disabled={!local}>
+          Submit
+        </button>
       </div>
     </div>
   );
-}
+};
 
-export default GetRepoName
+export default GetRepoName;

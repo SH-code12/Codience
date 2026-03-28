@@ -1,0 +1,26 @@
+:root {
+  --color-green: #64aa61;
+  --color-yellow: #b09135;
+  --color-red: #821b1b;
+  --color-neutral: #a6adb7;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #0f1720;
+  color: #e6e6e6;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial;
+}

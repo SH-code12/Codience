@@ -1,4 +1,4 @@
-import type { user } from "../types/UserTest";
+import type { user } from "../../types/UserTest";
 
 interface props {
   userData: user | null;

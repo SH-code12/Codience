@@ -11,10 +11,10 @@
   position: sticky;
   top: 0;
 }
-h2.logo {
-  text-align: center;
-  color: white;
-  font-family: "Courier New", Courier, monospace;
+.logo {
+  width: 150px;
+  /* margin-inline: auto;          */
+  /* filter: brightness(0) invert(1); */
 }
 .navBar {
   width: 100%;
@@ -55,5 +55,5 @@ button.signOut {
 }
 
 button.signOut:hover {
-  background-color: #ad0303;
+  filter: brightness(1.05);
 }

@@ -1,4 +1,4 @@
-import SideBar from "../components/SideBar";
+import SideBar from "../components/layout/SideBar";
 import { Outlet } from "react-router-dom";
 import "./styles/SideBarLayout.css";
 const SideBarLayout = () => {

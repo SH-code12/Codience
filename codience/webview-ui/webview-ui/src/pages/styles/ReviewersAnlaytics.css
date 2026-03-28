@@ -1,0 +1,233 @@
+/* ============================= */
+/* PAGE BACKGROUND */
+/* ============================= */
+
+.analytics-container {
+  min-height: 100vh;
+  padding: 40px;
+  color: #e2e8f0;
+  box-sizing: border-box;
+}
+
+/* ============================= */
+/* LAYOUT */
+/* ============================= */
+
+.loading {
+  font-size: 18px;
+  color: white;
+}
+
+.analytics-content {
+  display: flex;
+  gap: 40px;
+  align-items:flex-start;
+  flex-direction: row-reverse;
+}
+
+.analytics-main {
+  flex: 3;
+}
+.projectTitle {
+  color: #ececec;
+  font-size: 20px;
+  font-weight: 550;
+  min-width: fit-content;
+  max-width: 90%;
+}
+.analytics-stats {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ============================= */
+/* SECTION TITLES */
+/* ============================= */
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #e1e1e1;
+}
+
+/* ============================= */
+/* TABLE */
+/* ============================= */
+
+.reviewer-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #2c2f36;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+.reviewer-table thead {
+  background: #0f172a;
+  text-align: left;
+}
+
+.reviewer-table th {
+  padding: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #b6bac0;
+}
+
+.reviewer-table td {
+  padding: 16px;
+  font-size: 14px;
+  border-top: 1px solid #334155;
+}
+
+.reviewer-table tbody tr:hover {
+  background: #35373d;
+  transition: 0.2s ease;
+}
+
+/* ============================= */
+/* STATS CARDS */
+/* ============================= */
+.analytics-stats{
+  height: fit-content;
+  margin-block: auto;
+}
+.stats-card {
+  background: #2c2f36;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.35);
+  transition: 0.2s ease;
+  text-align: center;
+}
+
+.stats-card:hover {
+  transform: translateY(-3px);
+    box-shadow: 0 12px 15px rgba(0, 0, 0, 0.45);
+}
+
+.stats-title {
+  font-size: 14px;
+  color: #aeb3ba;
+  margin-bottom: 10px;
+}
+
+.stats-card h2 {
+  font-size: 40px;
+  font-weight: 700;
+  margin: 0;
+}
+/* ============================= */
+/* HEATMAP */
+/* ============================= */
+
+.heatmap-container {
+  background: #2C2F36;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.heatmap-grid {
+  display: grid;
+  gap: 2px;
+  align-items: center;
+}
+
+/* Column Headers */
+.heatmap-header {
+  text-align: center;
+  font-size: 14px;
+  color: #afafaf;
+  font-weight: 500;
+}
+
+/* Row Labels */
+.heatmap-week-label {
+  font-weight: 600;
+  color: #c1c4c8;
+}
+
+/* Cells */
+.heatmap-cell {
+  height: 60px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.heatmap-cell:hover {
+opacity: 0.8;
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 1024px) {
+  .heatmap-container {
+    overflow-x: auto;
+  }
+
+  .heatmap-grid {
+    min-width: 800px;
+  }
+}
+
+@media (max-width: 640px) {
+  .heatmap-cell {
+    height: 45px;
+    font-size: 13px;
+  }
+
+  .heatmap-header {
+    font-size: 12px;
+  }
+}/* ============================= */
+/* RESPONSIVE DESIGN */
+/* ============================= */
+
+@media (max-width: 1024px) {
+  .analytics-left{
+    max-width: 900px;
+    
+  }
+  .analytics-content{
+    max-width: 600px;
+  }
+  .analytics-main{
+    width: 100%;
+  }
+  .reviewer-table{
+    width: 100%;
+  }
+  .analytics-content {
+    flex-direction: column;
+  }
+
+  .analytics-stats {
+    flex-direction: row;
+    gap: 16px;
+  }
+  .heatmap-container{
+    width: 95%;
+  }
+ .heatmap-grid{
+  min-width: 0px;
+ }
+ .analytics-stats{
+  width:  fit-content;
+  margin-inline: auto;
+}
+  .stats-card {
+    flex: 1;
+  }
+}
+
+

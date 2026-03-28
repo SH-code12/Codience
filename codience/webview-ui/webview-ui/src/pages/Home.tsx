@@ -1,45 +1,21 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom"; // ✅ detect current route
-import axios from "axios";
-import type { PullRequest } from "../types/PullRequest";
+import { useLocation } from "react-router-dom";
 import PRsHome from "./PRsHome";
 import Dashboard from "./Dashboard";
+import "./styles/Home.css";
 
 const Home = () => {
-  const user: string | null = localStorage.getItem("User");
-  const repoName: string | null = localStorage.getItem("RepoName");
-  const [prs, setPrs] = useState<PullRequest[] | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const location = useLocation(); 
-
-  useEffect(() => {
-    const fetchPRs = async () => {
-      try {
-        const response = await axios.get<PullRequest[]>(
-          `https://codience.onrender.com/api/GitHubAuth/${user}/${repoName}/pulls`
-        );
-        setPrs(response.data);
-      } catch (err) {
-        console.error(err);
-        setPrs([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchPRs();
-  }, [user, repoName]);
+  const location = useLocation();
 
   const renderContent = () => {
-    if (location.pathname.includes("dashboard")) {
-      return <Dashboard prs={prs} projectName={repoName} />;
-    }
-    return <PRsHome prs={prs} projectName={repoName} />;
+    if (location.pathname.includes("dashboard")) return <Dashboard />;
+    return <PRsHome />;
   };
 
+  const isDashboard = location.pathname.includes("dashboard");
+
   return (
-    <div className="Home">
-      {loading ? <p className="loading">Loading...</p> : renderContent()}
+    <div className={`Home ${isDashboard ? "" : "homeHideScroll"}`}>
+      {renderContent()}
     </div>
   );
 };

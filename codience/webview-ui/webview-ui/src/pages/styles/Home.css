@@ -1,0 +1,51 @@
+/* Home page specific tweaks */
+
+/* Hide the PRs table scrollbar only when rendered inside the Home page */
+
+.Home .cardsContainer {
+  max-width: 100%;
+  margin: auto;
+}
+.Home .prsTableContainer::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+/* Reduce the PRs table height on the Home page so the overall page doesn't need scrolling */
+.Home .prsTableContainer {
+  margin-inline: auto;
+  max-width: 100%;
+  max-height: 365px; /* shorter on Home so page fits without scrolling */
+  overflow: auto;
+  padding-bottom: 5px;
+}
+.Home .prsTableContainer::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+.Home .prsPagination {
+  max-width: 100%;
+  padding-block: 5px;
+}
+
+.home .cardsContainer {
+  width: 80%;
+}
+
+@media (max-width: 700px) {
+  .Home .prsTableContainer {
+    max-height: 100%;
+  }
+}
+
+/* Hide the overall page scrollbar when on the Home route (not dashboard) */
+.Home.homeHideScroll {
+  /* Keep normal flow so the sidebar remains visible; just hide scrollbars */
+  position: relative;
+  overflow: auto;
+}
+.Home.homeHideScroll::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}

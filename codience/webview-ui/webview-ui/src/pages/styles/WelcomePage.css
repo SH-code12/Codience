@@ -1,28 +1,27 @@
 .welcomePage {
-    display: flex;
-    height: 100vh;
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
-    gap: 50px;
+  display: flex;
+  height: 100vh;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
 }
 
 .welcomePage h2 {
-    text-align: center;
-    color: #eee;
+  text-align: center;
+  color: #eee;
 }
 
 .welcomePage a {
-    color: #eee;
-    background-color: #0f6824;
-    width: 70%;
-    text-align: center;
-    border-radius: 5px;
-    padding-block: 10px;
-    text-decoration: none;
-    
+  color: #eee;
+  background-color: rgba(30, 164, 79, 0.85);
+  width: 70%;
+  text-align: center;
+  border-radius: 5px;
+  padding-block: 10px;
+  text-decoration: none;
 }
 
 .welcomePage a:hover {
-    background-color:#09b7319c ;
+  background-color: rgba(34, 197, 94, 0.85);
 }

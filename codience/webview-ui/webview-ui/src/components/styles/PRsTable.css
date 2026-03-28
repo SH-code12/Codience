@@ -1,14 +1,7 @@
-:root{
-    --high: #821B1B;
-    --low: #298f22;
-    --med:#B06A35;
-
-}
-
 table {
   display: inline-table;
   background-color: transparent;
-  color: #BEBABA;
+  color: #bebaba;
   /* min-height: 100vh; */
   overflow: auto;
   width: 100%;
@@ -16,39 +9,54 @@ table {
   border-spacing: 0;
 }
 table tr {
-  width: 100%;
+  width: 60%;
   height: 50px;
 }
 
 table thead tr {
-  background-color: #181B1F;
-  color: #5D6065;
-  font-size: 14px;
+  background-color: #181b1f;
+  color: #5d6065;
+  font-size: 12px;
 }
 
+/* make the table header sticky inside its scroll container */
+.prsTable thead th {
+  position: sticky;
+  top: 0px; /* matches container padding so header sits flush */
+  background: #181b1f;
+  z-index: 5;
+}
+
+/* Default for narrow columns (all except first) */
 table th {
-  padding: 10px;
-  width: 20%;
+  width: 10%;
+}
+
+/* Make first column (PR Title) larger */
+.prsTable th:first-child,
+.prsTable td.titleCell {
+  width: 35%;
 }
 table td {
   text-align: center;
   border-bottom: 1px #eeeeee41 solid;
+  font-size: 12px;
 }
 td.titleCell {
   text-align: start;
-  padding-left: 10px;
+  padding-left: 5px;
   text-transform: capitalize;
 }
 
 .riskCell.low {
-  color: var(--low);
+  color: var(--color-green);
 }
 
 .riskCell.med {
-  color: var(--med);
+  color: var(--color-yellow);
 }
 .riskCell.high {
-  color: var(--high);
+  color: var(--color-red);
 }
 
 .priorityCell span {
@@ -61,25 +69,25 @@ td.titleCell {
 }
 
 .priorityCell.high span {
-  background-color: var(--high);
+  background-color: var(--color-red);
 }
 .priorityCell.low span {
-  background-color: var(--low);
+  background-color: var(--color-green);
 }
 .priorityCell.med span {
-  background-color: var(--med);
+  background-color: var(--color-yellow);
 }
 td.open {
-    color: var(--low);
+  color: var(--color-green);
 }
 td.closed {
-    color: var(--high);
+  color: var(--color-red);
 }
-td.status{
-    text-transform: capitalize;
+td.status {
+  text-transform: capitalize;
 }
 table tbody tr:hover {
-    background-color: #40404d6b;
+  background-color: #40404d6b;
 }
 
 .prsTable tr {
@@ -88,10 +96,101 @@ table tbody tr:hover {
 }
 
 .prsTable tr:hover {
-  background-color: #1e1e26;
+  /* background-color: #48484b; */
+  opacity: 0.9;
 }
 
 .selected-row {
   background-color: #45576933 !important;
   border-left: 4px solid #404d5c;
+}
+
+/* New container to make table scrollable */
+.prsTableContainer {
+  max-height: 420px; /* vertical space for the table */
+  overflow: auto; /* show both scrollbars when needed */
+  width: 100%;
+  border-radius: 4px;
+}
+
+@media (max-width: 700px) {
+  .prsTable {
+    min-width: 0;
+    width: 100%;
+  }
+  .prsTableContainer {
+    max-height: calc(100vh - 320px);
+  }
+}
+
+/* Ensure table can be wider than container to allow horizontal scroll */
+.prsTable {
+  min-width: 500px;
+}
+
+.prsPagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  color: #bbb;
+}
+
+/* Controls rectangle above the table (right side) */
+.prsControls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: #181b1f;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #25262a;
+}
+.prsControls label {
+  color: var(--color-neutral);
+  font-size: 12px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.prsControls select {
+  background: #0f1316;
+  color: #e6e6e6;
+  border: 1px solid #2a2d31;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.prsControls .sortDir {
+  background: transparent;
+  color: var(--color-neutral);
+  border: 1px solid #2a2d31;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.paginationControls button {
+  background: transparent;
+  border: 1px solid #444;
+  color: #ddd;
+  padding: 6px 10px;
+  margin: 0 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.controls {
+  font-size: 14px;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+.paginationControls button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.pageSizeControl select {
+  margin-left: 6px;
+  background: #1d1f22;
+  color: #ddd;
+  border: 1px solid #333;
+  padding: 4px 6px;
 }
