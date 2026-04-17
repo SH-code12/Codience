@@ -28,6 +28,8 @@ builder.Services.AddScoped<IJiraService, JiraService>();
 builder.Services.AddScoped<IChangeMetricsService, ChangeMetricsService>();
 builder.Services.AddScoped<IHistoryMetricsService, HistoryMetricsService>();
 builder.Services.AddScoped<IExperienceMetricsService,ExperienceMetricsService>();
+builder.Services.AddScoped<IGitHubWebhookService, GitHubWebhookService>();
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<AuthUser, Guid>), typeof(GenericRepository<AuthUser, Guid>));
 

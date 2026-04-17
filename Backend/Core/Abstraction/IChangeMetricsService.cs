@@ -2,7 +2,7 @@ using Share;
 
 namespace Core.Abstraction;
 
-public interface IMetricsService
+public interface IChangeMetricsService
 {
         ChangeMetricsDto Calculate(IEnumerable<GitHubFileDto> files);
 

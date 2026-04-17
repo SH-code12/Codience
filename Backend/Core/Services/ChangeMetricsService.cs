@@ -1,10 +1,7 @@
 
+using Core.Abstraction;
 using Share;
 
-public interface IChangeMetricsService
-{
-    ChangeMetricsDto Calculate(IEnumerable<GitHubFileDto> files);
-}
 
 public class ChangeMetricsService : IChangeMetricsService
 {
