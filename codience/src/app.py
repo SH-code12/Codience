@@ -25,10 +25,10 @@ async def recommend(request: ReviewerRequest):
     results = engine.recommend(real_pr)
 
     formatted_results = []
-    for res in results[:5]:
+    for res in results[:5]:  # Return top 5 maximum
         formatted_results.append({
-            "name": res['name'],
-            "score": res['score'],
-            "skills": res['skills'],
+            "name": res.get("name"),
+            "confidence_score": res.get("confidence_score", 0),
+            "justification": res.get("justification", ""),
         })
     return {"reviewers": formatted_results}

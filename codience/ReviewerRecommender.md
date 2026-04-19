@@ -74,8 +74,54 @@ The Role Knowledge Base consists of structured personas used for vector similari
 
 ## 🛠 Tech Stack
 
-* **LLM:** Gemini 1.5 Pro / GPT-4o
+* **LLM:** Gemini 1.5 Pro / GPT-4o / Gemini 3.1 Flash
 * **Vector DB:** ChromaDB (for Role Knowledge Base)
-* **Framework:** LangChain / LlamaIndex
-* **API:** GitHub GraphQL API
+* **Framework:** LangChain / LlamaIndex / Pre-defined AI Clean Code Frameworks
+* **API:** GitHub GraphQL API, .NET Jira Backend
+
+---
+
+## 🚀 Multi-Agent Evolution (v2) & Jira Integration
+
+To address input-size limitations and enhance tracking accuracy, the recommendation pipeline has been evolved into a **Stateful Multi-Agent Workflow**, adhering to AI Clean Code standards.
+
+### The "Story" of the New Changes (How to Explain It)
+
+The core challenge was that evaluating every developer's massive git commit history using an LLM directly would result in excessive context limits. 
+Therefore, we separated the capabilities into isolated "Automated Agents" orchestrating together:
+
+1. **The PR Agent** (`extract_pr_skills`): Extracts the required languages and atomic skills from the incoming PR.
+2. **The Jira Analyzer Agent** (`jira_agent.py`): Reaches out to the configured `.NET` REST API to fetch a developer's recently assigned Jira tickets. It uses the LLM to deduce what domain (e.g., UI, Database, Auth) the developer is focusing on *right now*.
+3. **The Matchmaker / Scorer Agent** (`scorer_agent.py`): Acts as the "Tech Lead". It intakes the PR constraints, the Vector DB recommendations (RAG), and the summarized Jira/commit history, generating a scaled **0-100 Confidence Score** with human-readable rationale.
+
+### Component Code Explanations (Line-by-Line Concepts)
+
+#### 1. `Engine_test.py` (The Orchestrator)
+**What it does:** It's the central pipeline that ties everything together.
+**Line-by-line Breakdown:**
+- It calls the PR Agent (`extract_pr_skills`) to find out the requirements.
+- It calls `search_vector_db` to get historical role guidance from RAG.
+- **The Filter (Crucial Optimization):** Instead of hitting the Jira API and LLM for all 100 historical contributors computationally, it uses a fast mathematical formula `len(matched_skills) / max(req_languages)` to filter the pool down to the **Top 10 Preliminary Candidates**.
+- For those 10, it launches `analyze_jira_context` to fetch Jira domains.
+- Finally, it aggregates all parameters and triggers the Scorer Agent (`calculate_match_scores`) to assign the final `confidence_score`.
+
+#### 2. `jira_agent.py` (The Context Gatherer)
+**What it does:** Maps a username to their current workload focus.
+**Line-by-line Breakdown:**
+- Uses the `requests` library to fetch JSON payloads from the `JIRA_API_BASE_URL` (the internal .NET backend).
+- Loops through up to 10 recent tickets, merging their titles and descriptions into a singular text block.
+- Invokes the LLM by formatting variables into the isolated `JIRA_ANALYSIS_PROMPT`.
+- **Clean Code Mechanics:** To enforce structural integrity, it uses `Pydantic (BaseModel)` so the JSON response structurally maps strictly to `{"domain", "recent_skills", "summary"}`. It implements a deterministic `3-max-retries` loop (`json.JSONDecodeError` and `ValidationError` capture) for resilience against hallucinated JSON architectures.
+
+#### 3. `scorer_agent.py` (The Final Matchmaker)
+**What it does:** Eliminates naive language matching by adding smart, contextual semantic AI evaluation.
+**Line-by-line Breakdown:**
+- Combines the `pr_skills`, the vector database `rag_context`, and loops through mapping out each candidate's raw `commits` + current `Jira Domain`.
+- Invokes the LLM using the externalized `SCORER_PROMPT`.
+- Parses the string into a JSON array, structurally validating it into `[CandidateScore]` (which enforces the `{name, confidence_score, justification}` structure).
+- Sorts the Array descending by score. **Graceful Degradation:** If the LLM throws an exception 3 times in a row, a pure mathematical fallback score logic is immediately executed, guaranteeing the system never crashes.
+
+#### 4. `prompts.py` (AI Clean Code Configurations)
+**What it does:** Extracts hardcoded AI instructions away from pure business logic.
+**The Concept:** By placing `JIRA_ANALYSIS_PROMPT` and `SCORER_PROMPT` here as top-level variables, they become 'first-class configuration items'. This prevents Python execution logic from being visually polluted by massive strings, allows the team to tweak the LLM constraints easily without introducing python bugs, and strictly enforces **Separation of Concerns**.
 

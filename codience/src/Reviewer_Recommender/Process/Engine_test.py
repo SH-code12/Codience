@@ -11,6 +11,11 @@ from codience.src.Reviewer_Recommender.Process.analysis_PR import extract_pr_ski
 from codience.src.Reviewer_Recommender.Process.Reviewer_Engine_Helper import fetch_commits, map_commits_to_skills
 from codience.src.Reviewer_Recommender.Process.prompts import SKILL_EXTRACTION_PROMPT
 
+# Import AI Agents
+from codience.src.Reviewer_Recommender.Process.jira_agent import analyze_jira_context
+from codience.src.Reviewer_Recommender.Process.scorer_agent import calculate_match_scores
+from codience.src.Reviewer_Recommender.Data.searching_into_vectordb import search_vector_db
+
 load_dotenv()
 
 # --- 1. FETCH REAL DATA ---
@@ -76,38 +81,54 @@ class ReviewerRecommender:
         self.history_profiles = {}
 
     def initialize_system(self):
-        # Increased to 100 to find more developers
-        print(f"🚀 Building Knowledge Base from last 100 commits...")
-        commits = fetch_commits(self.owner, self.repo, per_page=100)
+        # Reduced to 5 for fast testing without RemoteConnectionClosed errors
+        print(f"🚀 Building Knowledge Base from last 5 commits...")
+        commits = fetch_commits(self.owner, self.repo, per_page=5)
         self.history_profiles = map_commits_to_skills(commits)
         print(f"✅ Indexed {len(self.history_profiles)} developers.")
 
     def recommend(self, pr_data):
+        # 1. PR Analyzer Agent
         analysis = extract_pr_skills(pr_data)
-        # The LLM returns full names like "Python", "JavaScript"
-        # Ensure they are formatted to match your helper's mapping (Title Case)
         required_languages = {lang.strip().title() for lang in analysis.get('detected_languages', [])}
         
-        # Fix for C# specifically if needed
         if "C#" in required_languages:
             required_languages.remove("C#")
             required_languages.add(".NET")
 
-        rankings = []
-        for name, dev_skills in self.history_profiles.items():
-            # dev_skills now contains {"Python", "Java"} etc. from the helper
-            matched_skills = required_languages.intersection(dev_skills)
-            
-            score = len(matched_skills) / len(required_languages) if required_languages else 0
-            
-            rankings.append({
-                "name": name,
-                "score": round(score, 2),
-                "skills": list(matched_skills), 
-                "analysis_summary": analysis.get('rag_query', '')
-            })
+        # 2. Vector DB RAG Search
+        rag_query = analysis.get('rag_query', '') or ', '.join(required_languages)
+        try:
+            rag_roles = search_vector_db(rag_query, k=10) if rag_query else []
+        except Exception as e:
+            print(f"⚠️ Vector DB Search Failed: {e}")
+            rag_roles = []
 
-        return sorted(rankings, key=lambda x: x['score'], reverse=True)
+        # 3. Preliminary Candidate Filtering (to save API / LLM time)
+        # We find up to 10 candidates whose commit history matches at least one requirement
+        preliminary_candidates = []
+        for name, dev_skills in self.history_profiles.items():
+            matched_skills = required_languages.intersection(dev_skills)
+            score = len(matched_skills) / max(len(required_languages), 1)
+            preliminary_candidates.append({
+                "name": name,
+                "commit_skills": list(dev_skills),
+                "matched_skills": list(matched_skills),
+                "prelim_score": score
+            })
+            
+        preliminary_candidates = sorted(preliminary_candidates, key=lambda x: x['prelim_score'], reverse=True)[:10]
+
+        # 4. Jira Analyzer Agent (Enrich candidates)
+        for c in preliminary_candidates:
+            print(f"🔄 Analyzing Jira Context for {c['name']}...")
+            c["jira_context"] = analyze_jira_context(c["name"])
+
+        # 5. Scorer Matchmaker Agent
+        print("🧠 Calculating AI Confidence Scores...")
+        rankings = calculate_match_scores(analysis, rag_roles, preliminary_candidates)
+
+        return rankings
 
 if __name__ == "__main__":
     # Test on a repo that uses your skills (Java/SQL/Web)
@@ -128,20 +149,20 @@ if __name__ == "__main__":
         print("\n" + "═"*90)
         print(f"  ACCURACY-MATCH REPORT: {TARGET_REPO}")
         print("═"*90)
-        print(f"{'RANK':<5} | {'DEVELOPER':<18} | {'MATCH %':<8} | {'MATCHED SKILLS'}")
+        print(f"{'RANK':<5} | {'DEVELOPER':<18} | {'CONF SCORE':<10} | {'JUSTIFICATION'}")
         print("─"*90)
 
         for i, r in enumerate(results):
             icon = "⭐" if i == 0 else "  "
-            skills_str = ", ".join(r['skills']) if r['skills'] else "---"
-            match_pct = f"{r['score'] * 100:>5.0f}%"
+            conf_score = f"{r.get('confidence_score', 0)}/100"
+            justif = r.get('justification', '')[:40] + "..." if len(r.get('justification', '')) > 40 else r.get('justification', '')
             
-            print(f"{icon} #{i+1:<2} | {r['name']:<18} | {match_pct} | {skills_str}")
+            print(f"{icon} #{i+1:<2} | {r['name']:<18} | {conf_score:<10} | {justif}")
         
         print("═"*90)
-        if results and results[0]['score'] > 0:
+        if results and results[0].get('confidence_score', 0) > 0:
             print(f"🏆 BEST MATCH: {results[0]['name']}")
-            print(f"   Matches: {', '.join(results[0]['skills'])}")
+            print(f"   Reason: {results[0].get('justification', 'N/A')}")
         else:
             print("⚠️ No strong matches found in recent history.")
         print("═"*90)
