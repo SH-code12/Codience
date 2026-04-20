@@ -24,66 +24,50 @@ def fetch_real_pr_data(owner, repo, pr_number):
     pr_url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{pr_number}"
     headers = {
         "Authorization": f"token {os.getenv('GITHUB_TOKEN')}",
-        "Accept": "application/vnd.github.v3.diff" 
+        "Accept": "application/vnd.github.v3+json" 
     }
     
-    pr_resp = requests.get(pr_url, headers={"Authorization": f"token {os.getenv('GITHUB_TOKEN')}"})
+    pr_resp = requests.get(pr_url, headers=headers)
     if pr_resp.status_code != 200:
         print(f"❌ Failed to fetch PR info: {pr_resp.status_code}")
         return None
         
     pr_json = pr_resp.json()
-    diff_resp = requests.get(pr_url, headers=headers)
+    
+    files_url = f"{pr_url}/files"
+    files_resp = requests.get(files_url, headers=headers)
+    files_data = []
+    if files_resp.status_code == 200:
+        files_json = files_resp.json()
+        for f in files_json:
+            if "patch" in f and not f["filename"].endswith("lock.json") and not f["filename"].endswith("poetry.lock"):
+                files_data.append({
+                    "filename": f["filename"],
+                    "patch": f["patch"]
+                })
+        # Cap at 30 files to avoid excessive API calls
+        files_data = files_data[:30]
+    else:
+        print(f"⚠️ Failed to fetch PR files: {files_resp.status_code}")
     
     return {
         "title": pr_json.get("title"),
         "description": pr_json.get("body") or "No description provided.",
-        "diff": diff_resp.text[:3000] 
+        "files": files_data 
     }
 
-# --- 2. AI SKILL EXTRACTION ---
-# -----------function already implemented in analysis_PR.py for better modularity and testing-----------
-# def extract_pr_skills(pr_data):
-#     client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-    
-#     # FIX: Using the direct model name string to avoid 404
-#     model_name = "gemini-3.1-flash-lite-preview" 
 
-#     prompt = SKILL_EXTRACTION_PROMPT.format(
-#         title=pr_data['title'],
-#         description=pr_data['description'],
-#         diff=pr_data['diff']
-#     )
 
-#     try:
-#         time.sleep(1) # Small delay
-#         response = client.models.generate_content(model=model_name, contents=prompt)
-#         text = response.text.strip()
-        
-#         # Robust JSON cleaning
-#         if "```json" in text:
-#             text = text.split("```json")[1].split("```")[0].strip()
-#         elif "```" in text:
-#             text = text.split("```")[1].strip()
-            
-#         return json.loads(text)
-#     except Exception as e:
-#         # FIX: Dynamic fallback based on the actual repository language
-#         main_lang = pr_data.get('repo_lang', 'Python')
-#         print(f"⚠️ AI Error: {e}. Falling back to {main_lang}.")
-#         return {"required_skills": [main_lang], "rag_query": f"{main_lang} expert"}
-
-# --- 3. THE UPDATED ENGINE ---
+# --- THE ENGINE ---
 class ReviewerRecommender:
     def __init__(self, owner, repo):
         self.owner = owner
         self.repo = repo
         self.history_profiles = {}
 
-    def initialize_system(self):
-        # Reduced to 5 for fast testing without RemoteConnectionClosed errors
-        print(f"🚀 Building Knowledge Base from last 5 commits...")
-        commits = fetch_commits(self.owner, self.repo, per_page=5)
+    def initialize_system(self, max_commits=10):
+        print(f"🚀 Building Knowledge Base from last {max_commits} commits...")
+        commits = fetch_commits(self.owner, self.repo, per_page=max_commits)
         self.history_profiles = map_commits_to_skills(commits)
         print(f"✅ Indexed {len(self.history_profiles)} developers.")
 

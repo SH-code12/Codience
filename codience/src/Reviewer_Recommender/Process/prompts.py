@@ -67,3 +67,42 @@ Output strictly in the following JSON array format:
     }}
 ]
 """
+
+FILE_DIFF_SUMMARY_PROMPT = """
+You are a Senior Technical Architect analyzing a single file's changes.
+
+FILE NAME: {filename}
+DIFF:
+{patch}
+
+Task:
+Summarize the technical changes made in this file in 1-2 sentences. 
+Highlight any specific programming languages, frameworks, or libraries that are evident.
+"""
+
+COMMIT_CHUNK_SUMMARY_PROMPT = """
+You are analyzing a developer's commit to understand their technical skills.
+
+COMMIT MESSAGE: {commit_message}
+
+FILE SUMMARIES:
+{file_summaries}
+
+Task:
+Summarize the technical skills, languages, and frameworks demonstrated in this specific commit based on the files changed.
+Keep it extremely concise (1-2 sentences).
+"""
+
+DEVELOPER_PROFILE_REDUCE_PROMPT = """
+You are building a technical profile for a developer based on summaries of their recent commits.
+
+DEVELOPER: {author}
+
+COMMIT SUMMARIES:
+{commit_summaries}
+
+Task:
+Identify the unique programming languages and technical skills this developer possesses.
+Return a valid JSON array of strings representing their skills.
+Example: ["Python", "React", "AWS", "SQL"]
+"""

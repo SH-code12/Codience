@@ -1,10 +1,15 @@
 import os
 import time
 import requests
+import json
+import re
+import concurrent.futures
 from collections import defaultdict
 from dotenv import load_dotenv
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+from codience.src.Reviewer_Recommender.Process.llm import get_model
+from codience.src.Reviewer_Recommender.Process.prompts import FILE_DIFF_SUMMARY_PROMPT, COMMIT_CHUNK_SUMMARY_PROMPT, DEVELOPER_PROFILE_REDUCE_PROMPT
 
 load_dotenv()
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
@@ -22,23 +27,150 @@ def fetch_commits(owner, repo, per_page=30):
         return r.json() if r.status_code == 200 else []
     except: return []
 
-def detect_skill_from_file(file):
-    ext = file.split('.')[-1].lower() if '.' in file else ""
-    mapping = {
-        "py": "Python", "cs": ".NET", "js": "JavaScript", "ts": "TypeScript",
-        "jsx": "React", "tsx": "React", "java": "Java", "sql": "SQL"
-    }
-    return mapping.get(ext)
+# Global counter to avoid burning through API budget
+LLM_BUDGET = 100
+llm_calls_made = 0
 
-def map_commits_to_skills(commits):
-    dev_skills = defaultdict(set)
+def call_llm(prompt, retries=3):
+    global llm_calls_made
+    if llm_calls_made >= LLM_BUDGET:
+        return "Budget exceeded"
+    
+    for attempt in range(retries):
+        try:
+            llm_calls_made += 1
+            client = get_model()
+            response = client.models.generate_content(
+                model='gemini-3.1-flash-lite-preview',
+                contents=prompt
+            )
+            time.sleep(4) # Rate limit: 15 requests per minute
+            return response.text.strip()
+        except Exception as e:
+            if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
+                print(f"⏳ Rate limit hit. Sleeping for 30s... (Attempt {attempt+1}/{retries})")
+                time.sleep(30)
+            else:
+                print(f"⚠️ LLM Call Failed: {e}")
+                return ""
+    return ""
+
+def summarize_file_patch(file_data):
+    if not file_data.get("patch"): return ""
+    prompt = FILE_DIFF_SUMMARY_PROMPT.format(
+        filename=file_data['filename'],
+        patch=file_data['patch']
+    )
+    res = call_llm(prompt)
+    if not res or res == "Budget exceeded": return ""
+    return f"File: {file_data['filename']}\nSummary: {res}"
+
+def summarize_commit(commit_message, files):
+    # 1. Map step: Summarize each file
+    valid_files = [f for f in files if "patch" in f and not f["filename"].endswith(".csv") and not f["filename"].endswith("lock.json") and not f["filename"].endswith("poetry.lock")]
+    
+    file_summaries = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+        results = executor.map(summarize_file_patch, valid_files)
+        for r in results:
+            if r: file_summaries.append(r)
+            
+    if not file_summaries:
+        return ""
+        
+    # 2. Reduce step: Summarize the whole commit
+    prompt = COMMIT_CHUNK_SUMMARY_PROMPT.format(
+        commit_message=commit_message,
+        file_summaries="\n\n".join(file_summaries)
+    )
+    return call_llm(prompt)
+
+def map_commits_to_skills(commits, max_llm_calls=100):
+    global llm_calls_made
+    llm_calls_made = 0  # reset budget for this run
+    # Optionally limit total LLM calls
+    global LLM_BUDGET
+    LLM_BUDGET = max_llm_calls
+
+    commits_by_author = defaultdict(list)
     for commit in commits:
         author = commit.get("author", {}).get("login") or commit["commit"]["author"]["name"]
-        try:
-            data = session.get(commit["url"], headers=HEADERS, timeout=15).json()
-            for f in data.get("files", []):
-                skill = detect_skill_from_file(f["filename"])
-                if skill: dev_skills[author].add(skill)
-            time.sleep(0.2) # Avoid rate limits
-        except: continue
+        commits_by_author[author].append(commit)
+
+    dev_skills = defaultdict(set)
+
+    for author, author_commits in commits_by_author.items():
+        print(f"🔄 Analyzing history for {author} ({len(author_commits)} commits)...")
+        commit_summaries = []
+        for commit in author_commits:
+            try:
+                # Fetch detailed commit data (including file patches)
+                commit_detail = session.get(commit["url"], headers=HEADERS, timeout=15).json()
+                commit_message = commit["commit"]["message"]
+                files = commit_detail.get("files", [])
+                # Summarize this single commit (Map step)
+                summary = summarize_commit(commit_message, files)
+                if summary and summary != "Budget exceeded":
+                    commit_summaries.append(f"Commit: {commit_message[:80].replace('\n',' ')}...\nSummary: {summary}")
+                time.sleep(0.5)  # basic rate‑limit protection for GitHub
+            except Exception as e:
+                print(f"⚠️ Error processing commit {commit.get('sha','')}: {e}")
+                continue
+        # Reduce step: build a developer skill profile from the commit summaries
+        if commit_summaries:
+            prompt = DEVELOPER_PROFILE_REDUCE_PROMPT.format(
+                author=author,
+                commit_summaries="\n\n".join(commit_summaries)
+            )
+            raw_result = call_llm(prompt)
+            try:
+                json_match = re.search(r'\[.*\]', raw_result, re.DOTALL)
+                skills = json.loads(json_match.group()) if json_match else json.loads(raw_result)
+                if isinstance(skills, list):
+                    for skill in skills:
+                        dev_skills[author].add(skill)
+            except Exception as e:
+                print(f"⚠️ Failed to parse skill JSON for {author}: {e}")
+    return dev_skills
+        
+    dev_skills = defaultdict(set)
+    
+    for author, author_commits in commits_by_author.items():
+        print(f"🔄 Analyzing history for {author} ({len(author_commits)} commits)...")
+        commit_summaries = []
+        
+        for commit in author_commits:
+            try:
+                commit_message = commit["commit"]["message"]
+                data = session.get(commit["url"], headers=HEADERS, timeout=15).json()
+                files = data.get("files", [])
+                
+                # Hierarchical chunking
+                summary = summarize_commit(commit_message, files)
+                if summary and summary != "Budget exceeded":
+                    commit_summaries.append(f"Commit: {commit_message[:50]}...\nSummary: {summary}")
+                    
+                time.sleep(0.5) # Avoid GitHub rate limits
+            except Exception as e:
+                print(f"⚠️ Error fetching commit data: {e}")
+                continue
+                
+        if commit_summaries:
+            # Final reduce step to extract array of skills
+            prompt = DEVELOPER_PROFILE_REDUCE_PROMPT.format(
+                author=author,
+                commit_summaries="\n\n".join(commit_summaries)
+            )
+            raw_result = call_llm(prompt)
+            
+            try:
+                # Extract JSON array
+                json_match = re.search(r'\[.*\]', raw_result, re.DOTALL)
+                skills_list = json.loads(json_match.group()) if json_match else json.loads(raw_result)
+                if isinstance(skills_list, list):
+                    for skill in skills_list:
+                        dev_skills[author].add(skill)
+            except:
+                print(f"⚠️ Failed to parse skills JSON for {author}: {raw_result}")
+                
     return dev_skills
