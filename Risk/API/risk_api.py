@@ -8,9 +8,9 @@ import gdown
 app = FastAPI()
 
 # -----------------------------
-# 1. Load model from Google Drive (or local cache)
+# 1. Load model
 # -----------------------------
-MODEL_PATH = "svm_model.pkl"
+MODEL_PATH = "svm_model_proba.pkl"
 GDRIVE_FILE_ID = "1vx3K2-unQ6oXbkTI8kVi3YRdDeqbiHwr"
 
 def download_model():
@@ -18,10 +18,15 @@ def download_model():
         url = f"https://drive.google.com/uc?id={GDRIVE_FILE_ID}"
         gdown.download(url, MODEL_PATH, quiet=False)
 
+# def load_model():
+#     download_model()
+#     with open(MODEL_PATH, "rb") as f:
+#         return pickle.load(f)
+import joblib
+
 def load_model():
     download_model()
-    with open(MODEL_PATH, "rb") as f:
-        return pickle.load(f)
+    return joblib.load(MODEL_PATH)
 
 model = load_model()
 
@@ -43,7 +48,7 @@ class InputData(BaseModel):
     asexp: float
 
 # -----------------------------
-# 3. Prediction endpoint
+# 3. Prediction endpoint (PROBABILITY)
 # -----------------------------
 @app.post("/predict")
 def predict(data: InputData):
@@ -53,6 +58,11 @@ def predict(data: InputData):
         data.nuc, data.aexp, data.arexp, data.asexp
     ]])
 
-    prediction = model.predict(features)[0].item()
+    # 🔥 probability output
+    prob = model.predict_proba(features)[0][1]  # class 1 probability
+    pred = int(prob >= 0.5)
 
-    return {"prediction": prediction}
+    return {
+        "prediction": pred,
+        "bug_probability": float(prob)
+    }
