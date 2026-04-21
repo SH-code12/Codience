@@ -1,34 +1,33 @@
 import json
+import os
 import re
 import concurrent.futures
-from codience.src.Reviewer_Recommender.Process.llm import get_model
+from codience.src.Reviewer_Recommender.Process.llm import generate_with_resilience
 from codience.src.Reviewer_Recommender.Process.prompts import SKILL_EXTRACTION_PROMPT, FILE_DIFF_SUMMARY_PROMPT
+
+PR_SUMMARY_WORKERS = int(os.getenv("PR_SUMMARY_WORKERS", "3"))
 
 def summarize_file_diff(file_data):
     try:
-        client = get_model()
         prompt = FILE_DIFF_SUMMARY_PROMPT.format(
             filename=file_data['filename'],
             patch=file_data['patch']
         )
-        response = client.models.generate_content(
-            model='gemini-3.1-flash-lite-preview',
-            contents=prompt
-        )
-        return f"File: {file_data['filename']}\nSummary: {response.text.strip()}\n"
+        result = generate_with_resilience(prompt, purpose="pr_file_summary")
+        if not result.get("ok"):
+            return ""
+        return f"File: {file_data['filename']}\nSummary: {result.get('text', '').strip()}\n"
     except Exception as e:
         print(f"⚠️ Failed to summarize file {file_data.get('filename')}: {e}")
         return ""
 
 def extract_pr_skills(pr_data):
-    client = get_model()
-    
     files = pr_data.get('files', [])
     aggregated_summaries = ""
     
     if files:
         print(f"🚀 Summarizing {len(files)} files in parallel...")
-        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=PR_SUMMARY_WORKERS) as executor:
             summaries = list(executor.map(summarize_file_diff, files))
             aggregated_summaries = "\n".join(summaries)
     else:
@@ -40,14 +39,10 @@ def extract_pr_skills(pr_data):
         diff=aggregated_summaries
     )
     
-    # Modern SDK syntax: client.models.generate_content
-    response = client.models.generate_content(
-        model='gemini-3.1-flash-lite-preview', # Or 'gemini-1.5-flash'
-        contents=full_prompt
-    )
-    
-    # Extract text from response
-    raw_text = response.text
+    result = generate_with_resilience(full_prompt, purpose="pr_skill_extraction")
+    if not result.get("ok"):
+        return {"required_skills": [], "summary": "Extraction failed", "detected_languages": []}
+    raw_text = result.get("text", "")
     
     # Robust JSON extraction
     try:

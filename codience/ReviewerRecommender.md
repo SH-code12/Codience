@@ -58,6 +58,103 @@ The final output provides a list of suggested reviewers accompanied by a "Reason
 
 ---
 
+## API Contract (v2)
+
+The system exposes a versioned endpoint for frontend and .NET integration:
+
+- **Method:** `POST`
+- **Path:** `/api/recommend/v2`
+- **Purpose:** Return reviewer recommendations with required-reviewer handling and configurable ranking weights.
+
+### Request Parameters
+
+```json
+{
+  "owner": "huggingface",
+  "repo": "transformers",
+  "pr_number": 44935,
+  "required_reviewers": ["lvliang-intel", "someone-new"],
+  "options": {
+    "top_k": 5,
+    "prioritize_recent_activity": true,
+    "commits_per_reviewer": 50
+  }
+}
+```
+
+- `owner`: GitHub organization/user that owns the repository.
+- `repo`: Repository name under `owner`.
+- `pr_number`: Pull request number in that repository.
+- `required_reviewers`: Optional. Frontend-provided usernames that must be evaluated explicitly.
+- `options`: Optional object. If omitted, server defaults are used.
+- `options.top_k`: Optional override. Default is `5`.
+- `options.prioritize_recent_activity`: Optional override. Default is `true` (favor recent commit activity).
+- `options.commits_per_reviewer`: Optional override. Default is `50` recent commits per reviewer.
+
+### Ranking Behavior
+
+- The ranking always considers skill match.
+- When `prioritize_recent_activity=true`, recent activity is blended into preliminary ranking to favor currently active contributors.
+- Commit recency is computed from the most recent `commits_per_reviewer` commits per candidate.
+- By default, all detected candidate contributors are analyzed; options only customize behavior when provided.
+- Required reviewers receive explicit evaluation output even when they are not included in final recommendations.
+
+### Contributor-Only Policy
+
+- Recommended reviewers must be contributors of the target repository.
+- A required reviewer who is not a repository contributor is returned as:
+  - `included: false`
+  - `reasons: ["required_reviewer_not_repo_contributor"]`
+
+### Response Shape
+
+```json
+{
+  "required_reviewers_result": [
+    {
+      "name": "lvliang-intel",
+      "included": true,
+      "confidence_score": 65,
+      "justification": "...",
+      "reasons": ["required_reviewer", "recent_activity_priority"]
+    },
+    {
+      "name": "someone-new",
+      "included": false,
+      "confidence_score": 0,
+      "justification": "Reviewer was required by frontend but is not a contributor of this repository.",
+      "reasons": ["required_reviewer_not_repo_contributor"]
+    }
+  ],
+  "recommended_reviewers": [
+    {
+      "name": "candidate-a",
+      "confidence_score": 72,
+      "justification": "...",
+      "reasons": ["strong_skill_match"],
+      "required_reviewer": false,
+      "score_breakdown": {
+        "skill_score": 0.8,
+        "recency_score": 0.4,
+        "preliminary_score": 0.67,
+        "ai_score": 0.71,
+        "prioritize_recent_activity": true,
+        "commits_considered_per_reviewer": 50
+      }
+    }
+  ],
+  "diagnostics": {
+    "candidate_pool_size": 42,
+    "required_reviewers_requested": 2,
+    "prioritize_recent_activity": true,
+    "commits_per_reviewer": 50,
+    "indexed_commit_window": 1000
+  }
+}
+```
+
+---
+
 ## 📂 Knowledge Base Structure (RAG)
 
 The Role Knowledge Base consists of structured personas used for vector similarity search. Example entry:
@@ -74,10 +171,41 @@ The Role Knowledge Base consists of structured personas used for vector similari
 
 ## 🛠 Tech Stack
 
-* **LLM:** Gemini 1.5 Pro / GPT-4o / Gemini 3.1 Flash
+* **LLM:** Groq (primary) with Gemini fallback support
 * **Vector DB:** ChromaDB (for Role Knowledge Base)
 * **Framework:** LangChain / LlamaIndex / Pre-defined AI Clean Code Frameworks
 * **API:** GitHub GraphQL API, .NET Jira Backend
+
+### LLM Provider Configuration
+
+The system now supports provider routing through the centralized LLM wrapper.
+
+Recommended default mode:
+
+```env
+LLM_PROVIDER=groq_primary_gemini_fallback
+GROQ_API_KEY=your_groq_key
+GROQ_MODEL_PRIMARY=llama-3.3-70b-versatile
+GROQ_MODEL_FALLBACKS=llama-3.1-8b-instant
+
+GEMINI_API_KEY=your_gemini_key
+LLM_MODEL_PRIMARY=gemini-3.1-flash-lite-preview
+LLM_MODEL_FALLBACKS=gemini-1.5-flash
+```
+
+Supported provider modes:
+
+- `groq_primary_gemini_fallback` (recommended)
+- `gemini_primary_groq_fallback`
+- `groq_only`
+- `gemini_only`
+
+Purpose-specific model overrides are supported with either generic keys or provider-specific keys:
+
+- Generic: `LLM_MODELS_PR_SKILL_EXTRACTION=model-a,model-b`
+- Provider-specific: `LLM_MODELS_GROQ_PR_SKILL_EXTRACTION=model-a,model-b`
+
+All existing agents continue to call the same `generate_with_resilience` wrapper, so no endpoint contract or business-logic changes are required.
 
 ---
 

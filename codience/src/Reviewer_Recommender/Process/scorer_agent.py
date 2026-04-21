@@ -2,7 +2,7 @@ import json
 import re
 from typing import List, Dict, Any
 from pydantic import BaseModel, ValidationError
-from codience.src.Reviewer_Recommender.Process.llm import get_model
+from codience.src.Reviewer_Recommender.Process.llm import generate_with_resilience
 from codience.src.Reviewer_Recommender.Process.prompts import SCORER_PROMPT
 
 
@@ -26,8 +26,6 @@ def calculate_match_scores(pr_analysis: Dict[str, Any], rag_roles: List[Dict[str
     if not candidates:
         return []
         
-    client = get_model()
-    
     # Format candidates for the prompt
     candidates_text = ""
     for i, c in enumerate(candidates):
@@ -52,36 +50,29 @@ def calculate_match_scores(pr_analysis: Dict[str, Any], rag_roles: List[Dict[str
         candidates_text=candidates_text
     )
     
-    max_retries = 3
-    for attempt in range(max_retries):
+    result = generate_with_resilience(prompt, purpose="candidate_scoring")
+    if result.get("ok"):
+        raw_text = result.get("text", "")
         try:
-            response = client.models.generate_content(
-                model='gemini-3.1-flash-lite-preview',
-                contents=prompt
-            )
-            
-            raw_text = response.text
             json_match = re.search(r'\[.*\]', raw_text, re.DOTALL)
             json_str = json_match.group() if json_match else raw_text
-            
-            # Strict Validation using Pydantic
             parsed_data = json.loads(json_str)
             validated_results = []
             for item in parsed_data:
                 validated_results.append(CandidateScore(**item).model_dump())
-            
-            # Ensure it's sorted by score descending
-            validated_results = sorted(validated_results, key=lambda x: x.get("confidence_score", 0), reverse=True)
-            return validated_results
-            
+
+            return sorted(validated_results, key=lambda x: x.get("confidence_score", 0), reverse=True)
         except json.JSONDecodeError as decode_error:
-            print(f"⚠️ Attempt {attempt + 1}: JSON decode error: {decode_error}")
+            print(f"⚠️ Scorer JSON decode error: {decode_error}")
         except ValidationError as validation_error:
-            print(f"⚠️ Attempt {attempt + 1}: Pydantic validation failed: {validation_error}")
+            print(f"⚠️ Scorer validation failed: {validation_error}")
         except Exception as e:
-            print(f"⚠️ Attempt {attempt + 1}: Unexpected LLM error: {e}")
+            print(f"⚠️ Scorer parse error: {e}")
+    else:
+        print(f"⚠️ Scorer LLM fallback. reason={result.get('reason')}")
+
     # Fallback heuristic if all retries fail
-    print(f"⚠️ All {max_retries} attempts failed for calculating match scores via LLM.")
+    print("⚠️ Heuristic scorer fallback used.")
     fallback_results = []
     req_set = set(pr_analysis.get("detected_languages", []))
     for c in candidates:

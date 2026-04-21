@@ -3,7 +3,7 @@ import requests
 import json
 import re
 from dotenv import load_dotenv
-from codience.src.Reviewer_Recommender.Process.llm import get_model
+from codience.src.Reviewer_Recommender.Process.llm import generate_with_resilience
 from codience.src.Reviewer_Recommender.Process.prompts import JIRA_ANALYSIS_PROMPT
 from pydantic import BaseModel, ValidationError
 
@@ -16,11 +16,37 @@ load_dotenv()
 
 # Suppose the .NET API base URL is stored in an env variable, falling back to localhost for tests
 JIRA_API_BASE_URL = os.getenv("JIRA_API_BASE_URL", "http://localhost:5000/api")
+JIRA_API_MOCK = os.getenv("JIRA_API_MOCK", "false").lower() == "true"
+JIRA_API_MOCK_ON_FAILURE = os.getenv("JIRA_API_MOCK_ON_FAILURE", "true").lower() == "true"
+
+
+def _build_mock_tickets(username: str):
+    return [
+        {
+            "title": f"Refactor reviewer ranking pipeline for {username}",
+            "description": "Optimize scoring logic, add retries, and improve fallback behavior for API outages.",
+            "status": "In Progress",
+        },
+        {
+            "title": "Improve FastAPI endpoint latency",
+            "description": "Reduce request overhead and improve payload validation for recommendation endpoints.",
+            "status": "Done",
+        },
+        {
+            "title": "Stabilize vector DB search quality",
+            "description": "Tune embeddings retrieval and improve relevance for role suggestions.",
+            "status": "To Do",
+        },
+    ]
 
 def fetch_jira_tickets(username: str):
     """
     Fetches Jira tickets assigned to the given user from the existing .NET backend.
     """
+    if JIRA_API_MOCK:
+        print(f"ℹ️ Using mocked Jira tickets for {username}.")
+        return _build_mock_tickets(username)
+
     url = f"{JIRA_API_BASE_URL}/tickets/{username}"
     try:
         response = requests.get(url, timeout=10)
@@ -28,14 +54,20 @@ def fetch_jira_tickets(username: str):
             return response.json()
         else:
             print(f"⚠️ Failed to fetch Jira tickets for {username}. Status: {response.status_code}")
+            if JIRA_API_MOCK_ON_FAILURE:
+                print(f"ℹ️ Falling back to mocked Jira tickets for {username}.")
+                return _build_mock_tickets(username)
             return []
     except Exception as e:
         print(f"⚠️ Error fetching Jira tickets for {username} from .NET API: {e}")
+        if JIRA_API_MOCK_ON_FAILURE:
+            print(f"ℹ️ Falling back to mocked Jira tickets for {username}.")
+            return _build_mock_tickets(username)
         return []
 
 def analyze_jira_context(username: str):
     """
-    Fetches and analyzes Jira tickets for a user using Gemini to determine their current domain and skills.
+    Fetches and analyzes Jira tickets for a user using the configured LLM provider to determine current domain and skills.
     """
     tickets = fetch_jira_tickets(username)
     
@@ -59,34 +91,25 @@ def analyze_jira_context(username: str):
 
     prompt = JIRA_ANALYSIS_PROMPT.format(username=username, combined_tickets=combined_tickets)
     
-    client = get_model()
-    
-    max_retries = 3
-    for attempt in range(max_retries):
-        try:
-            response = client.models.generate_content(
-                model='gemini-3.1-flash-lite-preview',
-                contents=prompt
-            )
-            
-            raw_text = response.text
-            json_match = re.search(r'\{.*\}', raw_text, re.DOTALL)
-            json_str = json_match.group() if json_match else raw_text
-            
-            # Strict Validation using Pydantic
-            parsed_data = json.loads(json_str)
-            validated_output = JiraAnalysisOutput(**parsed_data)
-            return validated_output.model_dump()
-            
-        except json.JSONDecodeError as decode_error:
-            print(f"⚠️ Attempt {attempt + 1}: JSON decode error: {decode_error}")
-        except ValidationError as validation_error:
-            print(f"⚠️ Attempt {attempt + 1}: Pydantic validation failed: {validation_error}")
-        except Exception as e:
-            print(f"⚠️ Attempt {attempt + 1}: Unexpected LLM error: {e}")
-            
-    # Fallback default state
-    print(f"⚠️ All {max_retries} attempts failed for analyzing Jira tickets for {username}.")
+    result = generate_with_resilience(prompt, purpose="jira_analysis")
+    if not result.get("ok"):
+        print(f"⚠️ Jira analysis fallback for {username}. reason={result.get('reason')}")
+        return {"domain": "Unknown", "recent_skills": [], "summary": "Analysis failed after retries."}
+
+    raw_text = result.get("text", "")
+    try:
+        json_match = re.search(r'\{.*\}', raw_text, re.DOTALL)
+        json_str = json_match.group() if json_match else raw_text
+        parsed_data = json.loads(json_str)
+        validated_output = JiraAnalysisOutput(**parsed_data)
+        return validated_output.model_dump()
+    except json.JSONDecodeError as decode_error:
+        print(f"⚠️ Jira JSON decode error: {decode_error}")
+    except ValidationError as validation_error:
+        print(f"⚠️ Jira validation failed: {validation_error}")
+    except Exception as e:
+        print(f"⚠️ Jira analysis parse error: {e}")
+
     return {"domain": "Unknown", "recent_skills": [], "summary": "Analysis failed after retries."}
 
 if __name__ == "__main__":
