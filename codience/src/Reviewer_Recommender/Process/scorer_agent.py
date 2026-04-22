@@ -33,11 +33,13 @@ def calculate_match_scores(pr_analysis: Dict[str, Any], rag_roles: List[Dict[str
         c_commits = ", ".join(c.get("commit_skills", []))
         c_jira_domain = c.get("jira_context", {}).get("domain", "Unknown")
         c_jira_skills = ", ".join(c.get("jira_context", {}).get("recent_skills", []))
+        c_raw_skills = ", ".join(c.get("raw_skills", [])) if isinstance(c.get("raw_skills"), list) else c.get("raw_skills", "None")
         
         candidates_text += f"\nCandidate {i+1}: {c_name}\n"
-        candidates_text += f" - Commit Skills: {c_commits}\n"
+        candidates_text += f" - Commit History Skills: {c_commits}\n"
         candidates_text += f" - Current Jira Domain: {c_jira_domain}\n"
         candidates_text += f" - Recent Jira Skills: {c_jira_skills}\n"
+        candidates_text += f" - Explicitly Provided Skills: {c_raw_skills}\n"
 
     # Format PR and RAG context
     pr_skills = ", ".join(pr_analysis.get("required_skills", pr_analysis.get("detected_languages", [])))
