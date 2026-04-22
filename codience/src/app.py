@@ -1,6 +1,6 @@
 # Fast API for reviewer recommendation
 import os
-from typing import Optional
+from typing import Optional, Any
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 from codience.src.Reviewer_Recommender.Process.Engine_test import ReviewerRecommender, fetch_real_pr_data
@@ -39,20 +39,32 @@ class ReviewerRequestV2(BaseModel):
     repo: str
     # Pull request number in the target repository.
     pr_number: int
-    # Frontend-provided must-consider reviewer usernames.
-    required_reviewers: list[str] = Field(default_factory=list)
+    # Frontend-provided must-consider reviewers. Can be usernames (str) or entities (dict).
+    required_reviewers: list[Any] = Field(default_factory=list)
     # Optional tuning knobs. Omitted fields use server-side defaults.
     options: Optional[RankingOptions] = None
 
 
 def _build_engine(owner, repo, min_commits=None):
+    """Full init: indexes all repo contributors. Used when no required reviewers are provided."""
     engine = ReviewerRecommender(owner, repo)
-    # Keep a larger default commit index so per-reviewer recent-history limits are meaningful.
     max_commits = int(os.getenv("ENGINE_MAX_COMMITS", "1000"))
     if min_commits is not None:
         max_commits = max(max_commits, int(min_commits))
     max_llm_calls = int(os.getenv("ENGINE_MAX_LLM_CALLS", "30"))
     engine.initialize_system(max_commits=max_commits, max_llm_calls=max_llm_calls)
+    return engine
+
+
+def _build_engine_for_required(owner, repo, required_reviewers, commits_per_reviewer=50):
+    """Lean init: only fetches history for the specified required reviewers."""
+    engine = ReviewerRecommender(owner, repo)
+    max_llm_calls = int(os.getenv("ENGINE_MAX_LLM_CALLS", "20"))
+    engine.initialize_for_required_only(
+        required_reviewers=required_reviewers,
+        commits_per_reviewer=commits_per_reviewer,
+        max_llm_calls=max_llm_calls,
+    )
     return engine
 
 
@@ -80,18 +92,23 @@ async def recommend(request: ReviewerRequest):
 async def recommend_v2(request: ReviewerRequestV2):
     normalized_required = []
     seen = set()
-    # Normalize and dedupe required reviewers to keep matching deterministic.
+    # Normalize and dedupe required reviewers.
     for reviewer in request.required_reviewers:
-        if not isinstance(reviewer, str):
+        username = None
+        if isinstance(reviewer, str):
+            username = reviewer.strip()
+        elif isinstance(reviewer, dict):
+            username = (reviewer.get("username") or reviewer.get("login") or "").strip()
+        
+        if not username:
             continue
-        cleaned = reviewer.strip()
-        if not cleaned:
-            continue
-        lower = cleaned.lower()
+            
+        lower = username.lower()
         if lower in seen:
             continue
         seen.add(lower)
-        normalized_required.append(cleaned)
+        # We pass the original object (str or dict) to the engine's internal normalization
+        normalized_required.append(reviewer)
 
     options = request.options.model_dump(exclude_none=True) if request.options else {}
     # Keep top_k bounded for API safety and predictable runtime when provided.
@@ -108,12 +125,19 @@ async def recommend_v2(request: ReviewerRequestV2):
             options["commits_per_reviewer"] = 100
 
     commits_per_reviewer = options.get("commits_per_reviewer", ReviewerRecommender.DEFAULT_COMMITS_PER_REVIEWER)
-    top_k = options.get("top_k", ReviewerRecommender.DEFAULT_TOP_K)
-    # Ensure engine has enough indexed commits to satisfy per-reviewer limits for the expected candidate pool.
-    expected_reviewer_pool = max(len(normalized_required), int(top_k), 1)
-    min_commits = int(commits_per_reviewer) * expected_reviewer_pool
 
-    engine = _build_engine(request.owner, request.repo, min_commits=min_commits)
+    if normalized_required:
+        # Fast path: only analyze the explicitly listed reviewers.
+        engine = _build_engine_for_required(
+            request.owner, request.repo,
+            required_reviewers=normalized_required,
+            commits_per_reviewer=commits_per_reviewer,
+        )
+    else:
+        # Full path: index all repo contributors.
+        top_k = options.get("top_k", ReviewerRecommender.DEFAULT_TOP_K)
+        min_commits = int(commits_per_reviewer) * max(int(top_k), 1)
+        engine = _build_engine(request.owner, request.repo, min_commits=min_commits)
 
     real_pr = fetch_real_pr_data(request.owner, request.repo, request.pr_number)
     if not real_pr:

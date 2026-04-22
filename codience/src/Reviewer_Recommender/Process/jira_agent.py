@@ -39,37 +39,40 @@ def _build_mock_tickets(username: str):
         },
     ]
 
-def fetch_jira_tickets(username: str):
+def fetch_jira_tickets(username: str, jira_username: str = None):
     """
     Fetches Jira tickets assigned to the given user from the existing .NET backend.
+    If jira_username is provided, it is used instead of the repository username.
     """
+    target_user = jira_username if jira_username else username
+    
     if JIRA_API_MOCK:
-        print(f"ℹ️ Using mocked Jira tickets for {username}.")
-        return _build_mock_tickets(username)
+        print(f"ℹ️ Using mocked Jira tickets for {target_user}.")
+        return _build_mock_tickets(target_user)
 
-    url = f"{JIRA_API_BASE_URL}/tickets/{username}"
+    url = f"{JIRA_API_BASE_URL}/tickets/{target_user}"
     try:
         response = requests.get(url, timeout=10)
         if response.status_code == 200:
             return response.json()
         else:
-            print(f"⚠️ Failed to fetch Jira tickets for {username}. Status: {response.status_code}")
+            print(f"⚠️ Failed to fetch Jira tickets for {target_user}. Status: {response.status_code}")
             if JIRA_API_MOCK_ON_FAILURE:
-                print(f"ℹ️ Falling back to mocked Jira tickets for {username}.")
-                return _build_mock_tickets(username)
+                print(f"ℹ️ Falling back to mocked Jira tickets for {target_user}.")
+                return _build_mock_tickets(target_user)
             return []
     except Exception as e:
-        print(f"⚠️ Error fetching Jira tickets for {username} from .NET API: {e}")
+        print(f"⚠️ Error fetching Jira tickets for {target_user} from .NET API: {e}")
         if JIRA_API_MOCK_ON_FAILURE:
-            print(f"ℹ️ Falling back to mocked Jira tickets for {username}.")
-            return _build_mock_tickets(username)
+            print(f"ℹ️ Falling back to mocked Jira tickets for {target_user}.")
+            return _build_mock_tickets(target_user)
         return []
 
-def analyze_jira_context(username: str):
+def analyze_jira_context(username: str, jira_username: str = None):
     """
     Fetches and analyzes Jira tickets for a user using the configured LLM provider to determine current domain and skills.
     """
-    tickets = fetch_jira_tickets(username)
+    tickets = fetch_jira_tickets(username, jira_username=jira_username)
     
     if not tickets:
         return {"domain": "Unknown", "recent_skills": [], "summary": "No Jira tickets found."}

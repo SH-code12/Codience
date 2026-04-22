@@ -27,6 +27,10 @@ def fetch_real_pr_data(owner, repo, pr_number):
     pr_resp = requests.get(pr_url, headers=headers)
     if pr_resp.status_code != 200:
         print(f"❌ Failed to fetch PR info: {pr_resp.status_code}")
+        try:
+            print(f"GitHub Error: {pr_resp.json().get('message')}")
+        except:
+            print(f"Raw Response: {pr_resp.text}")
         return None
         
     pr_json = pr_resp.json()
@@ -113,6 +117,49 @@ class ReviewerRecommender:
 
         print(f"✅ Indexed {len(self.history_profiles)} developers.")
 
+    def initialize_for_required_only(self, required_reviewers, commits_per_reviewer=50, max_llm_calls=20):
+        """
+        Lean initialization path used when required_reviewers are explicitly provided.
+        Skips full repo indexing — fetches commit history ONLY for the listed reviewers.
+        This is much faster and cheaper than initialize_system.
+        """
+        # Normalize to extract usernames only
+        usernames = []
+        for r in required_reviewers or []:
+            if isinstance(r, str):
+                name = r.strip()
+            elif isinstance(r, dict):
+                name = (r.get("username") or r.get("login") or "").strip()
+            else:
+                continue
+            if name:
+                usernames.append(name)
+
+        if not usernames:
+            return
+
+        print(f"🚀 Targeted init: fetching up to {commits_per_reviewer} commits for {len(usernames)} reviewer(s)...")
+        all_commits = []
+        seen_shas = set()
+        for username in usernames:
+            fetched = self._fetch_commits_for_author(username, commits_per_reviewer)
+            for commit in fetched:
+                sha = commit.get("sha")
+                if sha and sha in seen_shas:
+                    continue
+                if sha:
+                    seen_shas.add(sha)
+                all_commits.append(commit)
+
+        self.indexed_commits = all_commits
+        self.contributor_stats = self._build_contributor_stats(all_commits)
+        self.history_profiles = map_commits_to_skills(all_commits, max_llm_calls=max_llm_calls)
+
+        for author in self.contributor_stats:
+            self.history_profiles.setdefault(author, set())
+
+        print(f"✅ Targeted init complete: {len(self.history_profiles)} reviewer(s) profiled.")
+
     def _parse_commit_datetime(self, date_value):
         if not date_value:
             return None
@@ -184,16 +231,32 @@ class ReviewerRecommender:
         return limited
 
     def _normalize_required_reviewers(self, required_reviewers):
+        """
+        Normalizes required reviewers into a consistent dict mapping.
+        Supports:
+          - String (username)
+          - Dict {"username": "...", "jira_username": "...", "raw_skills": [...]}
+        """
         required_map = {}
         for reviewer in required_reviewers or []:
-            if not isinstance(reviewer, str):
-                continue
-            clean_name = reviewer.strip()
-            if not clean_name:
-                continue
-            key = clean_name.lower()
-            if key not in required_map:
-                required_map[key] = clean_name
+            if isinstance(reviewer, str):
+                clean_name = reviewer.strip()
+                if not clean_name: continue
+                key = clean_name.lower()
+                required_map[key] = {
+                    "username": clean_name,
+                    "jira_username": None,
+                    "raw_skills": []
+                }
+            elif isinstance(reviewer, dict):
+                username = reviewer.get("username") or reviewer.get("login")
+                if not username: continue
+                key = username.strip().lower()
+                required_map[key] = {
+                    "username": username.strip(),
+                    "jira_username": reviewer.get("jira_username"),
+                    "raw_skills": reviewer.get("raw_skills", [])
+                }
         return required_map
 
     def _count_commits_for_author(self, commits, author_name):
@@ -283,16 +346,9 @@ class ReviewerRecommender:
         if not required_map:
             return []
 
-        valid = []
-        observed_contributors = set(self.history_profiles.keys()) | set(self.contributor_stats.keys())
-        known_contributors = set(self.repo_contributors) | observed_contributors
-        contributor_name_map = {name.lower(): name for name in known_contributors}
-        for required_name in required_map.values():
-            resolved = contributor_name_map.get(required_name.lower())
-            if resolved:
-                valid.append(resolved)
-
-        return valid
+        # Return all usernames from required_map. 
+        # We will try to fetch their GitHub history if it exists, but we won't exclude them yet.
+        return [r["username"] for r in required_map.values()]
 
     def recommend(self, pr_data):
         v2_result = self.recommend_v2(pr_data, required_reviewers=[], options={})
@@ -349,15 +405,16 @@ class ReviewerRecommender:
             print(f"⚠️ Vector DB Search Failed: {e}")
             rag_roles = []
 
-        # 3. Preliminary candidate scoring with optional recency prioritization.
-        observed_contributors = set(self.history_profiles.keys()) | set(dynamic_stats.keys())
-        repo_contributors = set(self.repo_contributors)
-
+        # 3. Preliminary candidate scoring
         if required_only_mode:
-            # Strict required mode: evaluate only required reviewers that are valid repo contributors.
-            candidate_names = set(valid_required_contributors)
+            # Strict required mode: evaluate ONLY required reviewers provided in the input.
+            candidate_names = set()
+            for key, meta in required_map.items():
+                candidate_names.add(meta["username"])
         else:
-            # No required list provided: analyze all contributors in repo, never external users.
+            # No required list provided: analyze all observed repo contributors.
+            observed_contributors = set(self.history_profiles.keys()) | set(dynamic_stats.keys())
+            repo_contributors = set(self.repo_contributors)
             candidate_names = set(observed_contributors)
             if repo_contributors:
                 candidate_names = {name for name in candidate_names if name in repo_contributors}
@@ -370,11 +427,15 @@ class ReviewerRecommender:
 
             stat = dynamic_stats.get(name, self.contributor_stats.get(name, {}))
             recency_score = stat.get("recency_score", 0.0)
-            required_flag = name.lower() in required_set
+            
+            # Fetch metadata from required_map if it exists
+            meta = required_map.get(name.lower(), {})
+            required_flag = bool(meta)
+            raw_skills = meta.get("raw_skills", [])
+            jira_username = meta.get("jira_username")
 
             base_composite = skill_score
             if prioritize_recent_activity:
-                # Fixed blend keeps API simple while still favoring active contributors.
                 base_composite = (0.55 * skill_score) + (0.45 * recency_score)
             if required_flag:
                 base_composite = min(1.0, base_composite + 0.10)
@@ -386,18 +447,19 @@ class ReviewerRecommender:
                 "skill_score": round(skill_score, 4),
                 "recency_score": recency_score,
                 "required_reviewer": required_flag,
+                "raw_skills": raw_skills,
+                "jira_username": jira_username,
                 "prelim_score": round(base_composite, 4),
                 "commit_count": stat.get("commit_count", 0),
                 "tenure_days": stat.get("tenure_days", 365),
             })
             
-        # By default, analyze all candidates and only apply top_k at final response slicing.
         preliminary_candidates = sorted(preliminary_candidates, key=lambda x: x['prelim_score'], reverse=True)
 
         # 4. Jira Analyzer Agent (Enrich candidates)
         for c in preliminary_candidates:
-            print(f"🔄 Analyzing Jira Context for {c['name']}...")
-            c["jira_context"] = analyze_jira_context(c["name"])
+            print(f"🔄 Analyzing Jira Context for {c['name']} (Jira user: {c.get('jira_username') or c['name']})...")
+            c["jira_context"] = analyze_jira_context(c["name"], jira_username=c.get("jira_username"))
 
         # 5. Scorer Matchmaker Agent (AI explanation + confidence)
         print("🧠 Calculating AI Confidence Scores...")
@@ -465,7 +527,21 @@ if __name__ == "__main__":
     real_pr = fetch_real_pr_data(TARGET_OWNER, TARGET_REPO, PR_NUMBER)
 
     if real_pr:
-        run_output = engine.recommend_v2(real_pr, required_reviewers=[], options={"top_k": 5})
+        required_reviewers = [
+            {"username": "lvliang-intel", "jira_username": "lvliang_jira", "raw_skills": ["Intel optimizations", "C++", "Performance"]},
+            {"username": "jackcook", "jira_username": "jack_jira", "raw_skills": ["Frontend", "React", "Typescript"]},
+            {"username": "harshaljanjani", "jira_username": "harshal_jira", "raw_skills": ["Transformers", "NLP", "Python"]},
+            {"username": "someone-new", "jira_username": "someone_new_jira", "raw_skills": ["Rust", "PyO3", "Core Optimization"]}
+        ]
+        
+        options = {
+            "top_k": 5,
+            "prioritize_recent_activity": True,
+            "commits_per_reviewer": 5
+        }
+
+        print(f"\n🚀 Running restricted analysis for {len(required_reviewers)} reviewers...")
+        run_output = engine.recommend_v2(real_pr, required_reviewers=required_reviewers, options=options)
         results = run_output.get("recommended_reviewers", [])
         
         print("\n" + "═"*90)
