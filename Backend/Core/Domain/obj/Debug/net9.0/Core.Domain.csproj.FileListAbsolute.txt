@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 D:\college\Senior Year\Demo\Backend\Core\Domain\bin\Debug\net9.0\Core.Domain.deps.json
 D:\college\Senior Year\Demo\Backend\Core\Domain\bin\Debug\net9.0\Core.Domain.dll
 D:\college\Senior Year\Demo\Backend\Core\Domain\bin\Debug\net9.0\Core.Domain.pdb
@@ -22,6 +23,44 @@ E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\D
 E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Domain\obj\Debug\net9.0\refint\Core.Domain.dll
 E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Domain\obj\Debug\net9.0\Core.Domain.pdb
 E:\Graduation Project\Codience\backend test\backend 1-10\Codience\Backend\Core\Domain\obj\Debug\net9.0\ref\Core.Domain.dll
+=======
+D:/college/Senior Year/Demo/Backend/Core/Domain/bin/Debug/net9.0/Core.Domain.deps.json
+D:/college/Senior Year/Demo/Backend/Core/Domain/bin/Debug/net9.0/Core.Domain.dll
+D:/college/Senior Year/Demo/Backend/Core/Domain/bin/Debug/net9.0/Core.Domain.pdb
+D:/college/Senior Year/Demo/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:/college/Senior Year/Demo/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.AssemblyInfoInputs.cache
+D:/college/Senior Year/Demo/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.AssemblyInfo.cs
+D:/college/Senior Year/Demo/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.csproj.CoreCompileInputs.cache
+D:/college/Senior Year/Demo/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.sourcelink.json
+D:/college/Senior Year/Demo/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.dll
+D:/college/Senior Year/Demo/Backend/Core/Domain/obj/Debug/net9.0/refint/Core.Domain.dll
+D:/college/Senior Year/Demo/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.pdb
+D:/college/Senior Year/Demo/Backend/Core/Domain/obj/Debug/net9.0/ref/Core.Domain.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Domain/bin/Debug/net9.0/Core.Domain.deps.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Domain/bin/Debug/net9.0/Core.Domain.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Domain/bin/Debug/net9.0/Core.Domain.pdb
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.GeneratedMSBuildEditorConfig.editorconfig
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.AssemblyInfoInputs.cache
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.AssemblyInfo.cs
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.csproj.CoreCompileInputs.cache
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.sourcelink.json
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Domain/obj/Debug/net9.0/refint/Core.Domain.dll
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.pdb
+E:/Graduation Project/Codience/backend test/backend 1-10/Codience/Backend/Core/Domain/obj/Debug/net9.0/ref/Core.Domain.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/bin/Debug/net9.0/Core.Domain.deps.json
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/bin/Debug/net9.0/Core.Domain.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/bin/Debug/net9.0/Core.Domain.pdb
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.AssemblyInfoInputs.cache
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.AssemblyInfo.cs
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.csproj.CoreCompileInputs.cache
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.sourcelink.json
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/obj/Debug/net9.0/refint/Core.Domain.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/obj/Debug/net9.0/Core.Domain.pdb
+/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/obj/Debug/net9.0/ref/Core.Domain.dll
+>>>>>>> b23a80ed4af7a2647afdf02faeab0455de452681
 D:\GraduationProject\Codience\Backend\Core\Domain\bin\Debug\net9.0\Core.Domain.deps.json
 d:\GraduationProject\Codience\Backend\Core\Domain\bin\Debug\net9.0\Core.Domain.dll
 d:\GraduationProject\Codience\Backend\Core\Domain\bin\Debug\net9.0\Core.Domain.pdb

@@ -97,7 +97,6 @@ public class GitHubAuthService : IGithubAuthService
     }
 
 
-
     public async Task<AuthUserDto> SaveUserAsync(string accessToken, CancellationToken ct = default)
     {
         if (string.IsNullOrEmpty(accessToken))
@@ -176,53 +175,6 @@ public class GitHubAuthService : IGithubAuthService
 
 
 
-    public async Task<IEnumerable<GitHubRepoDto>> SaveRepositories(string userName)
-    {
-        _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Codience");
-
-        var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
-        var authUser = await userRepo.FirstOrDefaultAsync(u => u.AuthUserName == userName);
-
-
-
-        _httpClient.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue("Bearer", authUser!.AccessToken);
-
-
-        var response = await _httpClient.GetAsync("https://api.github.com/user/repos?visibility=all");
-        if (!response.IsSuccessStatusCode)
-        {
-            var errorBody = await response.Content.ReadAsStringAsync();
-            throw new Exception($"GitHub API error: {response.StatusCode} - {errorBody}");
-        }
-
-        var reposJson = await response.Content.ReadFromJsonAsync<List<GitHubRepo>>(cancellationToken: CancellationToken.None);
-        if (reposJson == null)
-            throw new Exception("GitHub returned null repos list.");
-
-        var repoRepo = _authUow.GetGenericRepository<GitHubRepo, int>();
-
-        foreach (var repo in reposJson)
-        {
-            var existingRepo = await repoRepo.FirstOrDefaultAsync(r => r.Name == repo.Name && r.UserId == authUser.Id);
-            if (existingRepo == null)
-            {
-                repo.UserId = authUser.Id;
-                await repoRepo.AddAsync(repo);
-            }
-        }
-
-        await _authUow.SaveChangesAsync();
-
-        var result = reposJson.Select(r => new GitHubRepoDto(
-            r.Name,
-            r.HtmlUrl,
-            r.Description
-        ));
-
-        return result;
-    }
-
 
 
     public async Task<IEnumerable<GitHubPullRequestDto>> GetPullRequestsAsync(string userName, string repoName)
@@ -274,7 +226,7 @@ public class GitHubAuthService : IGithubAuthService
                 {
                     Number = prDto.Number,
                     Title = prDto.Title,
-                   
+
                     State = prDto.State,
                     CreatedAt = prDto.CreatedAt,
                     RepositoryId = repository.Id,
@@ -288,44 +240,44 @@ public class GitHubAuthService : IGithubAuthService
 
         return pullsFromGitHub;
     }
-    public async Task<GitHubPullRequestDto> GetPullRequest(string owner,int pullNumber,string repo)
-{
-    var userRepo =
-        _authUow.GetGenericRepository<AuthUser, Guid>();
-
-    var authUser =
-        await userRepo.FirstOrDefaultAsync(
-            u=>u.AuthUserName==owner);
-
-    if(authUser==null)
-        throw new Exception("User not found");
-
-    _httpClient.DefaultRequestHeaders.Authorization =
-        new AuthenticationHeaderValue(
-            "Bearer",
-            authUser.AccessToken);
-
-    _httpClient.DefaultRequestHeaders.UserAgent
-        .ParseAdd("Codience");
-
-    var url =
-$"https://api.github.com/repos/{owner}/{repo}/pulls/{pullNumber}";
-
-    var response =
-        await _httpClient.GetAsync(url);
-
-    if(!response.IsSuccessStatusCode)
+    public async Task<GitHubPullRequestDto> GetPullRequest(string owner, int pullNumber, string repo)
     {
-        var error =
-            await response.Content.ReadAsStringAsync();
+        var userRepo =
+            _authUow.GetGenericRepository<AuthUser, Guid>();
 
-        throw new Exception(
-            $"GitHub error: {response.StatusCode} {error}");
+        var authUser =
+            await userRepo.FirstOrDefaultAsync(
+                u => u.AuthUserName == owner);
+
+        if (authUser == null)
+            throw new Exception("User not found");
+
+        _httpClient.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue(
+                "Bearer",
+                authUser.AccessToken);
+
+        _httpClient.DefaultRequestHeaders.UserAgent
+            .ParseAdd("Codience");
+
+        var url =
+    $"https://api.github.com/repos/{owner}/{repo}/pulls/{pullNumber}";
+
+        var response =
+            await _httpClient.GetAsync(url);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var error =
+                await response.Content.ReadAsStringAsync();
+
+            throw new Exception(
+                $"GitHub error: {response.StatusCode} {error}");
+        }
+
+        return await response.Content
+            .ReadFromJsonAsync<GitHubPullRequestDto>();
     }
-
-    return await response.Content
-        .ReadFromJsonAsync<GitHubPullRequestDto>();
-}
     public async Task<IEnumerable<GitHubFileDto>> GetChangedFilesAsync(string owner, string repo, int pullNumber)
     {
         var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
@@ -378,69 +330,117 @@ $"https://api.github.com/repos/{owner}/{repo}/pulls/{pullNumber}";
         return commitsFromGitHub;
     }
 
-   public async Task<IEnumerable<GitHubCommitDto>> GetAllCommits(string owner,string repo, string author)
-   {
-    var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
+    public async Task<IEnumerable<GitHubCommitDto>> GetAllCommits(string owner, string repo, string author)
+    {
+        var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
 
-    var authUser = await userRepo
-        .FirstOrDefaultAsync(u => u.AuthUserName == owner);
+        var authUser = await userRepo
+            .FirstOrDefaultAsync(u => u.AuthUserName == owner);
 
-    if(authUser == null)
-        throw new Exception("User not found");
+        if (authUser == null)
+            throw new Exception("User not found");
 
-    _httpClient.DefaultRequestHeaders.Authorization =
-        new AuthenticationHeaderValue("Bearer", authUser.AccessToken);
+        _httpClient.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Bearer", authUser.AccessToken);
 
-    _httpClient.DefaultRequestHeaders.UserAgent
-        .ParseAdd("Codience");
+        _httpClient.DefaultRequestHeaders.UserAgent
+            .ParseAdd("Codience");
 
-    var url =
-        $"https://api.github.com/repos/{owner}/{repo}/commits?author={author}";
+        var url =
+            $"https://api.github.com/repos/{owner}/{repo}/commits?author={author}";
 
-    var response = await _httpClient.GetAsync(url);
+        var response = await _httpClient.GetAsync(url);
 
-    response.EnsureSuccessStatusCode();
+        response.EnsureSuccessStatusCode();
 
-    var commits =
-        await response.Content
-        .ReadFromJsonAsync<List<GitHubCommitDto>>();
+        var commits =
+            await response.Content
+            .ReadFromJsonAsync<List<GitHubCommitDto>>();
 
-    return commits ?? new List<GitHubCommitDto>();
-}
-    public async Task<IEnumerable<GitHubCommitDto>>
-GetPullRequestCommits(string owner,string repo,int pullNumber)
+        return commits ?? new List<GitHubCommitDto>();
+    }
+    public async Task<IEnumerable<GitHubCommitDto>> GetPullRequestCommits(string owner, string repo, int pullNumber)
+    {
+        var userRepo =
+            _authUow.GetGenericRepository<AuthUser, Guid>();
+
+        var authUser =
+            await userRepo.FirstOrDefaultAsync(
+                u => u.AuthUserName == owner);
+
+        if (authUser == null)
+            throw new Exception("User not found");
+
+        _httpClient.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue(
+                "Bearer",
+                authUser.AccessToken);
+
+        _httpClient.DefaultRequestHeaders.UserAgent
+            .ParseAdd("Codience");
+
+        var url =
+    $"https://api.github.com/repos/{owner}/{repo}/pulls/{pullNumber}/commits";
+
+        var response =
+            await _httpClient.GetAsync(url);
+
+        response.EnsureSuccessStatusCode();
+
+        var commits =
+            await response.Content
+            .ReadFromJsonAsync<List<GitHubCommitDto>>();
+
+        return commits ?? new List<GitHubCommitDto>();
+    }
+
+    
+    
+    public async Task<PagedResult<GitHubRepoDto>>
+GetRepositoriesAsync(
+string userName,
+int page = 1,
+int pageSize = 30)
 {
-    var userRepo =
-        _authUow.GetGenericRepository<AuthUser, Guid>();
+ 
 
-    var authUser =
-        await userRepo.FirstOrDefaultAsync(
-            u=>u.AuthUserName==owner);
+   _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Codience");
 
-    if(authUser==null)
-        throw new Exception("User not found");
+        var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
+        var authUser = await userRepo.FirstOrDefaultAsync(u => u.AuthUserName == userName);
 
-    _httpClient.DefaultRequestHeaders.Authorization=
-        new AuthenticationHeaderValue(
-            "Bearer",
-            authUser.AccessToken);
 
-    _httpClient.DefaultRequestHeaders.UserAgent
-        .ParseAdd("Codience");
 
-    var url=
-$"https://api.github.com/repos/{owner}/{repo}/pulls/{pullNumber}/commits";
+        _httpClient.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Bearer", authUser!.AccessToken);
 
-    var response=
-        await _httpClient.GetAsync(url);
+    var response =
+        await _httpClient.GetAsync(
+$"https://api.github.com/user/repos?page={page}&per_page={pageSize}");
 
     response.EnsureSuccessStatusCode();
 
-    var commits=
+    var repos =
         await response.Content
-        .ReadFromJsonAsync<List<GitHubCommitDto>>();
+        .ReadFromJsonAsync<List<GitHubRepo>>();
 
-    return commits ?? new List<GitHubCommitDto>();
+    bool hasNext = false;
+
+    if (response.Headers.TryGetValues("Link", out var values))
+    {
+        var link = values.FirstOrDefault();
+
+        hasNext =
+            link != null &&
+            link.Contains("rel=\"next\"");
+    }
+
+    var repoDtos = repos?.Select(r => new GitHubRepoDto(
+        r.Name,
+        r.HtmlUrl,
+        r.Description
+    )) ?? new List<GitHubRepoDto>();
+    return new PagedResult<GitHubRepoDto>(repoDtos, page, pageSize, hasNext);
 }
 
 }

@@ -12,6 +12,8 @@ public class GitHubCommitDto
 
     public DateTime CommitDate =>
         Commit?.Author?.Date ?? DateTime.MinValue;
+        
+    
 }
 
 public class GitHubCommit

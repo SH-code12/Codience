@@ -1,6 +1,7 @@
+using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using Core.Abstraction;
-using Microsoft.AspNetCore.Mvc;
+using Share;
 
 namespace Infrastructure.Presentation.Controllers;
 
@@ -8,32 +9,85 @@ namespace Infrastructure.Presentation.Controllers;
 [Route("api/[controller]")]
 public class GitHubWebhookController : ControllerBase
 {
-  private readonly IGitHubWebhookService _webhookService;
+    private readonly IGitHubWebhookService _service;
 
-    public GitHubWebhookController(IGitHubWebhookService webhookService)
+    public GitHubWebhookController(
+        IGitHubWebhookService service)
     {
-        _webhookService = webhookService;
+        _service = service;
     }
 
+    
     [HttpPost("github")]
-public async Task<IActionResult> ReceiveWebhook(
-    [FromHeader(Name = "X-GitHub-Event")] string eventType,
-    [FromBody] JsonElement payload)
-{
-    try
+    public async Task<IActionResult> Receive(
+        [FromHeader(Name = "X-GitHub-Event")] string eventType,
+        [FromBody] JsonElement payload)
     {
-        var result = await _webhookService.HandleEventAsync(
-            eventType,
-            payload.GetRawText()
-        );
+        try
+        {
+            var result = await _service.HandleEventAsync(
+                eventType,
+                payload.GetRawText());
 
-        return Ok(result);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new
+            {
+                message = ex.Message
+            });
+        }
     }
-    catch (Exception ex)
+    
+ 
+    [HttpGet("installation-id/{owner}/{repo}")]
+    public async Task<IActionResult> InstallationId(
+        string owner,
+        string repo)
     {
-        Console.WriteLine(ex.ToString());
-        return StatusCode(500, ex.Message);
+        try
+        {
+            var result =
+                await _service.GetInstallationIdAsync(owner, repo);
+
+            return Ok(new
+            {
+                installationId = result
+            });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new
+            {
+                message = ex.Message
+            });
+        }
     }
-}
-       
+
+    
+    [HttpDelete("{owner}/{repo}")]
+    public async Task<IActionResult> Disconnect(
+        string owner,
+        string repo)
+    {
+        try
+        {
+            await _service.DisconnectRepositoryAsync(
+                owner,
+                repo);
+
+            return Ok(new
+            {
+                message = "Disconnected successfully"
+            });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new
+            {
+                message = ex.Message
+            });
+        }
+    }
 }

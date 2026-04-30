@@ -72,6 +72,10 @@
             "Swashbuckle.AspNetCore.SwaggerUI": {
               "target": "Package",
               "version": "[9.0.5, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.17.0, )"
             }
           },
           "imports": [
@@ -119,6 +123,9 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
+              "D:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj": {
+                "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj"
+              },
               "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj": {
                 "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Share\\Share.csproj"
               }
@@ -285,6 +292,10 @@
             "Polly": {
               "target": "Package",
               "version": "[8.6.4, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.17.0, )"
             }
           },
           "imports": [
