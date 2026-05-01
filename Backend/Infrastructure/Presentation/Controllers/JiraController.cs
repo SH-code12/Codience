@@ -83,4 +83,18 @@ public class JiraController : ControllerBase
         var data = await _jiraService.GetAccessibleResources(token);
         return Ok(data);
     }
+
+    [HttpGet("assigned-tickets")]
+    public async Task<IActionResult> GetAssignedTickets(string token, string cloudId, string projectKey, string assigneeName)
+    {
+        try
+        {
+            var issues = await _jiraService.GetAssignedIssuesAsync(token, cloudId, projectKey, assigneeName);
+            return Ok(issues);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
 }

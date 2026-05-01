@@ -6,10 +6,15 @@ using Infrastructure.Persistence.Data;
 using Infrastructure.Persistence.Repositories;
 using Infrastructure.Presentation.Controllers;
 using Microsoft.EntityFrameworkCore;
+using dotenv.net;
+
+DotEnv.Load(options: new DotEnvOptions(envFilePaths: new[] { "../.env" }));
 
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddEnvironmentVariables();
 
 builder.Services.AddOpenApi();
 builder.Services.AddControllers()

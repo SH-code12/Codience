@@ -1,0 +1,3 @@
+# Local environment variables
+.env
+.env.*
