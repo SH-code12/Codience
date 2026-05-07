@@ -15,6 +15,15 @@
           }
         }
       },
+      "dotenv.net/4.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/dotenv.net.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/dotenv.net.dll": {}
+        }
+      },
       "Humanizer.Core/2.14.1": {
         "type": "package",
         "compile": {
@@ -1382,6 +1391,20 @@
         "lib/netstandard2.0/CsvHelper.xml",
         "lib/netstandard2.1/CsvHelper.dll",
         "lib/netstandard2.1/CsvHelper.xml"
+      ]
+    },
+    "dotenv.net/4.0.2": {
+      "sha512": "6xpiqKV1aKWIkSSDP7J+60GEKUitiDweD4yOsn9giCMysSfCghJQuYfXQwbzgdmt0Bsv/2ajUCbjvemGavqItA==",
+      "type": "package",
+      "path": "dotenv.net/4.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "dotenv.net.4.0.2.nupkg.sha512",
+        "dotenv.net.nuspec",
+        "lib/netstandard2.0/dotenv.net.dll",
+        "lib/netstandard2.1/dotenv.net.dll"
       ]
     },
     "Humanizer.Core/2.14.1": {
@@ -3785,23 +3808,24 @@
       "Microsoft.Extensions.DependencyInjection >= 9.0.9",
       "Swashbuckle.AspNetCore.SwaggerGen >= 9.0.5",
       "Swashbuckle.AspNetCore.SwaggerUI >= 9.0.5",
-      "System.IdentityModel.Tokens.Jwt >= 8.17.0"
+      "System.IdentityModel.Tokens.Jwt >= 8.17.0",
+      "dotenv.net >= 4.0.2"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\DELL\\.nuget\\packages\\": {}
+    "/home/malak-hisham/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GraduationProject\\Codience\\Backend\\API\\Codience.API.csproj",
+      "projectUniqueName": "/home/malak-hisham/RiderProjects/Codience/Backend/API/Codience.API.csproj",
       "projectName": "Codience.API",
-      "projectPath": "D:\\GraduationProject\\Codience\\Backend\\API\\Codience.API.csproj",
-      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "D:\\GraduationProject\\Codience\\Backend\\API\\obj\\",
+      "projectPath": "/home/malak-hisham/RiderProjects/Codience/Backend/API/Codience.API.csproj",
+      "packagesPath": "/home/malak-hisham/.nuget/packages/",
+      "outputPath": "/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/malak-hisham/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -3813,11 +3837,11 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj": {
-              "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj"
+            "/home/malak-hisham/RiderProjects/Codience/Backend/Infrastructure/Persistence/Infrastructure.Persistence.csproj": {
+              "projectPath": "/home/malak-hisham/RiderProjects/Codience/Backend/Infrastructure/Persistence/Infrastructure.Persistence.csproj"
             },
-            "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj": {
-              "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj"
+            "/home/malak-hisham/RiderProjects/Codience/Backend/Infrastructure/Presentation/Infrastructure.Presentation.csproj": {
+              "projectPath": "/home/malak-hisham/RiderProjects/Codience/Backend/Infrastructure/Presentation/Infrastructure.Presentation.csproj"
             }
           }
         }
@@ -3832,7 +3856,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "10.0.200"
     },
     "frameworks": {
       "net9.0": {
@@ -3863,6 +3887,10 @@
           "System.IdentityModel.Tokens.Jwt": {
             "target": "Package",
             "version": "[8.17.0, )"
+          },
+          "dotenv.net": {
+            "target": "Package",
+            "version": "[4.0.2, )"
           }
         },
         "imports": [
@@ -3884,7 +3912,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/home/malak-hisham/.dotnet/sdk/10.0.201/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

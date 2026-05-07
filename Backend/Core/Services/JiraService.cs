@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
+using Share;
 
 namespace Core.Services;
 
@@ -21,7 +22,6 @@ public class JiraService : IJiraService
         _unitOfWork = unitOfWork;
     }
 
-    // Exchange code for Admin access token
     public async Task<string> ExchangeCodeForAdminToken(string code)
     {
         var body = new
@@ -35,61 +35,46 @@ public class JiraService : IJiraService
 
         var response = await _httpClient.PostAsJsonAsync("https://auth.atlassian.com/oauth/token", body);
         var json = await response.Content.ReadAsStringAsync();
-        if (!response.IsSuccessStatusCode) throw new Exception($"Jira OAuth Error: {json}"); var token = JsonSerializer.Deserialize<JsonElement>(json);
+        if (!response.IsSuccessStatusCode) throw new Exception("Jira OAuth Error: " + json);
+        var token = JsonSerializer.Deserialize<JsonElement>(json);
 
         if (!token.TryGetProperty("access_token", out var accessToken))
-            throw new Exception($"Token Error: {json}");
+            throw new Exception("access_token not found in response: " + json);
 
         return accessToken.GetString()!;
     }
 
-    // Get all accessible Jira sites
     public async Task<JsonElement> GetAccessibleResources(string accessToken)
     {
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         var response = await _httpClient.GetAsync("https://api.atlassian.com/oauth/token/accessible-resources");
         var json = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode) throw new Exception("AccessibleResources Error: " + json);
         return JsonSerializer.Deserialize<JsonElement>(json);
     }
 
-    // Get all projects (Classic + Next-gen) for Admin
     public async Task<JsonElement> GetAllProjects(string accessToken, string cloudId)
     {
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-        // 1️⃣ Classic projects
-        var response1 = await _httpClient.GetAsync($"https://api.atlassian.com/ex/jira/{cloudId}/rest/api/3/project");
-        var json1 = await response1.Content.ReadAsStringAsync();
-        var projects = JsonSerializer.Deserialize<JsonElement>(json1);
-
-        if (projects.ValueKind == JsonValueKind.Array && projects.GetArrayLength() > 0)
-            return projects;
-
-        // 2️⃣ Fallback Next-gen
-        var response2 = await _httpClient.GetAsync($"https://api.atlassian.com/ex/jira/{cloudId}/rest/api/3/project/search");
-        var json2 = await response2.Content.ReadAsStringAsync();
-        var projectsNext = JsonSerializer.Deserialize<JsonElement>(json2);
-
-        if (projectsNext.ValueKind == JsonValueKind.Object && projectsNext.TryGetProperty("values", out var values))
-            return values;
-
-        return projectsNext; // might be empty
-    }
-
-    // Get issues for a project
-    public async Task<JsonElement> GetIssues(string accessToken, string cloudId, string projectKey)
-    {
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-        var response = await _httpClient.GetAsync($"https://api.atlassian.com/ex/jira/{cloudId}/rest/api/3/search/jql?jql=project={projectKey}");
+        var response = await _httpClient.GetAsync("https://api.atlassian.com/ex/jira/" + cloudId + "/rest/api/3/project");
         var json = await response.Content.ReadAsStringAsync();
         return JsonSerializer.Deserialize<JsonElement>(json);
     }
 
-    // Get roles for a project
+    public async Task<JsonElement> GetIssues(string accessToken, string cloudId, string projectKey)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        var url = "https://api.atlassian.com/ex/jira/" + cloudId + "/rest/api/3/search/jql";
+        var body = new { jql = "project=" + projectKey };
+        var response = await _httpClient.PostAsJsonAsync(url, body);
+        var json = await response.Content.ReadAsStringAsync();
+        return JsonSerializer.Deserialize<JsonElement>(json);
+    }
+
     public async Task<JsonElement> GetProjectRoles(string accessToken, string cloudId, string projectKey)
     {
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-        var response = await _httpClient.GetAsync($"https://api.atlassian.com/ex/jira/{cloudId}/rest/api/3/project/{projectKey}/role");
+        var response = await _httpClient.GetAsync("https://api.atlassian.com/ex/jira/" + cloudId + "/rest/api/3/project/" + projectKey + "/role");
         var json = await response.Content.ReadAsStringAsync();
         return JsonSerializer.Deserialize<JsonElement>(json);
     }
@@ -99,52 +84,89 @@ public class JiraService : IJiraService
         var userRepo = _unitOfWork.GetGenericRepository<AuthUser, Guid>();
         var user = await userRepo.FirstOrDefaultAsync(u => u.AuthUserName == userName);
         if (user == null) return;
-
-        if (!issuesJson.TryGetProperty("issues", out var issuesArray) || issuesArray.ValueKind != JsonValueKind.Array)
-            return;
-
+        if (!issuesJson.TryGetProperty("issues", out var issuesArray)) return;
         var issueRepo = _unitOfWork.GetGenericRepository<JiraIssue, int>();
-
         foreach (var issueData in issuesArray.EnumerateArray())
         {
-            var key = issueData.GetProperty("key").GetString()!;
-            var fields = issueData.GetProperty("fields");
-            var summary = fields.GetProperty("summary").GetString() ?? "No Summary";
-            var status = fields.GetProperty("status").GetProperty("name").GetString() ?? "Unknown";
-            var priority = fields.TryGetProperty("priority", out var p) ? p.GetProperty("name").GetString() ?? "Medium" : "Medium";
-            var issueType = fields.GetProperty("issuetype").GetProperty("name").GetString() ?? "Task";
-
+            if (!issueData.TryGetProperty("key", out var keyProp)) continue;
+            var key = keyProp.GetString()!;
+            if (!issueData.TryGetProperty("fields", out var fields)) continue;
+            var summary = fields.TryGetProperty("summary", out var s) ? s.GetString() ?? "No Summary" : "No Summary";
             var existingIssue = await issueRepo.FirstOrDefaultAsync(i => i.JiraKey == key && i.UserId == user.Id);
-            if (existingIssue == null)
-            {
-                await issueRepo.AddAsync(new JiraIssue
-                {
-                    JiraKey = key,
-                    Summary = summary,
-                    Status = status,
-                    Priority = priority,
-                    IssueType = issueType,
-                    UserId = user.Id
-                });
-            }
-            else
-            {
-                existingIssue.Summary = summary;
-                existingIssue.Status = status;
-                existingIssue.Priority = priority;
-                existingIssue.IssueType = issueType;
+            if (existingIssue == null) {
+                await issueRepo.AddAsync(new JiraIssue { JiraKey = key, Summary = summary, UserId = user.Id });
             }
         }
-
         await _unitOfWork.SaveChangesAsync();
     }
 
-    public async Task<JsonElement> GetAssignedIssuesAsync(string accessToken, string cloudId, string projectKey, string assigneeName)
+    public async Task<IEnumerable<JiraIssueDto>> GetAssignedIssuesAsync(string accessToken, string cloudId, string projectKey, string assigneeName)
     {
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-        var jql = $"project={projectKey} AND assignee='{assigneeName}'";
-        var encodedJql = Uri.EscapeDataString(jql); var response = await _httpClient.GetAsync($"https://api.atlassian.com/ex/jira/{cloudId}/rest/api/3/search/jql?jql={encodedJql}");
+        
+        // Use the mandatory /search/jql endpoint
+        var jql = $"project = '{projectKey}' AND assignee = '{assigneeName}'";
+        var url = $"https://api.atlassian.com/ex/jira/{cloudId}/rest/api/3/search/jql";
+        
+        // CRITICAL: Request explicit fields so the API returns full data instead of just IDs
+        var body = new { 
+            jql = jql,
+            fields = new[] { "summary", "status", "priority", "issuetype", "description" }
+        };
+        
+        var response = await _httpClient.PostAsJsonAsync(url, body);
         var json = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<JsonElement>(json);
+        if (!response.IsSuccessStatusCode) throw new Exception("Jira Search Error: " + json);
+        
+        var result = JsonSerializer.Deserialize<JsonElement>(json);
+        var list = new List<JiraIssueDto>();
+
+        if (result.TryGetProperty("issues", out var issuesArray) && issuesArray.ValueKind == JsonValueKind.Array) {
+            foreach (var issue in issuesArray.EnumerateArray()) {
+                try {
+                    if (!issue.TryGetProperty("key", out var keyProp)) continue;
+                    if (!issue.TryGetProperty("fields", out var fields)) continue;
+
+                    list.Add(new JiraIssueDto {
+                        Key = keyProp.GetString()!,
+                        Summary = fields.TryGetProperty("summary", out var s) ? s.GetString() ?? "No Summary" : "No Summary",
+                        Status = fields.TryGetProperty("status", out var st) && st.TryGetProperty("name", out var stn) 
+                                 ? stn.GetString() ?? "Unknown" 
+                                 : "Unknown",
+                        Priority = fields.TryGetProperty("priority", out var p) && p.ValueKind != JsonValueKind.Null && p.TryGetProperty("name", out var pn) 
+                                   ? pn.GetString() ?? "Medium" 
+                                   : "Medium",
+                        IssueType = fields.TryGetProperty("issuetype", out var it) && it.TryGetProperty("name", out var itn) 
+                                     ? itn.GetString() ?? "Task" 
+                                     : "Task",
+                        Description = fields.TryGetProperty("description", out var d) ? d.ToString() : ""
+                    });
+                } catch (Exception ex) {
+                    Console.WriteLine("Error parsing issue: " + ex.Message);
+                }
+            }
+        }
+        return list;
+    }
+
+    public async Task<bool> AssignIssueAsync(string accessToken, string cloudId, string issueKey, string accountId)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        var body = new { accountId = accountId };
+        var response = await _httpClient.PutAsJsonAsync("https://api.atlassian.com/ex/jira/" + cloudId + "/rest/api/3/issue/" + issueKey + "/assignee", body);
+        if (!response.IsSuccessStatusCode) {
+            var json = await response.Content.ReadAsStringAsync();
+            throw new Exception("AssignIssue Error: " + json);
+        }
+        return true;
+    }
+
+    public async Task<JiraUserProfile> GetCurrentUserAsync(string accessToken)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        var response = await _httpClient.GetAsync("https://api.atlassian.com/me");
+        var json = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode) throw new Exception("GetCurrentUser Error: " + json);
+        return JsonSerializer.Deserialize<JiraUserProfile>(json)!;
     }
 }

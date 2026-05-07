@@ -1,4 +1,5 @@
 using Core.Abstraction;
+using Share;
 using Core.Domain.Contracts;
 using Core.Domain.Models;
 using Core.Services;

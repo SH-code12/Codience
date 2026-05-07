@@ -195,6 +195,10 @@
             "Polly": {
               "target": "Package",
               "version": "[8.6.4, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.17.0, )"
             }
           },
           "imports": [
