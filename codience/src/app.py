@@ -1,5 +1,6 @@
 # Fast API for reviewer recommendation
 import os
+from typing import Optional, Any
 from fastapi import FastAPI, HTTPException
 # pyrefly: ignore [missing-import]
 from pydantic import BaseModel, Field
