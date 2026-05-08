@@ -1,4 +1,5 @@
 using Core.Abstraction;
+using Share;
 using Core.Domain.Contracts;
 using Core.Domain.Models;
 using Core.Services;
@@ -6,10 +7,15 @@ using Infrastructure.Persistence.Data;
 using Infrastructure.Persistence.Repositories;
 using Infrastructure.Presentation.Controllers;
 using Microsoft.EntityFrameworkCore;
+using dotenv.net;
+
+DotEnv.Load(options: new DotEnvOptions(envFilePaths: new[] { "../.env" }));
 
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddEnvironmentVariables();
 
 builder.Services.AddOpenApi();
 builder.Services.AddControllers()

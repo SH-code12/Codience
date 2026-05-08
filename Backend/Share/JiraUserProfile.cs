@@ -4,7 +4,12 @@ namespace Share;
 
 public class JiraUserProfile
 {
-    [JsonPropertyName("accountId")]
-     public string AccountId { get; set; } = default!;
-    [JsonPropertyName("displayName")] public string DisplayName { get; set; } = default!;
+    [JsonPropertyName("account_id")]
+    public string AccountId { get; set; } = default!;
+    
+    [JsonPropertyName("name")]
+    public string Name { get; set; } = default!;
+
+    [JsonPropertyName("email")]
+    public string Email { get; set; } = default!;
 }
