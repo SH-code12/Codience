@@ -97,6 +97,45 @@ def summarize_commit(commit_message, files):
     )
     return call_llm(prompt)
 
+def analyze_user_commit_history(author: str, author_commits: list[dict], max_llm_calls=100) -> list[str]:
+    global llm_calls_made
+    llm_calls_made = 0
+    global LLM_BUDGET
+    LLM_BUDGET = max_llm_calls
+
+    print(f"🔄 Analyzing history for {author} ({len(author_commits)} commits)...")
+    commit_summaries = []
+    for commit in author_commits:
+        try:
+            commit_detail = session.get(commit["url"], headers=HEADERS, timeout=15).json()
+            commit_message = commit["commit"]["message"]
+            files = commit_detail.get("files", [])
+            summary = summarize_commit(commit_message, files)
+            if summary and summary != "Budget exceeded":
+                commit_summaries.append(f"Commit: {commit_message[:80].replace('\n',' ')}...\nSummary: {summary}")
+            time.sleep(0.5)
+        except Exception as e:
+            print(f"⚠️ Error processing commit {commit.get('sha','')}: {e}")
+            continue
+
+    dev_skills = set()
+    if commit_summaries:
+        prompt = DEVELOPER_PROFILE_REDUCE_PROMPT.format(
+            author=author,
+            commit_summaries="\n\n".join(commit_summaries)
+        )
+        raw_result = call_llm(prompt)
+        try:
+            json_match = re.search(r'\[.*\]', raw_result, re.DOTALL)
+            skills = json.loads(json_match.group()) if json_match else json.loads(raw_result)
+            if isinstance(skills, list):
+                for skill in skills:
+                    dev_skills.add(skill)
+        except Exception as e:
+            print(f"⚠️ Failed to parse skill JSON for {author}: {e}")
+    return list(dev_skills)
+
+
 def map_commits_to_skills(commits, max_llm_calls=100):
     global llm_calls_made
     llm_calls_made = 0  # reset budget for this run
