@@ -3813,19 +3813,19 @@
     ]
   },
   "packageFolders": {
-    "/home/malak-hisham/.nuget/packages/": {}
+    "/Users/rebuy/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/malak-hisham/RiderProjects/Codience/Backend/API/Codience.API.csproj",
+      "projectUniqueName": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/API/Codience.API.csproj",
       "projectName": "Codience.API",
-      "projectPath": "/home/malak-hisham/RiderProjects/Codience/Backend/API/Codience.API.csproj",
-      "packagesPath": "/home/malak-hisham/.nuget/packages/",
-      "outputPath": "/home/malak-hisham/RiderProjects/Codience/Backend/API/obj/",
+      "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/API/Codience.API.csproj",
+      "packagesPath": "/Users/rebuy/.nuget/packages/",
+      "outputPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/API/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/malak-hisham/.nuget/NuGet/NuGet.Config"
+        "/Users/rebuy/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -3837,11 +3837,11 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "/home/malak-hisham/RiderProjects/Codience/Backend/Infrastructure/Persistence/Infrastructure.Persistence.csproj": {
-              "projectPath": "/home/malak-hisham/RiderProjects/Codience/Backend/Infrastructure/Persistence/Infrastructure.Persistence.csproj"
+            "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Infrastructure/Persistence/Infrastructure.Persistence.csproj": {
+              "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Infrastructure/Persistence/Infrastructure.Persistence.csproj"
             },
-            "/home/malak-hisham/RiderProjects/Codience/Backend/Infrastructure/Presentation/Infrastructure.Presentation.csproj": {
-              "projectPath": "/home/malak-hisham/RiderProjects/Codience/Backend/Infrastructure/Presentation/Infrastructure.Presentation.csproj"
+            "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Infrastructure/Presentation/Infrastructure.Presentation.csproj": {
+              "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Infrastructure/Presentation/Infrastructure.Presentation.csproj"
             }
           }
         }
@@ -3856,7 +3856,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "10.0.200"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net9.0": {
@@ -3912,7 +3912,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/home/malak-hisham/.dotnet/sdk/10.0.201/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/Users/rebuy/.dotnet/sdk/9.0.312/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
