@@ -129,14 +129,13 @@ async def get_combined_prediction(owner: str, repo: str, pull_number: int):
 
         }
 
-
         # 2. Call all .NET APIs concurrently
         tasks = {key: client.get(url) for key, url in endpoints.items()}
         responses = await asyncio.gather(*tasks.values(), return_exceptions=True)
 
-        results = {}
+        raw = {}
+
         for key, response in zip(tasks.keys(), responses):
-            # Detailed error reporting
             if isinstance(response, Exception):
                 raise HTTPException(
                     status_code=502,
@@ -149,27 +148,41 @@ async def get_combined_prediction(owner: str, repo: str, pull_number: int):
                     detail=f".NET returned {response.status_code} for {key}. Body: {response.text}"
                 )
 
-            # Extract the value (handling both raw numbers and JSON)
-            try:
-                val = response.json()
-                results[key] = float(val) if not isinstance(val, dict) else float(val.get("value", 0))
-            except:
-                results[key] = 0.0
+            raw[key] = response.json()
 
 
-        print("results:", results )
-        la = results.get("la", 0)
-        ld = results.get("ld", 0)
-        nf = results.get("nf", 0)
-        nd = results.get("nd", 0)
-        ns = results.get("ns", 0)
-        ent = results.get("ent", 0)
-        ndev = results.get("ndev", 0)
-        age = results.get("age", 0)
-        nuc = results.get("nuc", 0)
-        aexp = results.get("exp", 0)
-        arexp = results.get("rexp", 0)
-        asexp = results.get("sexp", 0)
+        print("results:", raw )
+        metrics = raw.get("metrics", {})
+        history = raw.get("history", {})
+        exp = raw.get("experience", {})
+
+        # ---- Metrics ----
+        nf = metrics.get("nFiles", 0)
+        nd = metrics.get("nDirectories", 0)
+        ns = metrics.get("nSubsystems", 0)
+        la = metrics.get("linesAdded", 0)
+        ld = metrics.get("linesDeleted", 0)
+        ent = metrics.get("entropy", 0)
+
+        # ---- History ----
+        ndev = history.get("ndev", 0)
+        age = history.get("age", 0)
+        nuc = history.get("nuc", 0)
+
+        # ---- Experience ----
+        aexp = exp.get("exp", 0)
+        arexp = exp.get("rexp", 0)
+        asexp = exp.get("sexp", 0)
+
+        # 1. Pre-calculate the transformed values
+        log_nuc = math.log1p(nuc / nf) if nf > 0 else 0
+
+        # 2. Print using an f-string for clarity
+        print(
+            f"Metrics: la={la}, ld={ld}, nf={nf}, nd={nd}, ns={ns}, ent={ent}\n"
+            f"History: ndev={math.log1p(ndev):.4f}, age={math.log1p(age):.4f}, nuc={log_nuc:.4f}\n"
+            f"Experience: aexp={math.log1p(aexp):.4f}, arexp={math.log1p(arexp):.4f}, asexp={math.log1p(asexp):.4f}"
+        )
 
         input_obj = InputData(
             # Size & Diffusion (Usually used as raw counts or logged depending on skew)
