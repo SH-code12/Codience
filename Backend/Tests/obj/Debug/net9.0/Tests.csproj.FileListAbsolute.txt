@@ -125,3 +125,8 @@
 /home/malak-hisham/RiderProjects/Codience/Backend/Tests/obj/Debug/net9.0/ref/Tests.dll
 /home/malak-hisham/RiderProjects/Codience/Backend/Tests/bin/Debug/net9.0/Infrastructure.Presentation.dll
 /home/malak-hisham/RiderProjects/Codience/Backend/Tests/bin/Debug/net9.0/Infrastructure.Presentation.pdb
+/home/malak-hisham/RiderProjects/Codience/Backend/Tests/bin/Debug/net9.0/Microsoft.IdentityModel.Abstractions.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/Tests/bin/Debug/net9.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/Tests/bin/Debug/net9.0/Microsoft.IdentityModel.Logging.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/Tests/bin/Debug/net9.0/Microsoft.IdentityModel.Tokens.dll
+/home/malak-hisham/RiderProjects/Codience/Backend/Tests/bin/Debug/net9.0/System.IdentityModel.Tokens.Jwt.dll

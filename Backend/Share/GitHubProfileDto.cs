@@ -23,7 +23,7 @@ public class GitHubProfileDto
 
     [JsonPropertyName("blog")]
     public string Blog { get; set; }
-    
+
     [JsonPropertyName("location")]
     public string Location { get; set; }
 
@@ -38,8 +38,4 @@ public class GitHubProfileDto
 
     [JsonPropertyName("created_at")]
     public DateTime CreatedAt { get; set; }
-
-    public int AssignedPullRequestsCount { get; set; }
-    public int ReviewedPullRequestsCount { get; set; }
-    public int CreatedPullRequestsCount { get; set; }
 }

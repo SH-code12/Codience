@@ -20,7 +20,8 @@ builder.Configuration.AddEnvironmentVariables();
 builder.Services.AddOpenApi();
 builder.Services.AddControllers()
        .AddApplicationPart(typeof(GitHubAuthController).Assembly)
-       .AddApplicationPart(typeof(JiraController).Assembly); 
+       .AddApplicationPart(typeof(JiraController).Assembly)
+       .AddApplicationPart(typeof(AnalyticsController).Assembly); 
 
 var fastApiConfig = builder.Configuration.GetSection("FastApi");
 
@@ -58,6 +59,7 @@ builder.Services.AddScoped<IRiskService, RiskService>();
 builder.Services.AddScoped<CsvProcessor>();
 builder.Services.AddScoped<IReviewerService, ReviewerService>();
 builder.Services.AddScoped<IProfilingService, GithubProfilingService>();
+builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 
 builder.Services.AddCors(options =>
 {
