@@ -8,25 +8,24 @@
     "net9.0": []
   },
   "packageFolders": {
-    "/home/shahd/.nuget/packages/": {}
+    "/home/malak-hisham/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/shahd/Desktop/Grduation/Backend/Core/Domain/Core.Domain.csproj",
+      "projectUniqueName": "/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/Core.Domain.csproj",
       "projectName": "Core.Domain",
-      "projectPath": "/home/shahd/Desktop/Grduation/Backend/Core/Domain/Core.Domain.csproj",
-      "packagesPath": "/home/shahd/.nuget/packages/",
-      "outputPath": "/home/shahd/Desktop/Grduation/Backend/Core/Domain/obj/",
+      "projectPath": "/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/Core.Domain.csproj",
+      "packagesPath": "/home/malak-hisham/.nuget/packages/",
+      "outputPath": "/home/malak-hisham/RiderProjects/Codience/Backend/Core/Domain/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/shahd/.nuget/NuGet/NuGet.Config"
+        "/home/malak-hisham/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
-        "/usr/lib/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -45,7 +44,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "10.0.200"
     },
     "frameworks": {
       "net9.0": {
@@ -66,7 +65,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.115/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/home/malak-hisham/.dotnet/sdk/10.0.201/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

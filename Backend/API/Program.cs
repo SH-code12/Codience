@@ -57,6 +57,7 @@ builder.Services.AddHttpClient("FastApiClient", client =>
 builder.Services.AddScoped<IRiskService, RiskService>();
 builder.Services.AddScoped<CsvProcessor>();
 builder.Services.AddScoped<IReviewerService, ReviewerService>();
+builder.Services.AddScoped<IProfilingService, GithubProfilingService>();
 
 builder.Services.AddCors(options =>
 {
