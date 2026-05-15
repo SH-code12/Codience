@@ -62,12 +62,19 @@ def _tversky_bulk(
     cache: ProfileCache,
     ref: datetime,
 ) -> Dict[str, float]:
-    """Bulk Tversky scoring with caching."""
+    """Bulk Tversky scoring with caching and debugging."""
     m_c = commit_multiset(pr_file_paths)
     pr_hash = ProfileCache.hash_pr(pr_file_paths)
     dtag = ProfileCache.decay_tag(DECAY_FACTOR, DECAY_HALFLIFE)
     out = {}
-
+    
+    # DEBUG: Print PR files
+    print(f"\n🔍 DEBUG: PR has {len(pr_file_paths)} files")
+    if pr_file_paths:
+        print(f"   Sample PR files (first 5):")
+        for f in pr_file_paths[:5]:
+            print(f"     - {f}")
+    
     for c in candidates:
         name = c.get("name", "")
         if not name:
@@ -76,13 +83,17 @@ def _tversky_bulk(
         cached_sim = cache.get_similarity(repo, name, pr_hash)
         if cached_sim is not None:
             out[name] = cached_sim
+            print(f"   📦 {name}: Tversky from cache = {cached_sim:.3f}")
             continue
 
         commit_history = c.get("commit_history", [])
         if not commit_history:
+            print(f"   ⚠️ {name}: No commit history! Tversky = 0.0")
             out[name] = 0.0
             continue
 
+        print(f"\n   🔄 {name}: Building profile from {len(commit_history)} commits")
+        
         profile = cache.get_profile(repo, name, dtag)
         if profile is None:
             profile = build_reviewer_profile(
@@ -93,10 +104,36 @@ def _tversky_bulk(
                 reference_date=ref,
             )
             cache.set_profile(repo, name, profile, dtag)
+            print(f"   ✅ {name}: Profile built with {len(profile)} unique file paths")
+        else:
+            print(f"   📦 {name}: Profile from cache with {len(profile)} unique paths")
+        
+        # DEBUG: Show top files from developer
+        if profile:
+            print(f"   📁 {name}'s top files (by weight):")
+            top_files = sorted(profile.items(), key=lambda x: x[1], reverse=True)[:5]
+            for file_path, weight in top_files:
+                print(f"      - {file_path} (weight: {weight:.3f})")
+        
+        # DEBUG: Calculate overlap
+        pr_set = set(pr_file_paths)
+        dev_set = set(profile.keys())
+        overlap = pr_set & dev_set
+        print(f"   🔍 Overlap with PR: {len(overlap)} files")
+        if overlap:
+            print(f"      Common files: {', '.join(list(overlap)[:5])}")
+        else:
+            print(f"      ❌ NO file overlap found!")
+            # Show what developer works on vs PR
+            dev_sample = list(dev_set)[:3] if dev_set else []
+            pr_sample = pr_file_paths[:3] if pr_file_paths else []
+            print(f"      Developer sample: {dev_sample}")
+            print(f"      PR sample: {pr_sample}")
 
         sim = tversky_similarity(profile, m_c, TVERSKY_ALPHA, TVERSKY_BETA)
         cache.set_similarity(repo, name, pr_hash, sim)
         out[name] = sim
+        print(f"   📊 {name}: Tversky similarity = {sim:.4f}")
 
     return out
 

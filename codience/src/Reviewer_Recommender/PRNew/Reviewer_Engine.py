@@ -786,6 +786,22 @@ class ReviewerRecommender:
         
         # 6. Scorer Matchmaker Agent with Tversky + Formula
         print("🧠 Calculating AI Confidence Scores with Tversky formula...")
+        # Add this debug before calling calculate_match_scores
+        print("\n🔍 DEBUG: Checking commit history for candidates:")
+        for name in candidate_names:
+            if name in self.commit_history_cache:
+                commits = self.commit_history_cache[name]
+                print(f"   {name}: {len(commits)} commits in history")
+                if commits:
+                    sample_commit = commits[0]
+                    files = sample_commit.get("files", [])
+                    print(f"      Sample commit files: {[f.get('filename', '') for f in files[:3]]}")
+            else:
+                print(f"   {name}: NOT in commit_history_cache!")
+
+        print(f"\n🔍 DEBUG: PR files being compared:")
+        for f in pr_file_paths[:10]:
+            print(f"   - {f}")
         ai_rankings = calculate_match_scores(
             pr_analysis=analysis,
             rag_roles=rag_roles,
