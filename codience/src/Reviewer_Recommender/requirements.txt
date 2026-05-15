@@ -1,6 +1,10 @@
 datasets
 pandas
 langchain
+langchain-huggingface # New
+mistralai # NEW
+openai # New
+redis # NEW
 langchain-community
 sentence-transformers 
 chromadb

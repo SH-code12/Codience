@@ -3,8 +3,11 @@ import requests
 import json
 import re
 from dotenv import load_dotenv
-from codience.src.Reviewer_Recommender.Process.llm import generate_with_resilience
-from codience.src.Reviewer_Recommender.Process.prompts import JIRA_ANALYSIS_PROMPT
+import sys
+sys.path.insert(0, '/home/shahd/Desktop/Grduation/codience/src/Reviewer_Recommender/PRNew')
+
+from .llm import generate_with_resilience
+from .prompts import JIRA_ANALYSIS_PROMPT
 from pydantic import BaseModel, ValidationError
 
 load_dotenv()

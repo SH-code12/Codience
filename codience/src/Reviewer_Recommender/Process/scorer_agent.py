@@ -87,4 +87,3 @@ def calculate_match_scores(pr_analysis: Dict[str, Any], rag_roles: List[Dict[str
             "justification": "Fallback heuristic used due to LLM error."
         })
     return sorted(fallback_results, key=lambda x: x["confidence_score"], reverse=True)
-
