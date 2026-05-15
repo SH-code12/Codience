@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Codience.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ee493676d9ce0cfa667be7822552c23a633e5b6f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+20564c570773a7c86cad8b73c0d3fd80cb52ba87")]
 [assembly: System.Reflection.AssemblyProductAttribute("Codience.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Codience.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
