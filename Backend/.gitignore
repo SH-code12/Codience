@@ -1,3 +1,4 @@
-# Local environment variables
+bin/
+obj/
+.vs/
 .env
-.env.*
