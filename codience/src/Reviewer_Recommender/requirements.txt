@@ -1,16 +1,20 @@
-datasets
-pandas
-langchain
-langchain-huggingface # New
-mistralai # NEW
-openai # New
-redis # NEW
-langchain-community
-sentence-transformers 
 chromadb
+datasets
+fastapi
 google-genai>=0.7.0
 groq>=0.11.0
+langchain
+langchain-community
+langchain-huggingface
+langchain-text-splitters
+mistralai
+nomic
+numpy
+openai
+pandas
+pydantic
 python-dotenv
-fastapi
-uvicorn[standard]
+redis
 requests
+sentence-transformers
+uvicorn[standard]
