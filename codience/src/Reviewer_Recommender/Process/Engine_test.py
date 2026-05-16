@@ -3,6 +3,7 @@ import requests
 from datetime import datetime, timezone
 from typing import Any, Dict, List
 from dotenv import load_dotenv
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 from codience.src.Reviewer_Recommender.Process.analysis_PR import extract_pr_skills
 
 # Import your history logic
@@ -12,6 +13,7 @@ from codience.src.Reviewer_Recommender.Process.Reviewer_Engine_Helper import fet
 from codience.src.Reviewer_Recommender.Process.jira_agent import analyze_jira_context
 from codience.src.Reviewer_Recommender.Process.scorer_agent import calculate_match_scores
 from codience.src.Reviewer_Recommender.Data.searching_into_vectordb import search_vector_db
+from codience.src.Reviewer_Recommender.Data.commit_diff_vectordb import search_similar_commits
 
 load_dotenv()
 
@@ -397,13 +399,30 @@ class ReviewerRecommender:
             required_languages.remove("C#")
             required_languages.add(".NET")
 
-        # 2. Vector DB RAG Search
+        # 2. Vector DB RAG Search (Roles)
         rag_query = analysis.get('rag_query', '') or ', '.join(required_languages)
         try:
             rag_roles = search_vector_db(rag_query, k=10) if rag_query else []
         except Exception as e:
             print(f"⚠️ Vector DB Search Failed: {e}")
             rag_roles = []
+            
+        # 2b. Vector DB RAG Search (Code Diffs)
+        pr_patch_text = "\n".join([f.get("patch", "") for f in pr_data.get("files", []) if f.get("patch")])
+        rag_commits = []
+        if pr_patch_text:
+            try:
+                print("🔍 Searching for similar past code diffs...")
+                rag_commits = search_similar_commits(pr_patch_text, k=15)
+            except Exception as e:
+                print(f"⚠️ Code Diff Vector DB Search Failed: {e}")
+                
+        # Tally up author matches from code diffs
+        author_rag_matches = {}
+        for res in rag_commits:
+            author = res.metadata.get("author")
+            if author:
+                author_rag_matches[author.lower()] = author_rag_matches.get(author.lower(), 0) + 1
 
         # 3. Preliminary candidate scoring
         if required_only_mode:
@@ -434,11 +453,18 @@ class ReviewerRecommender:
             raw_skills = meta.get("raw_skills", [])
             jira_username = meta.get("jira_username")
 
+            # RAG Code Match Score (0 to 1 based on max matches)
+            rag_match_count = author_rag_matches.get(name.lower(), 0)
+            max_rag = max(author_rag_matches.values()) if author_rag_matches else 1
+            rag_match_score = rag_match_count / max_rag if max_rag > 0 else 0.0
+
             base_composite = skill_score
             if prioritize_recent_activity:
-                base_composite = (0.55 * skill_score) + (0.45 * recency_score)
+                base_composite = (0.4 * skill_score) + (0.3 * recency_score) + (0.3 * rag_match_score)
             if required_flag:
                 base_composite = min(1.0, base_composite + 0.10)
+                
+            matched_diffs = [res.page_content for res in rag_commits if res.metadata.get("author", "").lower() == name.lower()]
 
             preliminary_candidates.append({
                 "name": name,
@@ -446,6 +472,7 @@ class ReviewerRecommender:
                 "matched_skills": list(matched_skills),
                 "skill_score": round(skill_score, 4),
                 "recency_score": recency_score,
+                "rag_code_matches": matched_diffs[:3], # Pass top 3 matched chunks to AI
                 "required_reviewer": required_flag,
                 "raw_skills": raw_skills,
                 "jira_username": jira_username,
@@ -537,7 +564,7 @@ if __name__ == "__main__":
         options = {
             "top_k": 5,
             "prioritize_recent_activity": True,
-            "commits_per_reviewer": 5
+            "commits_per_reviewer": 50
         }
 
         print(f"\n🚀 Running restricted analysis for {len(required_reviewers)} reviewers...")
