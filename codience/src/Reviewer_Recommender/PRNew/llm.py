@@ -23,7 +23,7 @@ from threading import Lock
 from dotenv import load_dotenv
 
 # Import rate limiter
-from llm_rate_limiter import rate_limiter
+from .llm_rate_limiter import rate_limiter
 
 # Use only openai package for all providers
 from openai import OpenAI

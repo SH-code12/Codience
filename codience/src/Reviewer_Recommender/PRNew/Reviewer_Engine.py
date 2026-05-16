@@ -15,6 +15,7 @@ from .commit_history_utils import fetch_commits, map_commits_to_skills, load_fro
 # Import AI Agents
 from .scorer_agent import calculate_match_scores
 from ..Data.searching_into_vectordb import search_vector_db
+from ..Data.commit_diff_vectordb import search_similar_commits
 from .profile_cache import ProfileCache
 
 load_dotenv()
