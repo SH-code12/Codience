@@ -13,14 +13,25 @@ using dotenv.net;
 // Load .env
 // =====================================================
 
-DotEnv.Load(options: new DotEnvOptions(
-    envFilePaths: new[] { "../.env" }
-));
+DotEnv.Fluent()
+    .WithEnvFiles("../.env")
+    .Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddEnvironmentVariables();
 
+
+// =====================================================
+// Database
+// =====================================================
+
+var connectionString =
+    Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
+    ?? throw new InvalidOperationException("Connection string not found.");
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(connectionString));
 
 // =====================================================
 // Controllers & Swagger
@@ -49,21 +60,6 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
-
-
-// =====================================================
-// Database
-// =====================================================
-
-
-var envVars = DotEnv.Read();
-
-var connectionString =
-    envVars["ConnectionStrings__DefaultConnection"];
-
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(connectionString));
 
 
 // =====================================================
