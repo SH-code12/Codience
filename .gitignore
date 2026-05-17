@@ -1,8 +1,32 @@
+# Dependencies
 node_modules/
+.venv/
 dist/
+build/
+
+# Environment
 .env
-Risk/Model/
-.venv
-my_vector_db
-.env
+
+# IDEs
+.idea/
+.vscode/
+.DS_Store
+
+# Python
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# Vector Databases & Data
+my_vector_db/
+commit_vector_db/
+commit_vector_db_nomic/
+*.sqlite3
+
+# Models
+Risk/Model/

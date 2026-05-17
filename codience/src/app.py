@@ -1,5 +1,8 @@
 # Fast API for reviewer recommendation
 import os
+
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
 from typing import Optional, Any
 from fastapi import FastAPI, HTTPException
 # pyrefly: ignore [missing-import]
@@ -210,6 +213,31 @@ def get_composite_recommendations(pr_data: dict, candidates: list[dict], options
     except Exception as e:
         print(f"⚠️ Vector DB Search Failed: {e}")
         rag_roles = []
+
+    from codience.src.Reviewer_Recommender.Data.commit_diff_vectordb import search_similar_commits
+    pr_patch_text = "\n".join([f.get("patch", "") for f in pr_data.get("files", []) if f.get("patch")])
+    rag_commits = []
+    if pr_patch_text:
+        try:
+            rag_commits = search_similar_commits(pr_patch_text, k=15)
+        except Exception as e:
+            print(f"⚠️ Code Diff Vector DB Search Failed: {e}")
+
+    author_rag_matches = {}
+    for res in rag_commits:
+        author = res.metadata.get("author")
+        if author:
+            author_rag_matches[author.lower()] = author_rag_matches.get(author.lower(), 0) + 1
+
+    for c in candidates:
+        rag_match_count = author_rag_matches.get(c["name"].lower(), 0)
+        max_rag = max(author_rag_matches.values()) if author_rag_matches else 1
+        rag_match_score = rag_match_count / max_rag if max_rag > 0 else 0.0
+        
+        c["prelim_score"] = (0.7 * c.get("prelim_score", 0)) + (0.3 * rag_match_score)
+        
+        matched_diffs = [res.page_content for res in rag_commits if res.metadata.get("author", "").lower() == c["name"].lower()]
+        c["rag_code_matches"] = matched_diffs[:3]
 
     ai_rankings = calculate_match_scores(analysis, rag_roles, candidates)
     ai_by_name = {r.get("name", "").lower(): r for r in ai_rankings}

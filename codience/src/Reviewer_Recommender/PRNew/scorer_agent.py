@@ -151,11 +151,15 @@ def _call_llm_scorer(
     for i, c in enumerate(candidates, 1):
         name = c.get("name", f"Candidate_{i}")
         tv = tv_by_name.get(name, 0.0)
+        
+        rag_matches = c.get("rag_code_matches", [])
+        rag_text = f"\n  Historically Matched Code Diffs: {' | '.join(rag_matches)[:500]}..." if rag_matches else ""
+        
         lines.append(
             f"Candidate {i}: {name}\n"
             f"  Tversky file-path similarity: {tv:.3f}\n"
             f"  Commit skills: {', '.join(c.get('commit_skills', [])) or 'none'}\n"
-            f"  Explicit skills: {', '.join(c.get('raw_skills', [])) or 'none'}"
+            f"  Explicit skills: {', '.join(c.get('raw_skills', [])) or 'none'}{rag_text}"
         )
 
     rag_ctx = "\n".join(f"- {r.page_content}" for r in rag_roles) if rag_roles else "No vector DB match."

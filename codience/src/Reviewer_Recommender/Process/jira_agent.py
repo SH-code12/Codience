@@ -148,8 +148,11 @@ def fetch_jira_tickets(
             assignee_name=target_user,
         )
         return tickets
+    except requests.exceptions.ConnectionError:
+        print("⚠️ Jira server unreachable (Connection refused). Skipping Jira context.")
+        return []
     except Exception as exc:
-        print(f"⚠️ Error: {exc}")
+        print(f"⚠️ Jira Error: {type(exc).__name__}. Skipping Jira context.")
         return []
 
 

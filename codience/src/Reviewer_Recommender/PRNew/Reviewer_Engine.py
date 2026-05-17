@@ -3,9 +3,11 @@ import requests
 from datetime import datetime, timezone
 from collections import defaultdict
 from typing import Any, Dict, List, Optional, Set
+# pyrefly: ignore [missing-import]
 from dotenv import load_dotenv
 import sys
-sys.path.insert(0, '/home/shahd/Desktop/Grduation/codience/src/Reviewer_Recommender/PRNew')
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from .analysis_PR import extract_pr_skills
 
@@ -15,6 +17,7 @@ from .commit_history_utils import fetch_commits, map_commits_to_skills, load_fro
 # Import AI Agents
 from .scorer_agent import calculate_match_scores
 from ..Data.searching_into_vectordb import search_vector_db
+from ..Data.commit_diff_vectordb import search_similar_commits
 from .profile_cache import ProfileCache
 
 load_dotenv()
@@ -695,13 +698,23 @@ class ReviewerRecommender:
             required_languages.remove("C#")
             required_languages.add(".NET")
 
-        # 2. Vector DB RAG Search
-        rag_query = analysis.get('rag_query', '') or ', '.join(required_languages)
-        try:
-            rag_roles = search_vector_db(rag_query, k=10) if rag_query else []
-        except Exception as e:
-            print(f"⚠️ Vector DB Search Failed: {e}")
-            rag_roles = []
+        # 2. Vector DB RAG Search (Semantic Candidate Retrieval)
+        pr_patches = [f.get("patch", "") for f in pr_data.get("files", []) if f.get("patch")]
+        combined_patch = "\n".join(pr_patches)[:3000] # Limit size for embedding
+        
+        vector_db_candidates = {}
+        rag_roles = []
+        if combined_patch:
+            try:
+                # Get top 20 matching commit chunks
+                similar_commits = search_similar_commits(combined_patch, k=20)
+                for doc in similar_commits:
+                    author = doc.metadata.get("author")
+                    if author:
+                        vector_db_candidates.setdefault(author, []).append(doc.page_content)
+                print(f"🔍 Vector DB found historically matched authors: {list(vector_db_candidates.keys())}")
+            except Exception as e:
+                print(f"⚠️ Vector DB Commit Search Failed: {e}")
 
         # 3. Preliminary candidate scoring
         if required_only_mode:
@@ -714,6 +727,10 @@ class ReviewerRecommender:
             candidate_names = set(observed_contributors)
             if repo_contributors:
                 candidate_names = {name for name in candidate_names if name in repo_contributors}
+            # Add Vector DB authors to the pool
+            for author in vector_db_candidates:
+                if author not in candidate_names and (not repo_contributors or author in repo_contributors):
+                    candidate_names.add(author)
 
         preliminary_candidates = []
         
@@ -762,6 +779,12 @@ class ReviewerRecommender:
             if required_flag:
                 base_composite = min(1.0, base_composite + 0.10)
 
+            # Boost if found in Vector DB
+            rag_code_matches = vector_db_candidates.get(name, [])
+            if rag_code_matches:
+                boost = min(0.20, len(rag_code_matches) * 0.05) # +0.05 per chunk match, max 0.20
+                base_composite = min(1.0, base_composite + boost)
+
             # Get commit history for this candidate
             candidate_commit_history = commits_by_author.get(name, [])
             
@@ -774,12 +797,20 @@ class ReviewerRecommender:
                 "recency_score": recency_score,
                 "required_reviewer": required_flag,
                 "raw_skills": raw_skills,
+                "rag_code_matches": rag_code_matches,
                 "prelim_score": round(base_composite, 4),
                 "commit_count": stat.get("commit_count", 0),
                 "tenure_days": stat.get("tenure_days", 365),
             })
             
         preliminary_candidates = sorted(preliminary_candidates, key=lambda x: x['prelim_score'], reverse=True)
+        
+        # === TOP 10 PRE-FILTERING (LLM BOTTLENECK FIX) ===
+        if not required_only_mode and len(preliminary_candidates) > 10:
+            print(f"🔪 Truncating candidates from {len(preliminary_candidates)} to Top 10 to save LLM tokens.")
+            preliminary_candidates = preliminary_candidates[:10]
+            # Update candidate_names so debug output below matches what is sent to LLM
+            candidate_names = {c["name"] for c in preliminary_candidates}
 
         # 5. Get PR file paths for Tversky scoring
         pr_file_paths = [f.get("filename") for f in pr_data.get("files", []) if f.get("filename")]
