@@ -17,6 +17,8 @@ public class GitHubPullRequestDto
     public DateTime CreatedAt { get; }
     public string Name { get; }
     public GitHubUserDto User {get;set;}
+    public List<GitHubUserDto> Assignees { get; set; } = new();
+    public List<GitHubUserDto> requested_reviewers { get; set; } = new();
 }
 
 public class GitHubUserDto
