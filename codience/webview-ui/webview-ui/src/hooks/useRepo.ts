@@ -7,6 +7,11 @@ export const useRepo = (initial?: string | null) => {
   const setRepo = useCallback((value: string) => {
     localStorage.setItem("RepoName", value);
     setRepoState(value);
+    try {
+      window.dispatchEvent(new CustomEvent("repoChanged", { detail: value }));
+    } catch (e) {
+      // ignore in environments without window/custom events
+    }
   }, []);
 
   const clearRepo = useCallback(() => {

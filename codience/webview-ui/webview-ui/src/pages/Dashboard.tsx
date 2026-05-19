@@ -67,7 +67,7 @@ const Dashboard: React.FC = () => {
     });
   };
 
-  // 🔁 Fetch reviewers when selectedPR changes
+  //  Fetch reviewers when selectedPR changes
   /*
   // Original reviewers fetch logic (kept commented to avoid external API calls):
   useEffect(() => {

@@ -11,6 +11,7 @@ type PRCache = {
   loading: boolean;
   error: string | null;
   promise: Promise<PullRequest[]> | null;
+  repo: string | null;
   subscribers: Set<() => void>;
 };
 
@@ -19,6 +20,7 @@ const prCache: PRCache = {
   loading: true,
   error: null,
   promise: null,
+  repo: null,
   subscribers: new Set(),
 };
 
@@ -26,7 +28,7 @@ const emitPRCacheUpdate = () => {
   prCache.subscribers.forEach((subscriber) => subscriber());
 };
 
-const setPRCache = (next: Partial<Pick<PRCache, "data" | "loading" | "error" | "promise">>) => {
+const setPRCache = (next: Partial<Pick<PRCache, "data" | "loading" | "error" | "promise" | "repo">>) => {
   Object.assign(prCache, next);
   emitPRCacheUpdate();
 };
@@ -75,6 +77,13 @@ export const usePRs = () => {
   };
 
   const load = async (force = false) => {
+    const currentRepo = localStorage.getItem("RepoName");
+
+    // If cache belongs to a different repo, force reload
+    if (!force && prCache.repo && currentRepo && prCache.repo !== currentRepo) {
+      force = true;
+    }
+
     if (!force) {
       if (prCache.data) {
         syncFromCache();
@@ -88,7 +97,7 @@ export const usePRs = () => {
     }
 
     if (force) {
-      setPRCache({ data: null, loading: true, error: null, promise: null });
+      setPRCache({ data: null, loading: true, error: null, promise: null, repo: null });
     } else {
       setPRCache({ loading: true, error: null });
     }
@@ -97,7 +106,7 @@ export const usePRs = () => {
       try {
         const res = await fetchPRs();
 
-        setPRCache({ data: res, loading: false, error: null });
+        setPRCache({ data: res, loading: false, error: null, repo: currentRepo ?? null });
 
         void enrichPRsWithFilesChanged(res, (updatedPR) => {
           mergePRCacheItem(updatedPR);
@@ -127,10 +136,18 @@ export const usePRs = () => {
   useEffect(() => {
     syncFromCache();
     prCache.subscribers.add(syncFromCache);
+
+    const handleRepoChange = (_e: Event) => {
+      void load(true);
+    };
+
+    window.addEventListener("repoChanged", handleRepoChange);
+
     void load();
 
     return () => {
       prCache.subscribers.delete(syncFromCache);
+      window.removeEventListener("repoChanged", handleRepoChange);
     };
   }, []);
 

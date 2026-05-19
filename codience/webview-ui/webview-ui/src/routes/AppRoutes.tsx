@@ -8,6 +8,7 @@ import ReviewersAnalytics from "../pages/ReviewersAnalytics";
 import ReviewerRecommendationSettings from "../pages/ReviewerRecommendationSettings";
 import SignUpPage from "../pages/SignUpPage";
 import LoginPage from "../pages/LoginPage";
+import Profile from "../pages/Profile";
 
 export default function AppRoutes() {
   return (
@@ -20,6 +21,7 @@ export default function AppRoutes() {
 
       <Route element={<SideBarLayout />}>
         <Route path="/home" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/dashboard" element={<Home />}>
           <Route
             path="reviewer-settings/:prNumber"

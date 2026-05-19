@@ -6,6 +6,7 @@ import {
   exchangeDeviceCode,
 } from "../../services/auth.service";
 import "../styles/DeviceCodeCard.css";
+import copyIcon from "../../assets/copy_icon.png";
 
 const DeviceCodeCard = () => {
   const navigate = useNavigate();
@@ -13,6 +14,15 @@ const DeviceCodeCard = () => {
   const [deviceData, setDeviceData] = useState<DeviceCodeResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    if (!deviceData) return;
+
+    await navigator.clipboard.writeText(deviceData.user_code);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1200);
+  };
 
   useEffect(() => {
     const runAuthFlow = async () => {
@@ -60,7 +70,26 @@ const DeviceCodeCard = () => {
 
       {deviceData && (
         <>
-          <p className="userCode">{deviceData.user_code}</p>
+          <div className="userCodeRow">
+            <p className="userCode userCodeValue">
+              {deviceData.user_code}
+            </p>
+            <button
+              type="button"
+              className="copyDeviceCodeButton"
+              onClick={handleCopy}
+              aria-label="Copy device code"
+              title={copied ? "Copied" : "Copy device code"}
+              data-copied={copied}
+            >
+              <img
+                src={copyIcon}
+                alt=""
+                aria-hidden="true"
+                className="copyDeviceCodeIcon"
+              />
+            </button>
+          </div>
 
           <div className="linksContainer">
             <a
