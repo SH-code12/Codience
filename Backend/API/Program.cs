@@ -84,6 +84,8 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<IGitHubAppService, GitHubAppService>();
 
+builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
+
 builder.Services.AddScoped<IRiskService, RiskService>();
 
 builder.Services.AddScoped<CsvProcessor>();
@@ -101,6 +103,8 @@ builder.Services.AddScoped(
 builder.Services.AddHttpClient<IGithubAuthService, GitHubAuthService>();
 
 builder.Services.AddHttpClient<IJiraService, JiraService>();
+
+builder.Services.AddHttpClient<IProfilingService, GithubProfilingService>();
 
 builder.Services.AddHttpClient("FastApiClient", client =>
 {
