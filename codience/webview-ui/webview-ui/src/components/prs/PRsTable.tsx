@@ -28,12 +28,29 @@ const PRsTable = ({ prs, onSelect, onRiskUpdate, onVisibleChange }: Props) => {
         pr.risk ??
         ({
           risk_score: "Loading...",
-          risk_level: "unknown",
+          risk_level: "loading",
           comments: 0,
           files_changed: 0,
         } as any),
     })),
   );
+
+  useEffect(() => {
+    setUpdatedPRs(
+      prs.map((pr) => ({
+        ...pr,
+        files_changed: pr.files_changed ?? 0,
+        risk:
+          pr.risk ??
+          ({
+            risk_score: "Loading...",
+            risk_level: "loading",
+            comments: 0,
+            files_changed: pr.files_changed ?? 0,
+          } as any),
+      })),
+    );
+  }, [prs]);
 
   // Local filtering and sorting state (controls rendered above table)
   const [filterRisk, setFilterRisk] = useState<

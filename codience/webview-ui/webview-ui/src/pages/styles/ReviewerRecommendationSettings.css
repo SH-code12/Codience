@@ -1,0 +1,160 @@
+.reviewerSettingsPage {
+  position: fixed;
+  inset: 0;
+  min-height: 100vh;
+  padding: 28px;
+  background: #1e2227;
+  color: #e5e7eb;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: auto;
+  z-index: 30;
+}
+
+.reviewerSettingsCard {
+  width: min(960px, calc(100vw - 56px));
+  max-width: 100%;
+  background: #161718;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+  box-sizing: border-box;
+}
+
+.reviewerSettingsHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.reviewerSettingsHeader h2 {
+  margin: 4px 0 8px;
+  font-size: 28px;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 12px;
+  color: #d1d5db;
+}
+
+.subtext {
+  margin: 0;
+  color: #9aa3b2;
+  max-width: 56ch;
+}
+
+.reviewerSettingsForm {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.reviewerSettingsForm label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  color: #cbd5e1;
+}
+
+.reviewerSettingsForm input,
+.reviewerSettingsForm textarea {
+  width: 100%;
+  background: rgba(7, 10, 16, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 12px;
+  color: #f8fafc;
+  padding: 12px 14px;
+  outline: none;
+}
+
+.reviewerSettingsForm input:focus,
+.reviewerSettingsForm textarea:focus {
+  border-color: rgba(125, 211, 252, 0.8);
+  box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.12);
+}
+
+.reviewerSettingsForm textarea {
+  resize: vertical;
+  min-height: 160px;
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.formError {
+  grid-column: 1 / -1;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.28);
+  color: #fecaca;
+  padding: 12px 14px;
+  border-radius: 12px;
+}
+
+.formActions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.primaryButton,
+.ghostButton,
+.secondaryButton {
+  border-radius: 12px;
+  padding: 11px 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primaryButton {
+  border: 1px solid rgba(125, 211, 252, 0.45);
+  background: linear-gradient(180deg, rgba(14, 165, 233, 0.9), rgba(14, 165, 233, 0.65));
+  color: #eff6ff;
+}
+
+.ghostButton,
+.secondaryButton {
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  background: rgba(255, 255, 255, 0.02);
+  color: #dbe4f0;
+}
+
+@media (max-width: 760px) {
+  .reviewerSettingsPage {
+    padding: 16px;
+  }
+
+  .reviewerSettingsCard {
+    width: min(100%, calc(100vw - 32px));
+    padding: 18px;
+    border-radius: 16px;
+  }
+
+  .reviewerSettingsHeader {
+    flex-direction: column;
+  }
+
+  .reviewerSettingsForm {
+    grid-template-columns: 1fr;
+  }
+
+  .formActions {
+    justify-content: stretch;
+    flex-direction: column-reverse;
+  }
+
+  .formActions button {
+    width: 100%;
+  }
+}

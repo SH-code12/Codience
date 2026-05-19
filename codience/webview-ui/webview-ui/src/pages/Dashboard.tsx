@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PRsTable from "../components/prs/PRsTable";
 import CardsRow from "../components/ui/CardsRow";
 import PRsCharts from "../components/prs/PRsCharts";
@@ -11,6 +12,7 @@ import { usePRs } from "../hooks/usePRs";
 // Reviewer fetching moved into ReviewersList component
 
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
   const projectName: string | null = localStorage.getItem("RepoName");
   const { data: prs, loading, error } = usePRs();
   const [selectedPR, setSelectedPR] = useState<PullRequest | null>(null);
@@ -55,6 +57,14 @@ const Dashboard: React.FC = () => {
   // 🧩 Handler to receive risk updates from PRsTable
   const handleRiskUpdate = (newPRs: PullRequest[]) => {
     setUpdatedPRs(newPRs);
+  };
+
+  const openReviewerSettings = () => {
+    if (!selectedPR) return;
+
+    navigate(`/dashboard/reviewer-settings/${selectedPR.number}`, {
+      state: { selectedPR },
+    });
   };
 
   // 🔁 Fetch reviewers when selectedPR changes
@@ -263,7 +273,19 @@ const Dashboard: React.FC = () => {
           <div className="rightColumn">
             <aside className="rightPanel">
               <div className="recommendedBlock">
-                <h4 className="blockTitle">Recommended Reviewers</h4>
+                <div className="blockTitleRow">
+                  <h4 className="blockTitle">Recommended Reviewers</h4>
+                  <button
+                    type="button"
+                    className="iconSettingsButton"
+                    onClick={openReviewerSettings}
+                    disabled={!selectedPR}
+                    aria-label="Open reviewer recommendation settings"
+                    title="Open reviewer recommendation settings"
+                  >
+                    <span aria-hidden="true">⚙</span>
+                  </button>
+                </div>
                 <div className="reviewersBox">
                   <ReviewersList selectedPR={selectedPR} />
                 </div>

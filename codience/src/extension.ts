@@ -49,21 +49,26 @@ class SidebarProvider implements vscode.WebviewViewProvider {
 
     let html = fs.readFileSync(indexPath, "utf-8");
 
-    html = html.replace(/(src|href)="(.+?)"/g, (match, attr, link) => {
-      if (/^https?:\/\//.test(link)) {
-        return match;
-      }
-      const uri = webview.asWebviewUri(
-        vscode.Uri.joinPath(
-          this._extensionUri,
-          "webview-ui",
-          "webview-ui",
-          "dist",
-          link,
-        ),
-      );
-      return `${attr}="${uri}"`;
-    });
+    html = html.replace(
+      /(src|href)="(.+?)"/g,
+      (_match: string, attr: string, link: string) => {
+        if (/^https?:\/\//.test(link)) {
+          return _match;
+        }
+
+        const uri = webview.asWebviewUri(
+          vscode.Uri.joinPath(
+            this._extensionUri,
+            "webview-ui",
+            "webview-ui",
+            "dist",
+            link,
+          ),
+        );
+
+        return `${attr}="${uri}"`;
+      },
+    );
 
     // Inject CSP (Content Security Policy)
     html = html.replace(
@@ -78,7 +83,9 @@ class SidebarProvider implements vscode.WebviewViewProvider {
         connect-src
           https://codience.onrender.com
           https://sphery-arlen-nondecorative.ngrok-free.dev
-          https://fordless-samella-unexpendable.ngrok-free.dev;
+          https://fordless-samella-unexpendable.ngrok-free.dev
+          http://localhost:5051/
+          http://127.0.0.1:8000/;
       ">
   `,
     );

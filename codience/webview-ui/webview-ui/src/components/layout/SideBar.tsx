@@ -1,8 +1,16 @@
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../styles/SideBar.css";
 import logo from "../../assets/codience logo (3).png";
 
 const SideBar = () => {
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
   return (
     <div className="sideBar">
       <img src={logo} alt="Codience Logo" className="logo" />
@@ -15,7 +23,9 @@ const SideBar = () => {
         <NavLink to="/getRepo">Change Repo</NavLink>
       </nav>
 
-      <button className="signOut">Sign Out</button>
+      <button className="signOut" type="button" onClick={handleSignOut}>
+        Sign Out
+      </button>
     </div>
   );
 };

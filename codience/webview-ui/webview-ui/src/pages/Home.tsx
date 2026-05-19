@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import PRsHome from "./PRsHome";
 import Dashboard from "./Dashboard";
 import "./styles/Home.css";
@@ -16,6 +16,7 @@ const Home = () => {
   return (
     <div className={`Home ${isDashboard ? "" : "homeHideScroll"}`}>
       {renderContent()}
+      <Outlet />
     </div>
   );
 };

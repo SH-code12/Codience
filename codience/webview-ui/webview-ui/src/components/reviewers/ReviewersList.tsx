@@ -2,35 +2,38 @@ import React from "react";
 import type { PullRequest } from "../../types/PullRequest";
 import { useRecommendedReviewers } from "../../hooks/useRecommendedReviewers";
 import type { RecommendedReviewer } from "../../types/Reviewers";
+import { useReviewerRecommendationSettings } from "../../hooks/useReviewerRecommendationSettings";
+import "./ReviewersList.css";
 
 interface Props {
   selectedPR: PullRequest | null;
 }
 
 const ReviewersList: React.FC<Props> = ({ selectedPR }) => {
+  const { settings } = useReviewerRecommendationSettings(selectedPR);
   const {
     data: reviewers,
     loading,
     error,
-  } = useRecommendedReviewers(selectedPR);
+  } = useRecommendedReviewers(selectedPR, settings);
 
   const renderRows = () => {
     if (loading)
       return (
         <tr className="loadingRow">
-          <td colSpan={3}>Loading recommended reviewers…</td>
+          <td colSpan={2}>Loading recommended reviewers…</td>
         </tr>
       );
     if (error)
       return (
         <tr className="errorRow">
-          <td colSpan={3}>{error}</td>
+          <td colSpan={2}>{error}</td>
         </tr>
       );
     if (!reviewers || reviewers.length === 0)
       return (
         <tr className="emptyRow">
-          <td colSpan={3}>No recommended reviewers found for this PR.</td>
+          <td colSpan={2}>No recommended reviewers found for this PR.</td>
         </tr>
       );
     return reviewers.map((r: RecommendedReviewer, idx) => (

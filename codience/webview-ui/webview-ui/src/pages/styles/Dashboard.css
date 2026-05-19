@@ -267,6 +267,39 @@ body,
   border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
+.blockTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.iconSettingsButton {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, rgba(77, 124, 255, 0.18), rgba(77, 124, 255, 0.08));
+  color: #eef2ff;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  flex: 0 0 auto;
+}
+
+.iconSettingsButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.iconSettingsButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .reviewersBox {
   display: flex;
   flex-direction: column;

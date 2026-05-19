@@ -2,8 +2,12 @@ import { useEffect, useState, useCallback } from "react";
 import { fetchRecommendedReviewers } from "../services/reviewers.service";
 import type { RecommendedReviewer } from "../types/Reviewers";
 import type { PullRequest } from "../types/PullRequest";
+import type { ReviewerRecommendationSettings } from "../types/Reviewers";
 
-export const useRecommendedReviewers = (selectedPR: PullRequest | null) => {
+export const useRecommendedReviewers = (
+  selectedPR: PullRequest | null,
+  settings: ReviewerRecommendationSettings | null = null,
+) => {
   const [data, setData] = useState<RecommendedReviewer[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,6 +26,10 @@ export const useRecommendedReviewers = (selectedPR: PullRequest | null) => {
       const res = await fetchRecommendedReviewers({
         number: selectedPR.number,
         title: selectedPR.title,
+        k: settings?.k,
+        commitCount: settings?.commitCount,
+        reviewerNames: settings?.reviewerNames,
+        repoName: settings?.repoName,
       });
       setData(res);
     } catch (e) {
@@ -30,7 +38,7 @@ export const useRecommendedReviewers = (selectedPR: PullRequest | null) => {
     } finally {
       setLoading(false);
     }
-  }, [selectedPR]);
+  }, [selectedPR, settings]);
 
   useEffect(() => {
     void load();

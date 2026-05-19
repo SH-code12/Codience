@@ -1,6 +1,7 @@
 import type {
   ReviewersAnalyticsResponse,
   RecommendedReviewer,
+  ReviewerRecommendationRequest,
 } from "../types/Reviewers";
 
 export const fetchReviewersAnalytics =
@@ -82,22 +83,45 @@ export const fetchReviewersAnalytics =
   };
 
 export const fetchRecommendedReviewers = async (
-  pr: { number: number; title: string } | null,
+  pr: ReviewerRecommendationRequest | null,
 ): Promise<RecommendedReviewer[]> => {
   if (!pr) return [];
 
   return new Promise((resolve) => {
     setTimeout(() => {
-      const dummy: RecommendedReviewer[] = [
+      const basePool: RecommendedReviewer[] = [
         { reviewerName: "alice", confidence: 0.92 },
         { reviewerName: "bob", confidence: 0.85 },
         { reviewerName: "carol", confidence: 0.78 },
-      ].map((r, idx) => ({
-        ...r,
-        confidence: Math.max(0, r.confidence - idx * 0.03),
-      }));
+        { reviewerName: "david", confidence: 0.74 },
+        { reviewerName: "eva", confidence: 0.7 },
+      ];
 
-      dummy.sort((a, b) => b.confidence - a.confidence);
+      const reviewerNames = (pr.reviewerNames ?? [])
+        .map((name) => name.trim().toLowerCase())
+        .filter(Boolean);
+
+      const filteredPool =
+        reviewerNames.length > 0
+          ? basePool.filter((candidate) =>
+              reviewerNames.includes(candidate.reviewerName.toLowerCase()),
+            )
+          : basePool;
+
+      const commitBoost = Math.min(0.12, Math.max(0, (pr.commitCount ?? 0) / 500));
+      const k = Math.max(1, pr.k ?? 3);
+
+      const dummy = (filteredPool.length > 0 ? filteredPool : basePool)
+        .map((reviewer, idx) => ({
+          ...reviewer,
+          confidence: Math.max(
+            0,
+            Math.min(1, reviewer.confidence + commitBoost - idx * 0.02),
+          ),
+        }))
+        .sort((a, b) => b.confidence - a.confidence)
+        .slice(0, k);
+
       resolve(dummy);
     }, 300);
   });
