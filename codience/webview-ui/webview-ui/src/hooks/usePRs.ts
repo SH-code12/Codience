@@ -31,13 +31,35 @@ const setPRCache = (next: Partial<Pick<PRCache, "data" | "loading" | "error" | "
   emitPRCacheUpdate();
 };
 
+const isResolvedFilesChanged = (value: PullRequest["files_changed"]) =>
+  typeof value === "number" || value === "Error";
+
 const mergePRCacheItem = (updatedPR: PullRequest) => {
   if (!prCache.data) return;
 
   setPRCache({
-    data: prCache.data.map((pr) =>
-      pr.number === updatedPR.number ? { ...pr, ...updatedPR } : pr,
-    ),
+    data: prCache.data.map((pr) => {
+      if (pr.number !== updatedPR.number) return pr;
+
+      const nextFilesChanged = isResolvedFilesChanged(pr.files_changed)
+        ? pr.files_changed
+        : updatedPR.files_changed;
+
+      const mergedRisk = {
+        risk_score: updatedPR.risk?.risk_score ?? pr.risk?.risk_score ?? "N/A",
+        risk_level:
+          updatedPR.risk?.risk_level ?? pr.risk?.risk_level ?? "unknown",
+        comments: updatedPR.risk?.comments ?? pr.risk?.comments ?? 0,
+        files_changed: nextFilesChanged,
+      };
+
+      return {
+        ...pr,
+        ...updatedPR,
+        files_changed: nextFilesChanged,
+        risk: mergedRisk,
+      };
+    }),
   });
 };
 
