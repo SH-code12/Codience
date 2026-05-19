@@ -27,7 +27,6 @@ const PRRow: React.FC<Props> = ({ pr, selected, onSelect }) => {
       <td>{pr.risk?.risk_score ?? "Loading..."}</td>
       <RiskCell risk_level={pr.risk?.risk_level} />
       <td>{pr.files_changed ?? 0}</td>
-      <td>{pr.risk?.comments ?? 0}</td>
       <td>{pr.createdAt}</td>
       <td className={`status ${pr.state}`}>{pr.state}</td>
     </tr>

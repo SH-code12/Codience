@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useRef } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { PullRequest } from "../../types/PullRequest";
 import "../styles/PRsTable.css";
 import PRRow from "./PRRow";
@@ -11,13 +11,16 @@ type Props = {
   // NOTE: PRsTable manages its own filter/sort controls locally
 };
 
-type FileData = {
-  additions: number;
-  deletions: number;
-  changes: number;
+const toSortableFilesChanged = (value: number | string | undefined) => {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : 0;
 };
 
-const PRsTable = ({ prs, onSelect, onRiskUpdate, onVisibleChange }: Props) => {
+const PRsTable = ({ prs, onSelect, onVisibleChange }: Props) => {
   if (!prs) return null;
 
   const [updatedPRs, setUpdatedPRs] = useState<PullRequest[]>(() =>
@@ -66,12 +69,6 @@ const PRsTable = ({ prs, onSelect, onRiskUpdate, onVisibleChange }: Props) => {
 
   const [selectedPR, setSelectedPR] = useState<number | null>(null);
 
-  const repoName = localStorage.getItem("RepoName");
-  const userName = localStorage.getItem("User");
-
-  const prsRef = useRef(prs);
-  prsRef.current = prs;
-
   const handleSelect = (pr: PullRequest) => {
     setSelectedPR(pr.number);
     onSelect?.(pr);
@@ -105,7 +102,9 @@ const PRsTable = ({ prs, onSelect, onRiskUpdate, onVisibleChange }: Props) => {
         } else if (sortBy === "title") {
           res = (a.title ?? "").localeCompare(b.title ?? "");
         } else if (sortBy === "files") {
-          res = (a.files_changed ?? 0) - (b.files_changed ?? 0);
+          res =
+            toSortableFilesChanged(a.files_changed) -
+            toSortableFilesChanged(b.files_changed);
         }
         return sortDir === "asc" ? res : -res;
       });
@@ -193,7 +192,6 @@ const PRsTable = ({ prs, onSelect, onRiskUpdate, onVisibleChange }: Props) => {
               <th>Risk Score</th>
               <th>Risk Level</th>
               <th>Files Changed</th>
-              <th>Comments</th>
               <th>Created At</th>
               <th>Status</th>
             </tr>
@@ -252,12 +250,3 @@ const PRsTable = ({ prs, onSelect, onRiskUpdate, onVisibleChange }: Props) => {
 };
 
 export default PRsTable;
-
-type RiskProps = { risk_level: string };
-
-const RiskCell = ({ risk_level }: RiskProps) => {
-  if (risk_level === "low") return <td className="riskCell low">Low</td>;
-  if (risk_level === "medium") return <td className="riskCell med">Medium</td>;
-  if (risk_level === "high") return <td className="riskCell high">High</td>;
-  return <td className="riskCell unknown">Unknown</td>;
-};

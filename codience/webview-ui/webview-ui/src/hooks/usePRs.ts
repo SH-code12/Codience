@@ -1,55 +1,114 @@
-import { useEffect, useRef, useState } from "react";
-import { enrichPRsWithRisk, fetchPRs } from "../services/prs.service";
+import { useEffect, useState } from "react";
+import {
+  enrichPRsWithFilesChanged,
+  enrichPRsWithRisk,
+  fetchPRs,
+} from "../services/prs.service";
 import type { PullRequest } from "../types/PullRequest";
 
+type PRCache = {
+  data: PullRequest[] | null;
+  loading: boolean;
+  error: string | null;
+  promise: Promise<PullRequest[]> | null;
+  subscribers: Set<() => void>;
+};
+
+const prCache: PRCache = {
+  data: null,
+  loading: true,
+  error: null,
+  promise: null,
+  subscribers: new Set(),
+};
+
+const emitPRCacheUpdate = () => {
+  prCache.subscribers.forEach((subscriber) => subscriber());
+};
+
+const setPRCache = (next: Partial<Pick<PRCache, "data" | "loading" | "error" | "promise">>) => {
+  Object.assign(prCache, next);
+  emitPRCacheUpdate();
+};
+
+const mergePRCacheItem = (updatedPR: PullRequest) => {
+  if (!prCache.data) return;
+
+  setPRCache({
+    data: prCache.data.map((pr) =>
+      pr.number === updatedPR.number ? { ...pr, ...updatedPR } : pr,
+    ),
+  });
+};
+
 export const usePRs = () => {
-  const [data, setData] = useState<PullRequest[] | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const requestIdRef = useRef(0);
+  const [data, setData] = useState<PullRequest[] | null>(prCache.data);
+  const [loading, setLoading] = useState(prCache.loading);
+  const [error, setError] = useState<string | null>(prCache.error);
 
-  const load = async () => {
-    const requestId = ++requestIdRef.current;
+  const syncFromCache = () => {
+    setData(prCache.data);
+    setLoading(prCache.loading);
+    setError(prCache.error);
+  };
 
-    try {
-      setLoading(true);
-      setError(null);
-      const res = await fetchPRs();
+  const load = async (force = false) => {
+    if (!force) {
+      if (prCache.data) {
+        syncFromCache();
+        return prCache.data;
+      }
 
-      if (requestId !== requestIdRef.current) return;
+      if (prCache.promise) {
+        syncFromCache();
+        return prCache.promise;
+      }
+    }
 
-      setData(res);
-      setLoading(false);
+    if (force) {
+      setPRCache({ data: null, loading: true, error: null, promise: null });
+    } else {
+      setPRCache({ loading: true, error: null });
+    }
 
-      void enrichPRsWithRisk(res, (updatedPR) => {
-        if (requestId !== requestIdRef.current) return;
+    const request = (async () => {
+      try {
+        const res = await fetchPRs();
 
-        setData((current) => {
-          if (!current) return current;
-          return current.map((pr) =>
-            pr.number === updatedPR.number ? updatedPR : pr,
-          );
+        setPRCache({ data: res, loading: false, error: null });
+
+        void enrichPRsWithFilesChanged(res, (updatedPR) => {
+          mergePRCacheItem(updatedPR);
+        }).catch((filesErr) => {
+          console.error("Files changed enrichment failed:", filesErr);
         });
-      })
-        .then((enriched) => {
-          if (requestId !== requestIdRef.current) return;
-          setData(enriched);
-        })
-        .catch((riskErr) => {
+
+        void enrichPRsWithRisk(res, (updatedPR) => {
+          mergePRCacheItem(updatedPR);
+        }).catch((riskErr) => {
           console.error("Risk enrichment failed:", riskErr);
         });
-    } catch (err) {
-      if (requestId !== requestIdRef.current) return;
-      setError("Failed to load PRs");
-      setLoading(false);
-    }
+
+        return res;
+      } catch (err) {
+        setPRCache({ error: "Failed to load PRs", loading: false });
+        throw err;
+      } finally {
+        setPRCache({ promise: null });
+      }
+    })();
+
+    setPRCache({ promise: request });
+    return request;
   };
 
   useEffect(() => {
+    syncFromCache();
+    prCache.subscribers.add(syncFromCache);
     void load();
 
     return () => {
-      requestIdRef.current += 1;
+      prCache.subscribers.delete(syncFromCache);
     };
   }, []);
 

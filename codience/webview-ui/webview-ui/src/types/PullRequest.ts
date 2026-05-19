@@ -6,6 +6,6 @@ export interface PullRequest {
   state: string;
   createdAt: string;
   name: string;
-  files_changed: number;
+  files_changed: number | string;
   risk: RiskType | null;
 }
