@@ -16,6 +16,7 @@ from .commit_history_utils import fetch_commits, map_commits_to_skills, load_fro
 
 # Import AI Agents
 from .scorer_agent import calculate_match_scores
+from .jira_agent import analyze_jira_context
 from ..Data.searching_into_vectordb import search_vector_db
 from ..Data.commit_diff_vectordb import search_similar_commits
 from .profile_cache import ProfileCache
@@ -139,11 +140,20 @@ class ReviewerRecommender:
         else:
             return self._initialize_top_developers(max_developers, max_commits, commits_per_reviewer)
     
-    def _initialize_specific_developers(self, required_developers: List[str], 
+    def _initialize_specific_developers(self, required_developers: List[Any], 
                                         commits_per_reviewer: int,
                                         max_commits: int) -> bool:
         """Initialize for specific developers - skills from cache, commits from GitHub"""
-        needed_set = set(required_developers)
+        needed_names = []
+        for dev in required_developers:
+            if isinstance(dev, str):
+                needed_names.append(dev.strip())
+            elif isinstance(dev, dict):
+                username = dev.get("username") or dev.get("login")
+                if username:
+                    needed_names.append(username.strip())
+        
+        needed_set = set(needed_names)
         print(f"🎯 Need {len(needed_set)} specific developers: {', '.join(list(needed_set)[:5])}...")
         
         # Step 1: Load skills from cache (NO LLM)
@@ -352,79 +362,7 @@ class ReviewerRecommender:
         
         return collected[:target]
     
-    def _process_specific_developers(self, developers: Set[str], commits_per_reviewer: int, max_commits: int):
-        """Process only specific developers (legacy - kept for compatibility)"""
-        print(f"🚀 Processing {len(developers)} specific developers...")
-        
-        all_commits = []
-        seen_shas = set()
-        
-        for username in developers:
-            fetched = self._fetch_commits_for_author(username, commits_per_reviewer)
-            for commit in fetched:
-                sha = commit.get("sha")
-                if sha and sha in seen_shas:
-                    continue
-                if sha:
-                    seen_shas.add(sha)
-                all_commits.append(commit)
-        
-        self.indexed_commits = all_commits
-        self.contributor_stats.update(self._build_contributor_stats(all_commits))
-        
-        # Only map skills for these specific developers
-        repo_key = f"{self.owner}/{self.repo}"
-        new_profiles = map_commits_to_skills(all_commits, repo=repo_key, specific_authors=list(developers))
-        
-        # Update existing profiles
-        for author, skills in new_profiles.items():
-            self.history_profiles[author] = skills
-        
-        print(f"✅ Processed {len(new_profiles)} new developers")
-    
-    def _process_top_developers(self, max_developers: int, max_commits: int, need_to_process: int):
-        """Process only the top N developers we need (legacy - kept for compatibility)"""
-        print(f"🚀 Fetching top {max_developers} developers (need {need_to_process} new ones)...")
-        
-        # Fetch commits and get top developers
-        commits = fetch_commits(self.owner, self.repo, limit=max_commits)
-        
-        # Group commits by author
-        commits_by_author = defaultdict(list)
-        for commit in commits:
-            author = commit.get("author", {}).get("login") or commit.get("commit", {}).get("author", {}).get("name")
-            if author:
-                commits_by_author[author].append(commit)
-        
-        # Sort by commit count
-        sorted_authors = sorted(commits_by_author.keys(), 
-                               key=lambda a: len(commits_by_author[a]), 
-                               reverse=True)
-        
-        # Take top N developers
-        top_authors = sorted_authors[:max_developers]
-        
-        # Filter out already cached developers
-        repo_key = f"{self.owner}/{self.repo}"
-        
-        # Filter commits to only top authors
-        filtered_commits = []
-        for commit in commits:
-            author = commit.get("author", {}).get("login") or commit.get("commit", {}).get("author", {}).get("name")
-            if author in top_authors:
-                filtered_commits.append(commit)
-        
-        # Process these commits (will auto-skip already cached)
-        self.indexed_commits = filtered_commits
-        self.contributor_stats.update(self._build_contributor_stats(filtered_commits))
-        
-        new_profiles = map_commits_to_skills(filtered_commits, repo=repo_key, max_authors=need_to_process)
-        
-        # Update existing profiles
-        for author, skills in new_profiles.items():
-            self.history_profiles[author] = skills
-        
-        print(f"✅ Added {len(new_profiles)} new developers to cache")
+
     
     def _initialize_fresh(self, max_developers: int, max_commits: int):
         """Fresh initialization (ignore cache)"""
@@ -467,15 +405,7 @@ class ReviewerRecommender:
         print(f"✅ Indexed {len(self.history_profiles)} developers.")
         return False
     
-    def initialize_system(self, max_commits=500, max_llm_calls=None, max_developers=50):
-        """DEPRECATED: Use initialize_with_cache_check instead"""
-        print("⚠️ initialize_system is deprecated. Use initialize_with_cache_check for smart caching.")
-        return self._initialize_fresh(max_developers, max_commits)
-    
-    def initialize_for_required_only(self, required_reviewers, commits_per_reviewer=50, max_llm_calls=20):
-        """DEPRECATED: Use initialize_with_cache_check instead"""
-        print("⚠️ initialize_for_required_only is deprecated. Use initialize_with_cache_check for smart caching.")
-        return self._initialize_specific_developers(required_reviewers, commits_per_reviewer, 500)
+
     
     def _parse_commit_datetime(self, date_value):
         if not date_value:
@@ -556,7 +486,8 @@ class ReviewerRecommender:
                 key = clean_name.lower()
                 required_map[key] = {
                     "username": clean_name,
-                    "raw_skills": []
+                    "raw_skills": [],
+                    "jira_username": None
                 }
             elif isinstance(reviewer, dict):
                 username = reviewer.get("username") or reviewer.get("login")
@@ -564,7 +495,8 @@ class ReviewerRecommender:
                 key = username.strip().lower()
                 required_map[key] = {
                     "username": username.strip(),
-                    "raw_skills": reviewer.get("raw_skills", [])
+                    "raw_skills": reviewer.get("raw_skills", []),
+                    "jira_username": reviewer.get("jira_username")
                 }
         return required_map
 
@@ -661,7 +593,7 @@ class ReviewerRecommender:
         v2_result = self.recommend_v2(pr_data, required_reviewers=[], options={})
         return v2_result.get("recommended_reviewers", [])
 
-    def recommend_v2(self, pr_data, required_reviewers=None, options=None):
+    def recommend_v2(self, pr_data, required_reviewers=None, options=None, jira_token=None, jira_cloud_id=None, jira_project_key=None):
         options = options or {}
         raw_top_k = options.get("top_k")
         top_k = self.DEFAULT_TOP_K if raw_top_k is None else max(1, min(20, int(raw_top_k)))
@@ -811,6 +743,25 @@ class ReviewerRecommender:
             preliminary_candidates = preliminary_candidates[:10]
             # Update candidate_names so debug output below matches what is sent to LLM
             candidate_names = {c["name"] for c in preliminary_candidates}
+
+        # === JIRA ANALYSIS (For Top Candidates Only) ===
+        if jira_token and jira_cloud_id and jira_project_key:
+            print(f"\n🎫 Fetching Jira Context for Top {len(preliminary_candidates)} Candidates...")
+            for c in preliminary_candidates:
+                # Find Jira username if provided in required_reviewers, else fallback to github name
+                meta = required_map.get(c["name"].lower(), {})
+                j_user = meta.get("jira_username") or meta.get("username", c["name"])
+                
+                jira_result = analyze_jira_context(
+                    username=c["name"],
+                    jira_username=j_user,
+                    token=jira_token,
+                    cloud_id=jira_cloud_id,
+                    project_key=jira_project_key
+                )
+                c["jira_context"] = jira_result
+        else:
+            print(f"\n⚠️ Skipping Jira Analysis: Missing Jira credentials (token, cloud_id, project_key).")
 
         # 5. Get PR file paths for Tversky scoring
         pr_file_paths = [f.get("filename") for f in pr_data.get("files", []) if f.get("filename")]

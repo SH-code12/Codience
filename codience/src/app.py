@@ -7,12 +7,12 @@ from typing import Optional, Any
 from fastapi import FastAPI, HTTPException
 # pyrefly: ignore [missing-import]
 from pydantic import BaseModel, Field
-from codience.src.Reviewer_Recommender.Process.Engine_test import ReviewerRecommender, fetch_real_pr_data
-from codience.src.Reviewer_Recommender.Process.jira_agent import analyze_jira_tickets, fetch_jira_tickets
-from codience.src.Reviewer_Recommender.Process.Reviewer_Engine_Helper import analyze_user_commit_history
-from codience.src.Reviewer_Recommender.Process.analysis_PR import extract_pr_skills
+from codience.src.Reviewer_Recommender.PRNew.Reviewer_Engine import ReviewerRecommender, fetch_real_pr_data
+from codience.src.Reviewer_Recommender.PRNew.jira_agent import analyze_jira_tickets, fetch_jira_tickets
+from codience.src.Reviewer_Recommender.PRNew.commit_history_utils import fetch_commit_history_for_author, map_commits_to_skills
+from codience.src.Reviewer_Recommender.PRNew.analysis_PR import extract_pr_skills
 from codience.src.Reviewer_Recommender.Data.searching_into_vectordb import search_vector_db
-from codience.src.Reviewer_Recommender.Process.scorer_agent import calculate_match_scores
+from codience.src.Reviewer_Recommender.PRNew.scorer_agent import calculate_match_scores
 
 app = FastAPI(title="Codience Reviewer Recommender API")
 
@@ -38,6 +38,9 @@ class ReviewerRequest(BaseRepoRequest):
 class ReviewerRequestV2(BaseRepoRequest):
     required_reviewers: list[Any] = Field(default_factory=list, description="Explicit reviewers to consider (strings or dicts).")
     options: Optional[RankingOptions] = None
+    jira_token: Optional[str] = None
+    jira_cloud_id: Optional[str] = None
+    jira_project_key: Optional[str] = None
 
 
 class TicketListRequest(BaseModel):
@@ -118,19 +121,17 @@ def _build_engine(owner: str, repo: str, min_commits: Optional[int] = None) -> R
     max_commits = int(os.getenv("ENGINE_MAX_COMMITS", "1000"))
     if min_commits is not None:
         max_commits = max(max_commits, int(min_commits))
-    max_llm_calls = int(os.getenv("ENGINE_MAX_LLM_CALLS", "30"))
-    engine.initialize_system(max_commits=max_commits, max_llm_calls=max_llm_calls)
+    engine.initialize_with_cache_check(max_developers=50, max_commits=max_commits)
     return engine
 
 
 def _build_engine_for_required(owner: str, repo: str, required_reviewers: list, commits_per_reviewer: int = 50) -> ReviewerRecommender:
     """Lean init: only fetches history for the specified required reviewers."""
     engine = ReviewerRecommender(owner, repo)
-    max_llm_calls = int(os.getenv("ENGINE_MAX_LLM_CALLS", "20"))
-    engine.initialize_for_required_only(
-        required_reviewers=required_reviewers,
+    engine.initialize_with_cache_check(
+        required_developers=required_reviewers,
         commits_per_reviewer=commits_per_reviewer,
-        max_llm_calls=max_llm_calls,
+        max_commits=500,
     )
     return engine
 
@@ -181,7 +182,14 @@ async def recommend_v2(request: ReviewerRequestV2):
         engine = _build_engine(request.owner, request.repo, min_commits=min_commits)
 
     pr_data = get_pr_data_or_raise(request.owner, request.repo, request.pr_number)
-    result = engine.recommend_v2(pr_data, required_reviewers=normalized_required, options=options)
+    result = engine.recommend_v2(
+        pr_data, 
+        required_reviewers=normalized_required, 
+        options=options,
+        jira_token=request.jira_token,
+        jira_cloud_id=request.jira_cloud_id,
+        jira_project_key=request.jira_project_key
+    )
 
     return {"recommended_reviewers": format_reviewer_results(result.get("recommended_reviewers", []))}
 
@@ -193,7 +201,8 @@ async def api_analyze_jira_tickets(request: TicketListRequest):
 
 @app.post("/api/analyze/commit-history")
 async def api_analyze_commit_history(request: CommitHistoryRequest):
-    skills = analyze_user_commit_history(request.author, request.commits)
+    skills_set = map_commits_to_skills(request.commits, repo="unknown/unknown", specific_authors=[request.author]).get(request.author, set())
+    skills = list(skills_set)
     return {"skills": skills}
 
 def get_composite_recommendations(pr_data: dict, candidates: list[dict], options: Optional[RankingOptions] = None) -> list[dict]:
@@ -280,8 +289,9 @@ def _profile_single_user(user: OrchestratorUser, engine: ReviewerRecommender, co
     github_username = user.github_username
     
     # 1. GitHub History
-    author_commits = engine._fetch_commits_for_author(github_username, commits_per_user)
-    commit_skills = analyze_user_commit_history(github_username, author_commits)
+    author_commits = fetch_commit_history_for_author(github_username, engine.owner, engine.repo, limit=commits_per_user)
+    commit_skills_set = map_commits_to_skills(author_commits, repo=f"{engine.owner}/{engine.repo}", specific_authors=[github_username]).get(github_username, set())
+    commit_skills = list(commit_skills_set)
     
     # 2. Jira Context
     tickets = fetch_jira_tickets(

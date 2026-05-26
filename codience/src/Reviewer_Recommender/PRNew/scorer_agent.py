@@ -155,11 +155,19 @@ def _call_llm_scorer(
         rag_matches = c.get("rag_code_matches", [])
         rag_text = f"\n  Historically Matched Code Diffs: {' | '.join(rag_matches)[:500]}..." if rag_matches else ""
         
+        jira_ctx = c.get("jira_context", {})
+        jira_text = ""
+        if jira_ctx:
+            j_domain = jira_ctx.get("domain", "Unknown")
+            j_skills = ", ".join(jira_ctx.get("recent_skills", []))
+            j_summary = jira_ctx.get("summary", "")
+            jira_text = f"\n  Jira Context: Domain={j_domain}, Skills={j_skills}, Summary={j_summary}"
+        
         lines.append(
             f"Candidate {i}: {name}\n"
             f"  Tversky file-path similarity: {tv:.3f}\n"
             f"  Commit skills: {', '.join(c.get('commit_skills', [])) or 'none'}\n"
-            f"  Explicit skills: {', '.join(c.get('raw_skills', [])) or 'none'}{rag_text}"
+            f"  Explicit skills: {', '.join(c.get('raw_skills', [])) or 'none'}{rag_text}{jira_text}"
         )
 
     rag_ctx = "\n".join(f"- {r.page_content}" for r in rag_roles) if rag_roles else "No vector DB match."

@@ -265,6 +265,7 @@ def map_commits_to_skills(commits, max_llm_calls=None, repo="huggingface/transfo
                 commit_detail = session.get(commit["url"], headers=HEADERS, timeout=15).json()
                 commit_message = commit["commit"]["message"]
                 files = commit_detail.get("files", [])
+                commit["files"] = files
                 
                 # Prepare data for Vector DB RAG Indexing
                 to_index = []
@@ -286,6 +287,13 @@ def map_commits_to_skills(commits, max_llm_calls=None, repo="huggingface/transfo
             except Exception as e:
                 print(f"   ⚠️ Error on commit {commit_idx + 1}: {e}")
                 continue
+        
+        # Local LLM Extraction!
+        from .batch_skill_extractor import extract_skills_with_ollama
+        llm_skills = extract_skills_with_ollama(author_commits)
+        if llm_skills:
+            print(f"   🧠 Added LLM skills for {author}: {', '.join(llm_skills)}")
+            author_skills.update(llm_skills)
         
         # Save to dev_skills (even if empty, but we'll skip saving empty)
         dev_skills[author] = author_skills
