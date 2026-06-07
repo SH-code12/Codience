@@ -21,7 +21,7 @@ TARGET_OWNER = "huggingface"
 TARGET_REPO = "transformers"
 COMMITS_TO_ANALYZE = 3  # Reduced for low-RAM speed
 OLLAMA_URL = "http://localhost:11434/api/generate"
-OLLAMA_MODEL = "phi3:mini"
+OLLAMA_MODEL = "llama3.2:1b"
 
 # List of developers you want to extract skills for
 DEVELOPERS_TO_PROFILE = [
