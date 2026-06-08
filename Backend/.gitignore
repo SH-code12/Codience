@@ -1,4 +1,6 @@
-bin/
-obj/
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
 .vs/
 .env
