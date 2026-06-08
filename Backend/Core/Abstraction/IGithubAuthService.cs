@@ -7,6 +7,10 @@ public interface IGithubAuthService
 {
     Task<DeviceCodeResponse> GetDeviceCodeAsync(CancellationToken cancellationToken = default);
     Task<AccessTokenResponse> PollForAccessTokenAsync(DeviceCodeResponse deviceCodeResponse, CancellationToken cancellationToken = default);
+    
+    string GetGitHubAuthorizationUrl();
+    Task<AccessTokenResponse> ExchangeCodeForAccessTokenAsync(string code, CancellationToken cancellationToken = default);
+
     Task<AuthUserDto> SaveUserAsync(string accessToken, CancellationToken ct = default);
     Task<PagedResult<GitHubRepoDto>> GetRepositoriesAsync(
     string userName,
@@ -18,5 +22,5 @@ public interface IGithubAuthService
     Task<IEnumerable<GitHubFileDto>> GetChangedFilesAsync(string owner, string repo, int pullNumber);
     Task<IEnumerable<GitHubCommitDto>>GetCommitsByPath(string owner, string repo, string filePath);
     Task<IEnumerable<GitHubCommitDto>> GetAllCommits(string owner, string repo,string author);
-Task<IEnumerable<GitHubCommitDto>> GetPullRequestCommits(string owner, string repo, int pullNumber);
+    Task<IEnumerable<GitHubCommitDto>> GetPullRequestCommits(string owner, string repo, int pullNumber);
 }

@@ -20,6 +20,26 @@ public class GitHubAuthController : ControllerBase
         _experienceService = experienceService;
     }
 
+    [HttpGet("login")]
+    public IActionResult Login()
+    {
+        var url = _gitHubAuthService.GetGitHubAuthorizationUrl();
+        return Redirect(url);
+    }
+
+    [HttpGet("callback")]
+    public async Task<IActionResult> Callback(string code, CancellationToken cancellationToken)
+    {
+        var token = await _gitHubAuthService.ExchangeCodeForAccessTokenAsync(code, cancellationToken);
+        if (string.IsNullOrEmpty(token.AccessToken))
+        {
+            return BadRequest(new { error = token.Error ?? "Failed to get access token." });
+        }
+
+        var user = await _gitHubAuthService.SaveUserAsync(token.AccessToken, cancellationToken);
+        return Ok(user);
+    }
+
     [HttpGet("device-code")]
     public async Task<IActionResult> GetDeviceCode(CancellationToken cancellationToken)
     {
@@ -39,7 +59,6 @@ public class GitHubAuthController : ControllerBase
         var user = await _gitHubAuthService.SaveUserAsync(token.AccessToken, cancellationToken);
 
         return Ok(user);
-
     }
 
     [HttpGet("{userName}/{repoName}/pulls")]
@@ -118,8 +137,6 @@ GetExperienceMetrics(string owner, string repo, int pullNumber)
     [HttpGet("repos")]
     public async Task<IActionResult> GetRepos(string userName, int page = 1, int pageSize = 30)
     {
-
-
         var result =
             await _gitHubAuthService
             .GetRepositoriesAsync(userName, page, pageSize);

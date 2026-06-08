@@ -43,5 +43,15 @@
     "C:\\Users\\DELL\\.nuget\\packages\\xunit.extensibility.execution\\2.9.2\\xunit.extensibility.execution.2.9.2.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\xunit.runner.visualstudio\\2.8.2\\xunit.runner.visualstudio.2.8.2.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "message": "Problem reading the cache file D:\\GraduationProject\\Codience\\Backend\\Tests\\obj\\project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0.",
+      "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Tests\\Tests.csproj",
+      "warningLevel": 1,
+      "filePath": "D:\\GraduationProject\\Codience\\Backend\\Tests\\Tests.csproj",
+      "targetGraphs": []
+    }
+  ]
 }

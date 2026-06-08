@@ -1,7 +1,6 @@
 using System.Net.Http.Headers;
 using Core.Abstraction;
 using Microsoft.Extensions.Configuration;
-
 using Share;
 using System.Net.Http.Json;
 using Core.Domain.Models;
@@ -13,21 +12,49 @@ public class GitHubAuthService : IGithubAuthService
     private readonly string clientId;
     private readonly string clientSecret;
     private readonly IUnitOfWork _authUow;
+    private readonly IConfiguration _configuration;
 
     public GitHubAuthService(HttpClient httpClient, IConfiguration configuration, IUnitOfWork authUow)
     {
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+        _configuration = configuration;
         clientId = configuration["GitHub:ClientId"]!;
         clientSecret = configuration["GitHub:ClientSecret"]!;
         _authUow = authUow;
-
     }
 
+    public string GetGitHubAuthorizationUrl()
+    {
+        var redirectUri = _configuration["GitHub:RedirectUri"];
+        var scope = "repo read:user user:email";
+        return $"https://github.com/login/oauth/authorize?client_id={clientId}&redirect_uri={redirectUri}&scope={scope}";
+    }
+
+    public async Task<AccessTokenResponse> ExchangeCodeForAccessTokenAsync(string code, CancellationToken cancellationToken = default)
+    {
+        var redirectUri = _configuration["GitHub:RedirectUri"];
+
+        var req = new HttpRequestMessage(HttpMethod.Post, "https://github.com/login/oauth/access_token")
+        {
+            Content = new FormUrlEncodedContent(new Dictionary<string, string>
+            {
+                { "client_id", clientId },
+                { "client_secret", clientSecret },
+                { "code", code },
+                { "redirect_uri", redirectUri! }
+            })
+        };
+        req.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+        var res = await _httpClient.SendAsync(req, cancellationToken);
+        res.EnsureSuccessStatusCode();
+
+        var tokenResponse = await res.Content.ReadFromJsonAsync<AccessTokenResponse>(cancellationToken: cancellationToken);
+        return tokenResponse ?? throw new Exception("Access token response is null");
+    }
 
     public async Task<DeviceCodeResponse> GetDeviceCodeAsync(CancellationToken cancellationToken = default)
     {
-
-
         var req = new HttpRequestMessage(HttpMethod.Post, "https://github.com/login/device/code")
         {
             Content = new FormUrlEncodedContent(new Dictionary<string, string>
@@ -47,8 +74,6 @@ public class GitHubAuthService : IGithubAuthService
 
     public async Task<AccessTokenResponse> PollForAccessTokenAsync(DeviceCodeResponse deviceCodeResponse, CancellationToken cancellationToken = default)
     {
-
-
         var interval = deviceCodeResponse.Interval;
         var expiry = DateTime.UtcNow.AddSeconds(deviceCodeResponse.ExpiresIn);
 
@@ -89,7 +114,6 @@ public class GitHubAuthService : IGithubAuthService
                 continue;
             }
 
-            // أي Error تاني: access_denied, expired_token ...
             return json;
         }
 
@@ -102,7 +126,6 @@ public class GitHubAuthService : IGithubAuthService
         if (string.IsNullOrEmpty(accessToken))
             throw new ArgumentException("Access token cannot be null or empty.");
 
-
         if (_httpClient == null)
             throw new InvalidOperationException("_httpClient is not initialized.");
         if (_authUow == null)
@@ -112,10 +135,8 @@ public class GitHubAuthService : IGithubAuthService
         if (userRepo == null)
             throw new InvalidOperationException("userRepo is null. Check GetGenericRepository implementation.");
 
-
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Codience");
-
 
         var response = await _httpClient.GetAsync("https://api.github.com/user", ct);
         if (!response.IsSuccessStatusCode)
@@ -131,7 +152,6 @@ public class GitHubAuthService : IGithubAuthService
         var gitHubIdString = userDto.GitHubId.ToString();
         if (string.IsNullOrEmpty(gitHubIdString))
             throw new Exception("GitHubId is null or empty.");
-
 
         var existingUser = await userRepo.FirstOrDefaultAsync(u => u.GitHubId == gitHubIdString);
         if (existingUser != null)
@@ -150,7 +170,6 @@ public class GitHubAuthService : IGithubAuthService
                 AccessToken = existingUser.AccessToken
             };
         }
-
 
         var newUser = new AuthUser
         {
@@ -172,24 +191,16 @@ public class GitHubAuthService : IGithubAuthService
             AccessToken = newUser.AccessToken
         };
     }
-
-
-
-
-
+    
     public async Task<IEnumerable<GitHubPullRequestDto>> GetPullRequestsAsync(string userName, string repoName)
     {
-
         var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
         var authUser = await userRepo.FirstOrDefaultAsync(u => u.AuthUserName == userName);
         if (authUser == null)
             throw new Exception($"User '{userName}' not found in database.");
 
-
-        _httpClient.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue("Bearer", authUser.AccessToken);
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authUser.AccessToken);
         _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Codience");
-
 
         var url = $"https://api.github.com/repos/{userName}/{repoName}/pulls?state=all";
         var response = await _httpClient.GetAsync(url);
@@ -199,17 +210,14 @@ public class GitHubAuthService : IGithubAuthService
             throw new Exception($"GitHub API error: {response.StatusCode} - {errorBody}");
         }
 
-
         var pullsFromGitHub = await response.Content.ReadFromJsonAsync<List<GitHubPullRequestDto>>(cancellationToken: CancellationToken.None);
         if (pullsFromGitHub == null)
             throw new Exception("GitHub returned null pull requests list.");
-
 
         var repoRepo = _authUow.GetGenericRepository<GitHubRepo, int>();
         var repository = await repoRepo.FirstOrDefaultAsync(r => r.Name == repoName && r.UserId == authUser.Id);
         if (repository == null)
             throw new Exception("Repository not found in database.");
-
 
         var prRepo = _authUow.GetGenericRepository<GitHubPullRequest, int>();
         foreach (var prDto in pullsFromGitHub)
@@ -226,7 +234,6 @@ public class GitHubAuthService : IGithubAuthService
                 {
                     Number = prDto.Number,
                     Title = prDto.Title,
-
                     State = prDto.State,
                     CreatedAt = prDto.CreatedAt,
                     RepositoryId = repository.Id,
@@ -234,9 +241,7 @@ public class GitHubAuthService : IGithubAuthService
                 });
             }
         }
-
         await _authUow.SaveChangesAsync();
-
 
         return pullsFromGitHub;
     }
@@ -393,8 +398,6 @@ public class GitHubAuthService : IGithubAuthService
 
         return commits ?? new List<GitHubCommitDto>();
     }
-
-    
     
     public async Task<PagedResult<GitHubRepoDto>>
 GetRepositoriesAsync(
@@ -402,14 +405,10 @@ string userName,
 int page = 1,
 int pageSize = 30)
 {
- 
-
    _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Codience");
 
         var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
         var authUser = await userRepo.FirstOrDefaultAsync(u => u.AuthUserName == userName);
-
-
 
         _httpClient.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Bearer", authUser!.AccessToken);

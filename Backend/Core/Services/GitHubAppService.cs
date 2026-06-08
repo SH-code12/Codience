@@ -241,6 +241,39 @@ public class GitHubAppService : IGitHubAppService
         return doc.RootElement.GetProperty("token").GetString()!;
     }
 
+    public async Task<IReadOnlyList<GitHubPullRequestDto>> GetPullRequestsAsync(long? repositoryId)
+    {
+        if (repositoryId is null)
+        {
+            return new List<GitHubPullRequestDto>();
+        }
+
+        AddJwtHeaders();
+        var repoRes = await _httpClient.GetAsync($"https://api.github.com/repositories/{repositoryId}");
+        await EnsureSuccess(repoRes);
+        var repoJson = await repoRes.Content.ReadAsStringAsync();
+        using var repoDoc = JsonDocument.Parse(repoJson);
+        var owner = repoDoc.RootElement.GetProperty("owner").GetProperty("login").GetString()!;
+        var repo = repoDoc.RootElement.GetProperty("name").GetString()!;
+
+        var installation = await GetRepositoryInstallationAsync(owner, repo);
+        if (installation is null)
+        {
+            return new List<GitHubPullRequestDto>();
+        }
+        var token = await CreateInstallationTokenAsync(installation.Id);
+
+        _httpClient.DefaultRequestHeaders.Clear();
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github+json"));
+        _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("CodienceApp");
+
+        var prsRes = await _httpClient.GetAsync($"https://api.github.com/repos/{owner}/{repo}/pulls");
+        await EnsureSuccess(prsRes);
+        var prsJson = await prsRes.Content.ReadAsStringAsync();
+        return JsonSerializer.Deserialize<List<GitHubPullRequestDto>>(prsJson, JsonOptions()) ?? new List<GitHubPullRequestDto>();
+    }
+
     // =========================
     // DELETE installation
     // =========================
