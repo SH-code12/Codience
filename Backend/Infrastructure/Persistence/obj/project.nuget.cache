@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BwYvTsI50L0=",
+  "dgSpecHash": "5/bnQEUCZUM=",
   "success": true,
-  "projectFilePath": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj",
+  "projectFilePath": "d:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DELL\\.nuget\\packages\\csvhelper\\33.1.0\\csvhelper.33.1.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
@@ -62,15 +62,5 @@
     "C:\\Users\\DELL\\.nuget\\packages\\system.text.json\\9.0.9\\system.text.json.9.0.9.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "message": "Problem reading the cache file D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Persistence\\obj\\project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0.",
-      "projectPath": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj",
-      "warningLevel": 1,
-      "filePath": "D:\\GraduationProject\\Codience\\Backend\\Infrastructure\\Persistence\\Infrastructure.Persistence.csproj",
-      "targetGraphs": []
-    }
-  ]
+  "logs": []
 }
