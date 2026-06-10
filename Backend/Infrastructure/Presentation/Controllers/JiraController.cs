@@ -25,34 +25,52 @@ public class JiraController : ControllerBase
     {
         var clientId = _configuration["Jira:ClientId"];
         var redirectUri = _configuration["Jira:CallbackUrl"];
-        var url = "https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=" + clientId + "&scope=read:jira-user read:jira-work&redirect_uri=" + redirectUri + "&response_type=code&prompt=consent";
-        return Redirect(url);
+        var url = $"https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id={clientId}&scope=read:jira-user read:jira-work&redirect_uri={redirectUri}&response_type=code&prompt=consent";
+        
+        // Return URL as JSON so React can handle the redirection
+        return Ok(new { url });
+    }
+
+    [HttpPost("exchange")]
+    public async Task<IActionResult> Exchange([FromBody] JiraExchangeDto request)
+    {
+        try
+        {
+            var accessToken = await _jiraService.ExchangeCodeForAdminToken(request.Code);
+            var resources = await _jiraService.GetAccessibleResources(accessToken);
+
+            if (resources.ValueKind != JsonValueKind.Array || resources.GetArrayLength() == 0)
+                return BadRequest(new { message = "No Jira sites found" });
+
+            var cloud = resources.EnumerateArray()
+                .FirstOrDefault(r => r.GetProperty("url").GetString()!.Contains(_configuration["Jira:Domain"]));
+
+            if (cloud.ValueKind == JsonValueKind.Undefined)
+                return BadRequest(new { message = "No Jira cloud found" });
+
+            var cloudId = cloud.GetProperty("id").GetString()!;
+            var projects = await _jiraService.GetAllProjects(accessToken, cloudId);
+
+            return Ok(new JiraAuthResponseDto
+            {
+                AccessToken = accessToken,
+                CloudId = cloudId,
+                Projects = projects
+            });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
     }
 
     [HttpGet("callback")]
     public async Task<IActionResult> Callback(string code)
     {
-        var accessToken = await _jiraService.ExchangeCodeForAdminToken(code);
-        var resources = await _jiraService.GetAccessibleResources(accessToken);
-
-        if (resources.ValueKind != JsonValueKind.Array || resources.GetArrayLength() == 0)
-            return Ok(new { accessToken, message = "No Jira sites found" });
-
-        var cloud = resources.EnumerateArray()
-            .FirstOrDefault(r => r.GetProperty("url").GetString()!.Contains(_configuration["Jira:Domain"]));
-
-        if (cloud.ValueKind == JsonValueKind.Undefined)
-            return Ok(new { accessToken, message = "No Jira cloud found" });
-
-        var cloudId = cloud.GetProperty("id").GetString()!;
-        var projects = await _jiraService.GetAllProjects(accessToken, cloudId);
-
-        return Ok(new
-        {
-            accessToken,
-            cloudId,
-            Projects = projects
-        });
+        var frontendUrl = _configuration["Jira:FrontendUrl"];
+        var redirectPath = _configuration["Jira:FrontendRedirectPath"] ?? "/callback";
+        
+        return Redirect($"{frontendUrl}{redirectPath}?code={code}");
     }
 
     [HttpPost("assigned-tickets")]
