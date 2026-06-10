@@ -399,29 +399,52 @@ public class GitHubAuthService : IGithubAuthService
         return commits ?? new List<GitHubCommitDto>();
     }
     
-    public async Task<PagedResult<GitHubRepoDto>>
-GetRepositoriesAsync(
-string userName,
-int page = 1,
-int pageSize = 30)
+   public async Task<PagedResult<GitHubRepoDto>> GetRepositoriesAsync(string userName,int page = 1,int pageSize = 30)
 {
-   _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Codience");
+    _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Codience");
 
-        var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
-        var authUser = await userRepo.FirstOrDefaultAsync(u => u.AuthUserName == userName);
+    var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
 
-        _httpClient.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue("Bearer", authUser!.AccessToken);
+    var authUser =
+        await userRepo.FirstOrDefaultAsync(
+            u => u.AuthUserName == userName);
+
+    if (authUser == null)
+        throw new Exception("User not found");
+
+    _httpClient.DefaultRequestHeaders.Authorization =
+        new AuthenticationHeaderValue(
+            "Bearer",
+            authUser.AccessToken);
 
     var response =
         await _httpClient.GetAsync(
-$"https://api.github.com/user/repos?page={page}&per_page={pageSize}");
+            $"https://api.github.com/user/repos?page={page}&per_page={pageSize}");
 
     response.EnsureSuccessStatusCode();
 
     var repos =
-        await response.Content
-        .ReadFromJsonAsync<List<GitHubRepo>>();
+        await response.Content.ReadFromJsonAsync<List<GitHubRepo>>();
+
+    if (repos == null)
+        repos = new List<GitHubRepo>();
+
+    var repoRepository =
+        _authUow.GetGenericRepository<GitHubRepo, int>();
+
+    foreach (var repo in repos)
+    {
+        var existingRepo = await repoRepository.FirstOrDefaultAsync(r => r.Id == repo.Id);
+
+        if (existingRepo == null)
+        {
+            repo.UserId = authUser.Id;
+
+            await repoRepository.AddAsync(repo);
+        }
+    }
+
+    await _authUow.SaveChangesAsync();
 
     bool hasNext = false;
 
@@ -434,13 +457,17 @@ $"https://api.github.com/user/repos?page={page}&per_page={pageSize}");
             link.Contains("rel=\"next\"");
     }
 
-    var repoDtos = repos?.Select(r => new GitHubRepoDto(
-        r.Name,
-        r.HtmlUrl,
-        r.Description
-    )) ?? new List<GitHubRepoDto>();
-    return new PagedResult<GitHubRepoDto>(repoDtos, page, pageSize, hasNext);
-}
+    var repoDtos = repos.Select(r =>
+        new GitHubRepoDto(
+            r.Name,
+            r.HtmlUrl,
+            r.Description));
 
+    return new PagedResult<GitHubRepoDto>(
+        repoDtos,
+        page,
+        pageSize,
+        hasNext);
+}
 }
 
