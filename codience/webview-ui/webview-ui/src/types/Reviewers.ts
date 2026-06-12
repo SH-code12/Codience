@@ -19,15 +19,25 @@ export interface ReviewersAnalyticsResponse {
 export interface RecommendedReviewer {
   reviewerName: string;
   confidence: number; // 0..1
+  justification?: string;
+}
+
+export interface RequiredReviewer {
+  username: string;
+  jiraUsername: string;
 }
 
 export interface ReviewerRecommendationRequest {
-  number: number;
-  title: string;
-  k?: number;
-  commitCount?: number;
-  reviewerNames?: string[];
-  repoName?: string;
+  owner: string;
+  repo: string;
+  pr_number: number;
+  options: {
+    top_k: number;
+  };
+  jira_token: string;
+  jira_cloud_id: string;
+  jira_project_key: string;
+  required_reviewers?: RequiredReviewer[];
 }
 
 export interface ReviewerRecommendationSettings {
@@ -36,6 +46,6 @@ export interface ReviewerRecommendationSettings {
   prTitle: string;
   k: number;
   commitCount: number;
-  reviewerNames: string[];
+  requiredReviewers: RequiredReviewer[];
   updatedAt: string;
 }

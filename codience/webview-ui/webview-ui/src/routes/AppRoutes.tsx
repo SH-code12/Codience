@@ -1,6 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import WelcomePage from "../pages/WelcomePage";
 import UserCode from "../components/ui/UserCode";
+import JiraLogin from "../pages/JiraLogin";
+import JiraProjectName from "../pages/JiraProjectName";
 import GetRepoName from "../pages/GetRepoName";
 import SideBarLayout from "../pages/SideBarLayout";
 import Home from "../pages/Home";
@@ -15,6 +17,8 @@ export default function AppRoutes() {
     <Routes>
       <Route path="/" element={<WelcomePage />} />
       <Route path="/signIn" element={<UserCode />} />
+      <Route path="/jira-login" element={<JiraLogin />} />
+      <Route path="/jira-project" element={<JiraProjectName />} />
       <Route path="/signUp" element={<SignUpPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/getRepo" element={<GetRepoName />} />

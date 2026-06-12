@@ -23,14 +23,20 @@ export const useRecommendedReviewers = (
     try {
       setLoading(true);
       setError(null);
-      const res = await fetchRecommendedReviewers({
-        number: selectedPR.number,
-        title: selectedPR.title,
-        k: settings?.k,
-        commitCount: settings?.commitCount,
-        reviewerNames: settings?.reviewerNames,
-        repoName: settings?.repoName,
-      });
+      const res = await fetchRecommendedReviewers(
+        {
+          owner: "",
+          repo: settings?.repoName ?? "",
+          pr_number: selectedPR.number,
+          options: {
+            top_k: settings?.k ?? 3,
+          },
+          jira_token: "",
+          jira_cloud_id: "",
+          jira_project_key: "",
+        },
+        settings,
+      );
       setData(res);
     } catch (e) {
       setError("Failed to load recommended reviewers");

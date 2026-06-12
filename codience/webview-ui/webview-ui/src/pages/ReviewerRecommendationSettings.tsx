@@ -5,14 +5,28 @@ import type { PullRequest } from "../types/PullRequest";
 import {
   getDefaultReviewerRecommendationSettings,
   loadReviewerRecommendationSettings,
-  normalizeReviewerNames,
+  normalizeRequiredReviewer,
+  normalizeRequiredReviewers,
   saveReviewerRecommendationSettings,
 } from "../utils/reviewerRecommendationSettings";
+import type { RequiredReviewer } from "../types/Reviewers";
 import "./styles/ReviewerRecommendationSettings.css";
 
 type LocationState = {
   selectedPR?: PullRequest;
 };
+
+type ReviewerRowState = RequiredReviewer & {
+  id: string;
+};
+
+const createReviewerRow = (reviewer?: Partial<RequiredReviewer>): ReviewerRowState => ({
+  id:
+    typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+      ? crypto.randomUUID()
+      : `reviewer-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+  ...normalizeRequiredReviewer(reviewer ?? {}),
+});
 
 const ReviewerRecommendationSettingsPage = () => {
   const navigate = useNavigate();
@@ -31,7 +45,7 @@ const ReviewerRecommendationSettingsPage = () => {
 
   const [k, setK] = useState(3);
   const [commitCount, setCommitCount] = useState(0);
-  const [reviewerNames, setReviewerNames] = useState("");
+  const [requiredReviewers, setRequiredReviewers] = useState<ReviewerRowState[]>([]);
   const [prTitle, setPrTitle] = useState("");
   const [error, setError] = useState<string | null>(null);
 
@@ -46,7 +60,11 @@ const ReviewerRecommendationSettingsPage = () => {
 
     setK(fallback.k);
     setCommitCount(fallback.commitCount);
-    setReviewerNames(fallback.reviewerNames.join("\n"));
+    setRequiredReviewers(
+      fallback.requiredReviewers.length > 0
+        ? fallback.requiredReviewers.map((reviewer) => createReviewerRow(reviewer))
+        : [createReviewerRow()],
+    );
     setPrTitle(selectedPR?.title ?? fallback.prTitle ?? "");
   }, [repoName, parsedPrNumber, selectedPR?.title, storedSettings]);
 
@@ -68,13 +86,26 @@ const ReviewerRecommendationSettingsPage = () => {
       return;
     }
 
+    const trimmedReviewers = normalizeRequiredReviewers(requiredReviewers);
+    const hasIncompleteReviewer = requiredReviewers.some((reviewer) => {
+      const username = reviewer.username.trim();
+      const jiraUsername = reviewer.jiraUsername.trim();
+
+      return (username.length > 0 || jiraUsername.length > 0) && (!username || !jiraUsername);
+    });
+
+    if (hasIncompleteReviewer) {
+      setError("Each reviewer row must include both a GitHub username and a Jira username.");
+      return;
+    }
+
     const nextSettings = {
       repoName,
       prNumber: parsedPrNumber,
       prTitle: prTitle.trim() || (selectedPR?.title ?? ""),
       k,
       commitCount,
-      reviewerNames: normalizeReviewerNames(reviewerNames),
+      requiredReviewers: trimmedReviewers,
       updatedAt: new Date().toISOString(),
     };
 
@@ -126,13 +157,64 @@ const ReviewerRecommendationSettingsPage = () => {
           </label>
 
           <label className="fullWidth">
-            Reviewer names
-            <textarea
-              rows={7}
-              value={reviewerNames}
-              onChange={(event) => setReviewerNames(event.target.value)}
-              placeholder="Enter one reviewer per line or separate with commas"
-            />
+            Required reviewers
+            <div className="reviewerRowsHint">
+              Add GitHub and Jira usernames for reviewers that should always be included.
+              Leave everything blank to send the API without required reviewers.
+            </div>
+            <div className="reviewerRows">
+              {requiredReviewers.map((reviewer, index) => (
+                <div key={reviewer.id} className="reviewerRow">
+                  <input
+                    type="text"
+                    value={reviewer.username}
+                    onChange={(event) => {
+                      const value = event.target.value;
+                      setRequiredReviewers((current) =>
+                        current.map((row, rowIndex) =>
+                          rowIndex === index ? { ...row, username: value } : row,
+                        ),
+                      );
+                    }}
+                    placeholder="GitHub username"
+                  />
+                  <input
+                    type="text"
+                    value={reviewer.jiraUsername}
+                    onChange={(event) => {
+                      const value = event.target.value;
+                      setRequiredReviewers((current) =>
+                        current.map((row, rowIndex) =>
+                          rowIndex === index ? { ...row, jiraUsername: value } : row,
+                        ),
+                      );
+                    }}
+                    placeholder="Jira username"
+                  />
+                  <button
+                    type="button"
+                    className="removeReviewerButton"
+                    onClick={() => {
+                      setRequiredReviewers((current) =>
+                        current.length === 1
+                          ? [createReviewerRow()]
+                          : current.filter((_, rowIndex) => rowIndex !== index),
+                      );
+                    }}
+                    aria-label={`Remove reviewer row ${index + 1}`}
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+            <button
+              type="button"
+              className="addReviewerButton"
+              onClick={() => setRequiredReviewers((current) => [...current, createReviewerRow()])}
+            >
+              Add reviewer
+            </button>
           </label>
 
           <label className="fullWidth">

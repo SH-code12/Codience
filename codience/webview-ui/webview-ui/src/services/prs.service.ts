@@ -221,7 +221,7 @@ export const enrichPRsWithRisk = async (
       let risk: OrchestrateRisk;
 
       try {
-        const riskUrl = `http://127.0.0.1:8000/orchestrate/${encodeURIComponent(userName)}/${encodeURIComponent(repoName)}/${pr.number}`;
+        const riskUrl = `http://127.0.0.1:8001/orchestrate/${encodeURIComponent(userName)}/${encodeURIComponent(repoName)}/${pr.number}`;
         const riskRes = await withOneRetry(() => axios.get(riskUrl));
         risk = parseOrchestrateRisk(riskRes.data);
       } catch (riskError: any) {

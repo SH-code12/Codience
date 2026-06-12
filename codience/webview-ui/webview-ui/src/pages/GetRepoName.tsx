@@ -122,7 +122,7 @@ const GetRepoName = () => {
       storeOwnerNameFromRepoUrl(selectedRepo.html_url);
     }
     setRepo(repoName);
-    navigate("/home");
+    navigate("/jira-login");
   };
 
   return (

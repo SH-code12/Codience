@@ -1,0 +1,51 @@
+.jiraLoginPage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #11151b 0%, #0b0f14 100%);
+}
+
+.jiraLoginPage .deviceCodeContainer {
+  background-color: #ffffff17;
+  border: #4a5059 1px solid;
+  width: min(80%, 520px);
+  min-height: 280px;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  color: #b9b9b9;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.jiraLoginButton {
+  border: none;
+  border-radius: 8px;
+  background-color: #0f6824;
+  color: #b9b9b9;
+  width: min(100%, 320px);
+  text-align: center;
+  padding: 14px 18px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.jiraLoginButton:hover:not(:disabled) {
+  background-color: #09b7319c;
+  transform: translateY(-1px);
+}
+
+.jiraLoginButton:focus-visible {
+  outline: 2px solid #b9b9b9;
+  outline-offset: 3px;
+}
+
+.jiraLoginButton:disabled {
+  cursor: progress;
+  opacity: 0.85;
+}

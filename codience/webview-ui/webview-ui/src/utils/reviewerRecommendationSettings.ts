@@ -1,6 +1,11 @@
 import type {
+  RequiredReviewer,
   ReviewerRecommendationSettings,
 } from "../types/Reviewers";
+
+type LegacyReviewerRecommendationSettings = Partial<ReviewerRecommendationSettings> & {
+  reviewerNames?: string[];
+};
 
 const STORAGE_PREFIX = "ReviewerRecommendationSettings";
 
@@ -25,9 +30,23 @@ export const getDefaultReviewerRecommendationSettings = (
   prTitle,
   k: 3,
   commitCount: 0,
-  reviewerNames: [],
+  requiredReviewers: [],
   updatedAt: new Date().toISOString(),
 });
+
+export const normalizeRequiredReviewer = (
+  reviewer: Partial<RequiredReviewer>,
+): RequiredReviewer => ({
+  username: reviewer.username?.trim() ?? "",
+  jiraUsername: reviewer.jiraUsername?.trim() ?? "",
+});
+
+export const normalizeRequiredReviewers = (
+  reviewers: Array<Partial<RequiredReviewer>>,
+): RequiredReviewer[] =>
+  reviewers
+    .map(normalizeRequiredReviewer)
+    .filter((reviewer) => reviewer.username.length > 0 || reviewer.jiraUsername.length > 0);
 
 export const loadReviewerRecommendationSettings = (
   repoName: string,
@@ -37,16 +56,37 @@ export const loadReviewerRecommendationSettings = (
     const raw = localStorage.getItem(getReviewerSettingsKey(repoName, prNumber));
     if (!raw) return null;
 
-    const parsed = JSON.parse(raw) as ReviewerRecommendationSettings;
+    const parsed = JSON.parse(raw) as
+      | ReviewerRecommendationSettings
+      | LegacyReviewerRecommendationSettings;
+
+    const legacyParsed = parsed as LegacyReviewerRecommendationSettings;
+
+    const requiredReviewers = Array.isArray(parsed?.requiredReviewers)
+      ? normalizeRequiredReviewers(parsed.requiredReviewers)
+      : Array.isArray(legacyParsed.reviewerNames)
+        ? legacyParsed.reviewerNames
+            .map((name: string) => ({ username: name, jiraUsername: "" }))
+            .filter((reviewer: RequiredReviewer) => reviewer.username.length > 0)
+        : [];
+
     if (
       typeof parsed?.k !== "number" ||
       typeof parsed?.commitCount !== "number" ||
-      !Array.isArray(parsed?.reviewerNames)
+      !Array.isArray(requiredReviewers)
     ) {
       return null;
     }
 
-    return parsed;
+    return {
+      repoName: parsed.repoName ?? repoName,
+      prNumber: parsed.prNumber ?? prNumber,
+      prTitle: parsed.prTitle ?? "",
+      k: parsed.k,
+      commitCount: parsed.commitCount,
+      requiredReviewers,
+      updatedAt: parsed.updatedAt ?? new Date().toISOString(),
+    };
   } catch {
     return null;
   }
