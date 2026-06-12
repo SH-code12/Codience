@@ -5,6 +5,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 from typing import Optional, Any
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 # pyrefly: ignore [missing-import]
 
 from codience.src.models import (
@@ -34,6 +35,13 @@ from codience.src.Reviewer_Recommender.PRNew.commit_history_utils import map_com
 
 app = FastAPI(title="Codience Reviewer Recommender API")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
+)
 # --- Helpers -----------------------------------------------------------------
 # Helper functions and business logic are imported from codience.src.helpers
 
