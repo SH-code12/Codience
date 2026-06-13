@@ -18,9 +18,10 @@ sys.path.insert(0, '/home/shahd/Desktop/Grduation')
 sys.path.insert(0, '/home/shahd/Desktop/Grduation/codience/src/Reviewer_Recommender/PRNew')
 
 # Imports
-from llm import generate_with_resilience, print_rate_limiter_stats
-from prompts import FILE_DIFF_SUMMARY_PROMPT, COMMIT_CHUNK_SUMMARY_PROMPT, DEVELOPER_PROFILE_REDUCE_PROMPT
-from profile_cache import ProfileCache
+from .llm import generate_with_resilience, print_rate_limiter_stats
+from .prompts import FILE_DIFF_SUMMARY_PROMPT, COMMIT_CHUNK_SUMMARY_PROMPT, DEVELOPER_PROFILE_REDUCE_PROMPT
+from .profile_cache import ProfileCache
+from codience.src.Reviewer_Recommender.Data.commit_diff_vectordb import index_commits_to_db
 
 load_dotenv()
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
@@ -66,52 +67,45 @@ def fetch_commits(owner, repo, limit=300):
     except:
         return []
 
-# REMOVED: LLM_BUDGET limit - let it run until complete
-# No artificial budget - just let rate limiting handle it
-llm_calls_made = 0  # Just for tracking, not limiting
-SUMMARY_WORKERS = int(os.getenv("SUMMARY_WORKERS", "2"))
+EXT_TO_SKILL = {
+    ".py": "Python", ".js": "JavaScript", ".ts": "TypeScript", ".tsx": "React/TypeScript", 
+    ".jsx": "React", ".cs": "C#/.NET", ".java": "Java", ".go": "Go", ".rb": "Ruby", 
+    ".php": "PHP", ".html": "HTML", ".css": "CSS", ".sql": "SQL", ".sh": "Shell", 
+    ".rs": "Rust", ".cpp": "C++", ".c": "C", ".yml": "CI/CD", ".yaml": "CI/CD", 
+    "Dockerfile": "Docker", "docker-compose": "Docker"
+}
 
-def call_llm(prompt, retries=3):
-    """Call LLM without artificial budget limit"""
-    global llm_calls_made
-    llm_calls_made += 1
-    
-    result = generate_with_resilience(prompt, purpose="history_summary", max_retries=retries)
-    if result.get("ok"):
-        return result.get("text", "")
-    
-    # If LLM fails, return empty string (will retry via rate limiter)
-    print(f"⚠️ LLM call failed after {result.get('attempts', 0)} attempts")
-    return ""
+KEYWORD_TO_SKILL = {
+    "auth": "Authentication", "security": "Security", "db": "Database", "sql": "SQL", 
+    "api": "API Development", "performance": "Performance Optimization", "docker": "Docker", 
+    "k8s": "Kubernetes", "test": "Testing/QA", "react": "React", "vue": "Vue", 
+    "aws": "AWS", "azure": "Azure", "gcp": "GCP", "pipeline": "CI/CD", "refactor": "Refactoring"
+}
 
-def summarize_file_patch(file_data):
-    if not file_data.get("patch"): return ""
-    prompt = FILE_DIFF_SUMMARY_PROMPT.format(
-        filename=file_data['filename'],
-        patch=file_data['patch']
-    )
-    res = call_llm(prompt)
-    if not res:
-        return ""
-    return f"File: {file_data['filename']}\nSummary: {res}"
-
-def summarize_commit(commit_message, files):
-    valid_files = [f for f in files if "patch" in f and not f["filename"].endswith(".csv") and not f["filename"].endswith("lock.json") and not f["filename"].endswith("poetry.lock")]
-    
-    file_summaries = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=SUMMARY_WORKERS) as executor:
-        results = executor.map(summarize_file_patch, valid_files)
-        for r in results:
-            if r: file_summaries.append(r)
+def extract_skills_heuristically(commit_message, files):
+    skills = set()
+    msg_lower = commit_message.lower()
+    for kw, skill in KEYWORD_TO_SKILL.items():
+        if re.search(r'\b' + kw + r'\b', msg_lower):
+            skills.add(skill)
             
-    if not file_summaries:
-        return ""
+    for f in files:
+        filename = f.get("filename", "").lower()
+        if not filename:
+            continue
         
-    prompt = COMMIT_CHUNK_SUMMARY_PROMPT.format(
-        commit_message=commit_message,
-        file_summaries="\n\n".join(file_summaries)
-    )
-    return call_llm(prompt)
+        # Check extensions
+        _, ext = os.path.splitext(filename)
+        if ext in EXT_TO_SKILL:
+            skills.add(EXT_TO_SKILL[ext])
+        
+        # Check specific filenames/paths
+        if "dockerfile" in filename:
+            skills.add("Docker")
+        if "workflows" in filename and (ext == ".yml" or ext == ".yaml"):
+            skills.add("GitHub Actions")
+            
+    return skills
 
 def save_checkpoint(author: str, skills: set, repo: str = "huggingface/transformers"):
     """Save progress to both cache and checkpoint file"""
@@ -261,7 +255,8 @@ def map_commits_to_skills(commits, max_llm_calls=None, repo="huggingface/transfo
         author_commits = commits_by_author[author]
         print(f"\n🔄 [{idx}/{len(authors_to_process)}] Analyzing {author} ({len(author_commits)} commits)...")
         
-        commit_summaries = []
+        author_skills = set()
+        
         for commit_idx, commit in enumerate(author_commits):
             try:
                 if commit_idx > 0:
@@ -270,30 +265,35 @@ def map_commits_to_skills(commits, max_llm_calls=None, repo="huggingface/transfo
                 commit_detail = session.get(commit["url"], headers=HEADERS, timeout=15).json()
                 commit_message = commit["commit"]["message"]
                 files = commit_detail.get("files", [])
-                summary = summarize_commit(commit_message, files)
-                if summary:
-                    commit_summaries.append(f"Commit: {commit_message[:80].replace('\n',' ')}...\nSummary: {summary}")
+                commit["files"] = files
+                
+                # Prepare data for Vector DB RAG Indexing
+                to_index = []
+                for f in files:
+                    if f.get("patch"):
+                        to_index.append({
+                            "author": author,
+                            "sha": commit.get("sha", "unknown"),
+                            "filename": f.get("filename", "unknown"),
+                            "patch": f.get("patch")
+                        })
+                if to_index:
+                    index_commits_to_db(to_index)
+                    
+                # Heuristic extraction - NO LLM calls!
+                skills = extract_skills_heuristically(commit_message, files)
+                author_skills.update(skills)
                     
             except Exception as e:
                 print(f"   ⚠️ Error on commit {commit_idx + 1}: {e}")
                 continue
         
-        # Extract skills from summaries
-        author_skills = set()
-        if commit_summaries:
-            prompt = DEVELOPER_PROFILE_REDUCE_PROMPT.format(
-                author=author,
-                commit_summaries="\n\n".join(commit_summaries)
-            )
-            raw_result = call_llm(prompt)
-            if raw_result:
-                try:
-                    json_match = re.search(r'\[.*\]', raw_result, re.DOTALL)
-                    skills = json.loads(json_match.group()) if json_match else json.loads(raw_result)
-                    if isinstance(skills, list):
-                        author_skills = set(skills)
-                except Exception as e:
-                    print(f"   ⚠️ Failed to parse skills: {e}")
+        # Local LLM Extraction!
+        from .batch_skill_extractor import extract_skills_with_ollama
+        llm_skills = extract_skills_with_ollama(author_commits)
+        if llm_skills:
+            print(f"   🧠 Added LLM skills for {author}: {', '.join(llm_skills)}")
+            author_skills.update(llm_skills)
         
         # Save to dev_skills (even if empty, but we'll skip saving empty)
         dev_skills[author] = author_skills
@@ -304,14 +304,10 @@ def map_commits_to_skills(commits, max_llm_calls=None, repo="huggingface/transfo
         else:
             print(f"   ⚠️ No skills extracted for {author} - not saving to cache")
         
-        print(f"   ✅ Completed {author}: {len(author_skills)} skills extracted")
+        print(f"   ✅ Completed {author}: {len(author_skills)} skills extracted (RAG indexed)")
         print(f"   📊 Progress: {idx}/{len(authors_to_process)} authors processed")
-        print(f"   📞 LLM calls made so far: {llm_calls_made}")
     
     print(f"\n✅ Complete! Processed {len(dev_skills)} total developers")
-    
-    # Print rate limiter stats
-    print_rate_limiter_stats()
     
     return dev_skills
 # Add this helper function to get commit history without LLM
