@@ -1,0 +1,566 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/API/Codience.API.csproj": {}
+  },
+  "projects": {
+    "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/API/Codience.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/API/Codience.API.csproj",
+        "projectName": "Codience.API",
+        "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/API/Codience.API.csproj",
+        "packagesPath": "/Users/rebuy/.nuget/packages/",
+        "outputPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/API/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/rebuy/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Infrastructure/Persistence/Infrastructure.Persistence.csproj": {
+                "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Infrastructure/Persistence/Infrastructure.Persistence.csproj"
+              },
+              "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Infrastructure/Presentation/Infrastructure.Presentation.csproj": {
+                "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Infrastructure/Presentation/Infrastructure.Presentation.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerGen": {
+              "target": "Package",
+              "version": "[9.0.5, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerUI": {
+              "target": "Package",
+              "version": "[9.0.5, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.17.0, )"
+            },
+            "dotenv.net": {
+              "target": "Package",
+              "version": "[4.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/Users/rebuy/.dotnet/sdk/9.0.312/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Abstraction/Core.Abstraction.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Abstraction/Core.Abstraction.csproj",
+        "projectName": "Core.Abstraction",
+        "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Abstraction/Core.Abstraction.csproj",
+        "packagesPath": "/Users/rebuy/.nuget/packages/",
+        "outputPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Abstraction/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/rebuy/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Domain/Core.Domain.csproj": {
+                "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Domain/Core.Domain.csproj"
+              },
+              "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Share/Share.csproj": {
+                "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Share/Share.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/Users/rebuy/.dotnet/sdk/9.0.312/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Domain/Core.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Domain/Core.Domain.csproj",
+        "projectName": "Core.Domain",
+        "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Domain/Core.Domain.csproj",
+        "packagesPath": "/Users/rebuy/.nuget/packages/",
+        "outputPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Domain/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/rebuy/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/Users/rebuy/.dotnet/sdk/9.0.312/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Services/Core.Services.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Services/Core.Services.csproj",
+        "projectName": "Core.Services",
+        "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Services/Core.Services.csproj",
+        "packagesPath": "/Users/rebuy/.nuget/packages/",
+        "outputPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Services/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/rebuy/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Abstraction/Core.Abstraction.csproj": {
+                "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Abstraction/Core.Abstraction.csproj"
+              },
+              "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Domain/Core.Domain.csproj": {
+                "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Domain/Core.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[33.1.0, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[9.0.5, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.4, )"
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[8.6.4, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.17.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/Users/rebuy/.dotnet/sdk/9.0.312/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Infrastructure/Persistence/Infrastructure.Persistence.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Infrastructure/Persistence/Infrastructure.Persistence.csproj",
+        "projectName": "Infrastructure.Persistence",
+        "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Infrastructure/Persistence/Infrastructure.Persistence.csproj",
+        "packagesPath": "/Users/rebuy/.nuget/packages/",
+        "outputPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Infrastructure/Persistence/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/rebuy/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Domain/Core.Domain.csproj": {
+                "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Domain/Core.Domain.csproj"
+              },
+              "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Services/Core.Services.csproj": {
+                "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Services/Core.Services.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[33.1.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[9.0.5, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[8.6.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/Users/rebuy/.dotnet/sdk/9.0.312/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Infrastructure/Presentation/Infrastructure.Presentation.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Infrastructure/Presentation/Infrastructure.Presentation.csproj",
+        "projectName": "Infrastructure.Presentation",
+        "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Infrastructure/Presentation/Infrastructure.Presentation.csproj",
+        "packagesPath": "/Users/rebuy/.nuget/packages/",
+        "outputPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Infrastructure/Presentation/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/rebuy/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Abstraction/Core.Abstraction.csproj": {
+                "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Abstraction/Core.Abstraction.csproj"
+              },
+              "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Services/Core.Services.csproj": {
+                "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Core/Services/Core.Services.csproj"
+              },
+              "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Share/Share.csproj": {
+                "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Share/Share.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[9.0.5, )"
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[8.6.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/Users/rebuy/.dotnet/sdk/9.0.312/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Share/Share.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Share/Share.csproj",
+        "projectName": "Share",
+        "projectPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Share/Share.csproj",
+        "packagesPath": "/Users/rebuy/.nuget/packages/",
+        "outputPath": "/Users/rebuy/Desktop/FCAI/GP/CodienceProject/Backend/Share/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/rebuy/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/Users/rebuy/.dotnet/sdk/9.0.312/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
