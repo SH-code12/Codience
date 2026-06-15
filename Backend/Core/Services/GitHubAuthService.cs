@@ -191,7 +191,7 @@ public class GitHubAuthService : IGithubAuthService
             AccessToken = newUser.AccessToken
         };
     }
-    
+
     public async Task<IEnumerable<GitHubPullRequestDto>> GetPullRequestsAsync(string userName, string repoName)
     {
         var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
@@ -224,8 +224,7 @@ public class GitHubAuthService : IGithubAuthService
         {
             var existingPr = await prRepo.FirstOrDefaultAsync(
                 p => p.Number == prDto.Number &&
-                     p.RepositoryId == repository.Id &&
-                     p.UserId == authUser.Id
+                     p.RepositoryId == repository.Id
             );
 
             if (existingPr == null)
@@ -237,12 +236,39 @@ public class GitHubAuthService : IGithubAuthService
                     State = prDto.State,
                     CreatedAt = prDto.CreatedAt,
                     RepositoryId = repository.Id,
-                    UserId = authUser.Id
+                    UserId = authUser.Id,
+                    Description = prDto.Description?.Trim() ?? string.Empty,
+                    DiffUrl = prDto.DiffUrl ?? string.Empty,
                 });
             }
         }
         await _authUow.SaveChangesAsync();
+       foreach (var pr in pullsFromGitHub)
+{
+    if (string.IsNullOrWhiteSpace(pr.DiffUrl))
+        continue;
 
+    var request = new HttpRequestMessage(HttpMethod.Get, pr.DiffUrl);
+
+    request.Headers.UserAgent.ParseAdd("Codience");
+    request.Headers.Authorization =
+        new AuthenticationHeaderValue("Bearer", authUser.AccessToken);
+
+    request.Headers.Accept.Add(
+        new MediaTypeWithQualityHeaderValue("text/plain"));
+
+    var diffResponse = await _httpClient.SendAsync(request);
+
+    if (diffResponse.IsSuccessStatusCode)
+    {
+        pr.DiffContent = await diffResponse.Content.ReadAsStringAsync();
+    }
+    else
+    {
+        pr.DiffContent =
+            $"ERROR: {diffResponse.StatusCode} - {await diffResponse.Content.ReadAsStringAsync()}";
+    }
+}
         return pullsFromGitHub;
     }
     public async Task<GitHubPullRequestDto> GetPullRequest(string owner, int pullNumber, string repo)
@@ -279,9 +305,25 @@ public class GitHubAuthService : IGithubAuthService
             throw new Exception(
                 $"GitHub error: {response.StatusCode} {error}");
         }
+        var pr = await response.Content
+       .ReadFromJsonAsync<GitHubPullRequestDto>();
 
-        return await response.Content
-            .ReadFromJsonAsync<GitHubPullRequestDto>();
+        if (pr == null)
+            throw new Exception("Pull request not found");
+
+        // Get diff content
+        if (!string.IsNullOrWhiteSpace(pr.DiffUrl))
+        {
+            var diffResponse = await _httpClient.GetAsync(pr.DiffUrl);
+
+            if (diffResponse.IsSuccessStatusCode)
+            {
+                pr.DiffContent =
+                    await diffResponse.Content.ReadAsStringAsync();
+            }
+        }
+        return pr;
+
     }
     public async Task<IEnumerable<GitHubFileDto>> GetChangedFilesAsync(string owner, string repo, int pullNumber)
     {
@@ -398,76 +440,76 @@ public class GitHubAuthService : IGithubAuthService
 
         return commits ?? new List<GitHubCommitDto>();
     }
-    
-   public async Task<PagedResult<GitHubRepoDto>> GetRepositoriesAsync(string userName,int page = 1,int pageSize = 30)
-{
-    _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Codience");
 
-    var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
-
-    var authUser =
-        await userRepo.FirstOrDefaultAsync(
-            u => u.AuthUserName == userName);
-
-    if (authUser == null)
-        throw new Exception("User not found");
-
-    _httpClient.DefaultRequestHeaders.Authorization =
-        new AuthenticationHeaderValue(
-            "Bearer",
-            authUser.AccessToken);
-
-    var response =
-        await _httpClient.GetAsync(
-            $"https://api.github.com/user/repos?page={page}&per_page={pageSize}");
-
-    response.EnsureSuccessStatusCode();
-
-    var repos =
-        await response.Content.ReadFromJsonAsync<List<GitHubRepo>>();
-
-    if (repos == null)
-        repos = new List<GitHubRepo>();
-
-    var repoRepository =
-        _authUow.GetGenericRepository<GitHubRepo, int>();
-
-    foreach (var repo in repos)
+    public async Task<PagedResult<GitHubRepoDto>> GetRepositoriesAsync(string userName, int page = 1, int pageSize = 30)
     {
-        var existingRepo = await repoRepository.FirstOrDefaultAsync(r => r.Id == repo.Id);
+        _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Codience");
 
-        if (existingRepo == null)
+        var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
+
+        var authUser =
+            await userRepo.FirstOrDefaultAsync(
+                u => u.AuthUserName == userName);
+
+        if (authUser == null)
+            throw new Exception("User not found");
+
+        _httpClient.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue(
+                "Bearer",
+                authUser.AccessToken);
+
+        var response =
+            await _httpClient.GetAsync(
+                $"https://api.github.com/user/repos?page={page}&per_page={pageSize}");
+
+        response.EnsureSuccessStatusCode();
+
+        var repos =
+            await response.Content.ReadFromJsonAsync<List<GitHubRepo>>();
+
+        if (repos == null)
+            repos = new List<GitHubRepo>();
+
+        var repoRepository =
+            _authUow.GetGenericRepository<GitHubRepo, int>();
+
+        foreach (var repo in repos)
         {
-            repo.UserId = authUser.Id;
+            var existingRepo = await repoRepository.FirstOrDefaultAsync(r => r.Id == repo.Id);
 
-            await repoRepository.AddAsync(repo);
+            if (existingRepo == null)
+            {
+                repo.UserId = authUser.Id;
+
+                await repoRepository.AddAsync(repo);
+            }
         }
+
+        await _authUow.SaveChangesAsync();
+
+        bool hasNext = false;
+
+        if (response.Headers.TryGetValues("Link", out var values))
+        {
+            var link = values.FirstOrDefault();
+
+            hasNext =
+                link != null &&
+                link.Contains("rel=\"next\"");
+        }
+
+        var repoDtos = repos.Select(r =>
+            new GitHubRepoDto(
+                r.Name,
+                r.HtmlUrl,
+                r.Description));
+
+        return new PagedResult<GitHubRepoDto>(
+            repoDtos,
+            page,
+            pageSize,
+            hasNext);
     }
-
-    await _authUow.SaveChangesAsync();
-
-    bool hasNext = false;
-
-    if (response.Headers.TryGetValues("Link", out var values))
-    {
-        var link = values.FirstOrDefault();
-
-        hasNext =
-            link != null &&
-            link.Contains("rel=\"next\"");
-    }
-
-    var repoDtos = repos.Select(r =>
-        new GitHubRepoDto(
-            r.Name,
-            r.HtmlUrl,
-            r.Description));
-
-    return new PagedResult<GitHubRepoDto>(
-        repoDtos,
-        page,
-        pageSize,
-        hasNext);
-}
 }
 
