@@ -91,7 +91,11 @@ const JiraProjectName = () => {
           )}
         </div>
 
-        <button onClick={submit} disabled={!selectedProject}>
+        <button
+          onClick={submit}
+          disabled={!selectedProject}
+          className="reviewersAuthButton repoContinueButton"
+        >
           Continue
         </button>
 

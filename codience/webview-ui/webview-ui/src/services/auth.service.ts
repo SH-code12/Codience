@@ -9,7 +9,6 @@ import type { Token } from "../types/Token";
 
 export const authService = {
   async signUp(data: SignUpPayload): Promise<AuthResponse> {
-    // Replace with real API call later
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({
@@ -25,9 +24,6 @@ export const authService = {
   },
 
   async login(data: LoginPayload): Promise<AuthResponse> {
-    // 🔁 Replace this with:
-    // return axios.post('/api/auth/login', data)
-
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (data.username === "admin" && data.password === "1234") {
@@ -46,7 +42,6 @@ export const authService = {
   },
 };
 
-// Exchange a device code response for an access token from the auth backend
 export async function exchangeDeviceCode(
   deviceData: DeviceCodeResponse,
 ): Promise<Token> {
@@ -60,7 +55,6 @@ export async function exchangeDeviceCode(
   throw new Error(`Token exchange failed with status ${res.status}`);
 }
 
-// Fetch a device-code from the backend
 export async function fetchDeviceCode(): Promise<DeviceCodeResponse> {
   const url = "https://codience.onrender.com/api/GitHubAuth/device-code";
   const res = await axios.get<DeviceCodeResponse>(url);

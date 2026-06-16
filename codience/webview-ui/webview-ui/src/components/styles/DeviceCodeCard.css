@@ -74,9 +74,7 @@
 }
 
 .deviceCodeContainer .userCode:hover {
-  /* border: #64676c 1px solid;
-   */
-   padding-inline: 15px;
+  padding-inline: 15px;
 }
 
 .deviceCodeContainer a {

@@ -6,15 +6,15 @@ export const COLOR_RANGES = {
 
 export const getWorkloadColor = (value: number): string => {
   if (value >= COLOR_RANGES.green.min && value <= COLOR_RANGES.green.max) {
-    return "#588756"; // green
+    return "#588756";
   }
 
   if (value >= COLOR_RANGES.yellow.min && value <= COLOR_RANGES.yellow.max) {
-    return "#B06A35"; // yellow
+    return "#B06A35";
   }
 
   if (value >= COLOR_RANGES.red.min) {
-    return "#821B1B"; // red
+    return "#821B1B";
   }
 
   return "#595d63";

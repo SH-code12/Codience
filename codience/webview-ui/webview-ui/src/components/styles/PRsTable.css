@@ -1,51 +1,52 @@
 table {
   display: inline-table;
   background-color: transparent;
-  color: #bebaba;
-  /* min-height: 100vh; */
+  color: #d7d7d7;
   overflow: auto;
   width: 100%;
-  font-family: sans-serif;
+  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
   border-spacing: 0;
 }
 table tr {
   width: 60%;
-  height: 50px;
+  height: 48px;
 }
 
 table thead tr {
   background-color: #181b1f;
-  color: #5d6065;
+  color: #8b9097;
   font-size: 12px;
 }
 
-/* make the table header sticky inside its scroll container */
 .prsTable thead th {
   position: sticky;
-  top: 0px; /* matches container padding so header sits flush */
+  top: 0px;
   background: #181b1f;
   z-index: 5;
+  padding: 12px 8px;
+  font-weight: 700;
 }
 
-/* Default for narrow columns (all except first) */
 table th {
   width: 10%;
 }
 
-/* Make first column (PR Title) larger */
 .prsTable th:first-child,
 .prsTable td.titleCell {
   width: 35%;
 }
 table td {
   text-align: center;
-  border-bottom: 1px #eeeeee41 solid;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
   font-size: 12px;
+  padding: 10px 8px;
 }
 td.titleCell {
   text-align: start;
-  padding-left: 5px;
+  padding-left: 12px;
   text-transform: capitalize;
+  color: #ececec;
+  font-weight: 600;
 }
 
 .riskCell.low {
@@ -87,30 +88,49 @@ td.status {
   text-transform: capitalize;
 }
 table tbody tr:hover {
-  background-color: #40404d6b;
+  background-color: rgba(255, 255, 255, 0.045);
 }
 
 .prsTable tr {
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, opacity 0.2s ease;
 }
 
 .prsTable tr:hover {
-  /* background-color: #48484b; */
   opacity: 0.9;
 }
 
 .selected-row {
-  background-color: #45576933 !important;
-  border-left: 4px solid #404d5c;
+  background-color: rgba(79, 157, 105, 0.12) !important;
+  border-left: 4px solid #4f9d69;
 }
 
-/* New container to make table scrollable */
+.prExpandButton {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: 1px solid rgba(79, 157, 105, 0.18);
+  background: linear-gradient(180deg, #202423, #171a19);
+  color: #b7e4c5;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.prExpandButton:hover {
+  border-color: rgba(79, 157, 105, 0.38);
+  background: linear-gradient(180deg, rgba(79, 157, 105, 0.22), rgba(79, 157, 105, 0.08));
+  transform: translateY(-1px);
+}
+
 .prsTableContainer {
-  max-height: 420px; /* vertical space for the table */
-  overflow: auto; /* show both scrollbars when needed */
+  max-height: 420px;
+  overflow: auto;
   width: 100%;
-  border-radius: 4px;
+  border-radius: 7px;
 }
 
 @media (max-width: 700px) {
@@ -123,7 +143,6 @@ table tbody tr:hover {
   }
 }
 
-/* Ensure table can be wider than container to allow horizontal scroll */
 .prsTable {
   min-width: 500px;
 }
@@ -134,9 +153,9 @@ table tbody tr:hover {
   align-items: center;
   padding-top: 8px;
   color: #bbb;
+  font-size: 12px;
 }
 
-/* Controls rectangle above the table (right side) */
 .prsControls {
   display: flex;
   gap: 8px;
@@ -144,7 +163,7 @@ table tbody tr:hover {
   background: #181b1f;
   padding: 6px 8px;
   border-radius: 6px;
-  border: 1px solid #25262a;
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 .prsControls label {
   color: var(--color-neutral);
@@ -156,7 +175,7 @@ table tbody tr:hover {
 .prsControls select {
   background: #0f1316;
   color: #e6e6e6;
-  border: 1px solid #2a2d31;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 4px 6px;
   border-radius: 4px;
   font-size: 12px;
@@ -164,18 +183,18 @@ table tbody tr:hover {
 .prsControls .sortDir {
   background: transparent;
   color: var(--color-neutral);
-  border: 1px solid #2a2d31;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 4px 8px;
   border-radius: 4px;
   cursor: pointer;
 }
 .paginationControls button {
   background: transparent;
-  border: 1px solid #444;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: #ddd;
   padding: 6px 10px;
   margin: 0 6px;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
 }
 .controls {
@@ -191,6 +210,7 @@ table tbody tr:hover {
   margin-left: 6px;
   background: #1d1f22;
   color: #ddd;
-  border: 1px solid #333;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 4px 6px;
+  border-radius: 4px;
 }

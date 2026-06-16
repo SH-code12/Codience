@@ -1,17 +1,9 @@
-/* ============================= */
-/* PAGE BACKGROUND */
-/* ============================= */
-
 .analytics-container {
   min-height: 100vh;
   padding: 40px;
   color: #e2e8f0;
   box-sizing: border-box;
 }
-
-/* ============================= */
-/* LAYOUT */
-/* ============================= */
 
 .loading {
   font-size: 18px;
@@ -42,20 +34,12 @@
   gap: 20px;
 }
 
-/* ============================= */
-/* SECTION TITLES */
-/* ============================= */
-
 .section-title {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 20px;
   color: #e1e1e1;
 }
-
-/* ============================= */
-/* TABLE */
-/* ============================= */
 
 .reviewer-table {
   width: 100%;
@@ -89,9 +73,6 @@
   transition: 0.2s ease;
 }
 
-/* ============================= */
-/* STATS CARDS */
-/* ============================= */
 .analytics-stats{
   height: fit-content;
   margin-block: auto;
@@ -121,10 +102,6 @@
   font-weight: 700;
   margin: 0;
 }
-/* ============================= */
-/* HEATMAP */
-/* ============================= */
-
 .heatmap-container {
   background: #2C2F36;
   padding: 20px;
@@ -137,7 +114,6 @@
   align-items: center;
 }
 
-/* Column Headers */
 .heatmap-header {
   text-align: center;
   font-size: 14px;
@@ -145,13 +121,11 @@
   font-weight: 500;
 }
 
-/* Row Labels */
 .heatmap-week-label {
   font-weight: 600;
   color: #c1c4c8;
 }
 
-/* Cells */
 .heatmap-cell {
   height: 60px;
   border-radius: 3px;
@@ -165,10 +139,6 @@
 .heatmap-cell:hover {
 opacity: 0.8;
 }
-
-/* ============================= */
-/* RESPONSIVE */
-/* ============================= */
 
 @media (max-width: 1024px) {
   .heatmap-container {
@@ -189,9 +159,7 @@ opacity: 0.8;
   .heatmap-header {
     font-size: 12px;
   }
-}/* ============================= */
-/* RESPONSIVE DESIGN */
-/* ============================= */
+}
 
 @media (max-width: 1024px) {
   .analytics-left{

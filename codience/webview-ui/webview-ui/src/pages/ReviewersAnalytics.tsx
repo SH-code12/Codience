@@ -14,12 +14,10 @@ const ReviewersAnalytics = () => {
 
   const { workload } = data;
 
-  // 🔥 Calculate overloads (values > 10)
   const overloadCount = workload.reduce((count, reviewer) => {
     return count + reviewer.weeklyLoad.filter((value) => value > 10).length;
   }, 0);
 
-  // 🔥 Calculate average PRs per reviewer
   const avgPRs =
     workload.reduce((sum, reviewer) => {
       const total = reviewer.weeklyLoad.reduce((acc, value) => acc + value, 0);

@@ -85,7 +85,10 @@ class SidebarProvider implements vscode.WebviewViewProvider {
           https://sphery-arlen-nondecorative.ngrok-free.dev
           https://fordless-samella-unexpendable.ngrok-free.dev
           http://localhost:5051/
-          http://127.0.0.1:8000/;
+          http://localhost:8000/
+          http://127.0.0.1:8000/
+          http://127.0.0.1:8001/
+          http://127.0.0.1:8002/;
       ">
   `,
     );

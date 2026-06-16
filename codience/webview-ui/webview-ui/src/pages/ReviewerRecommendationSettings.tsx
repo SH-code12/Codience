@@ -44,9 +44,7 @@ const ReviewerRecommendationSettingsPage = () => {
   );
 
   const [k, setK] = useState(3);
-  const [commitCount, setCommitCount] = useState(0);
   const [requiredReviewers, setRequiredReviewers] = useState<ReviewerRowState[]>([]);
-  const [prTitle, setPrTitle] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -59,13 +57,11 @@ const ReviewerRecommendationSettingsPage = () => {
       );
 
     setK(fallback.k);
-    setCommitCount(fallback.commitCount);
     setRequiredReviewers(
       fallback.requiredReviewers.length > 0
         ? fallback.requiredReviewers.map((reviewer) => createReviewerRow(reviewer))
         : [createReviewerRow()],
     );
-    setPrTitle(selectedPR?.title ?? fallback.prTitle ?? "");
   }, [repoName, parsedPrNumber, selectedPR?.title, storedSettings]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -78,11 +74,6 @@ const ReviewerRecommendationSettingsPage = () => {
 
     if (!Number.isInteger(k) || k <= 0) {
       setError("Top k reviewers must be a positive integer.");
-      return;
-    }
-
-    if (!Number.isInteger(commitCount) || commitCount < 0) {
-      setError("Commit count must be a non-negative integer.");
       return;
     }
 
@@ -102,9 +93,9 @@ const ReviewerRecommendationSettingsPage = () => {
     const nextSettings = {
       repoName,
       prNumber: parsedPrNumber,
-      prTitle: prTitle.trim() || (selectedPR?.title ?? ""),
+      prTitle: selectedPR?.title ?? storedSettings?.prTitle ?? "",
       k,
-      commitCount,
+      commitCount: storedSettings?.commitCount ?? 0,
       requiredReviewers: trimmedReviewers,
       updatedAt: new Date().toISOString(),
     };
@@ -121,7 +112,7 @@ const ReviewerRecommendationSettingsPage = () => {
             <p className="eyebrow">Reviewer recommendation settings</p>
             <h2>{selectedPR ? selectedPR.title : `PR #${prNumber ?? ""}`}</h2>
             <p className="subtext">
-              Save the inputs that will be sent with this PR when the API is wired.
+              Tune reviewer inputs for this pull request.
             </p>
           </div>
           <button
@@ -145,23 +136,8 @@ const ReviewerRecommendationSettingsPage = () => {
             />
           </label>
 
-          <label>
-            Commit count for AI model
-            <input
-              type="number"
-              min={0}
-              step={1}
-              value={commitCount}
-              onChange={(event) => setCommitCount(Number(event.target.value))}
-            />
-          </label>
-
           <label className="fullWidth">
             Required reviewers
-            <div className="reviewerRowsHint">
-              Add GitHub and Jira usernames for reviewers that should always be included.
-              Leave everything blank to send the API without required reviewers.
-            </div>
             <div className="reviewerRows">
               {requiredReviewers.map((reviewer, index) => (
                 <div key={reviewer.id} className="reviewerRow">
@@ -203,7 +179,7 @@ const ReviewerRecommendationSettingsPage = () => {
                     }}
                     aria-label={`Remove reviewer row ${index + 1}`}
                   >
-                    Remove
+                    -
                   </button>
                 </div>
               ))}
@@ -215,16 +191,6 @@ const ReviewerRecommendationSettingsPage = () => {
             >
               Add reviewer
             </button>
-          </label>
-
-          <label className="fullWidth">
-            PR title
-            <input
-              type="text"
-              value={prTitle}
-              onChange={(event) => setPrTitle(event.target.value)}
-              placeholder="Optional title override"
-            />
           </label>
 
           {error ? <div className="formError">{error}</div> : null}

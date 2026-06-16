@@ -8,7 +8,6 @@ type Props = {
   onSelect?: (pr: PullRequest) => void;
   onRiskUpdate?: (updated: PullRequest[]) => void;
   onVisibleChange?: (visible: PullRequest[]) => void;
-  // NOTE: PRsTable manages its own filter/sort controls locally
 };
 
 const toSortableFilesChanged = (value: number | string | undefined) => {
@@ -55,7 +54,6 @@ const PRsTable = ({ prs, onSelect, onVisibleChange }: Props) => {
     );
   }, [prs]);
 
-  // Local filtering and sorting state (controls rendered above table)
   const [filterRisk, setFilterRisk] = useState<
     "all" | "low" | "medium" | "high"
   >("all");
@@ -79,19 +77,16 @@ const PRsTable = ({ prs, onSelect, onVisibleChange }: Props) => {
   const visiblePRs = useMemo(() => {
     let list = [...updatedPRs];
 
-    // Apply risk filter
     if (filterRisk !== "all") {
       list = list.filter(
         (p) => (p.risk?.risk_level ?? "unknown") === filterRisk,
       );
     }
 
-    // Apply status filter
     if (filterStatus !== "all") {
       list = list.filter((p) => (p.state ?? "").toLowerCase() === filterStatus);
     }
 
-    // Sorting
     if (sortBy !== "none") {
       list.sort((a, b) => {
         let res = 0;
@@ -194,6 +189,7 @@ const PRsTable = ({ prs, onSelect, onVisibleChange }: Props) => {
               <th>Files Changed</th>
               <th>Created At</th>
               <th>Status</th>
+              <th>Details</th>
             </tr>
           </thead>
           <tbody>

@@ -10,7 +10,6 @@ export const useRepo = (initial?: string | null) => {
     try {
       window.dispatchEvent(new CustomEvent("repoChanged", { detail: value }));
     } catch (e) {
-      // ignore in environments without window/custom events
     }
   }, []);
 

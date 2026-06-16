@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import type { PullRequest } from "../../types/PullRequest";
 
 interface Props {
@@ -18,6 +19,16 @@ export const RiskCell: React.FC<{ risk_level?: string }> = ({ risk_level }) => {
 };
 
 const PRRow: React.FC<Props> = ({ pr, selected, onSelect }) => {
+  const navigate = useNavigate();
+
+  const openSummary = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    onSelect?.(pr);
+    navigate(`/dashboard/pr-summary/${pr.number}`, {
+      state: { selectedPR: pr },
+    });
+  };
+
   return (
     <tr
       onClick={() => onSelect?.(pr)}
@@ -29,6 +40,17 @@ const PRRow: React.FC<Props> = ({ pr, selected, onSelect }) => {
       <td>{pr.files_changed ?? 0}</td>
       <td>{pr.createdAt}</td>
       <td className={`status ${pr.state}`}>{pr.state}</td>
+      <td>
+        <button
+          type="button"
+          className="prExpandButton"
+          onClick={openSummary}
+          aria-label={`Open summary for PR ${pr.number}`}
+          title="Open PR summary"
+        >
+          ⤢
+        </button>
+      </td>
     </tr>
   );
 };

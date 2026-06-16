@@ -2,64 +2,65 @@
   min-height: 100vh;
   width: 100%;
   background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.06), transparent 30%),
-    linear-gradient(180deg, #21252d 0%, #1b2027 100%);
-  color: #f1f1f1;
+    radial-gradient(circle at top left, rgba(34, 197, 94, 0.06), transparent 32%),
+    #101213;
+  color: #cfcfcf;
+  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+  box-sizing: border-box;
 }
 
 .profileShell {
-  max-width: 940px;
+  max-width: 980px;
   padding: 18px 22px 28px;
 }
 
 .profileHeader {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 18px;
-}
-
-.profileEyebrow {
-  margin: 0 0 4px;
-  font-size: 14px;
-  color: #ced3db;
+  min-height: 42px;
 }
 
 .profileHeader h1 {
-  margin: 8px 0 0;
-  font-size: 26px;
-  font-weight: 600;
-}
-
-.profileSubtext {
-  margin: 8px 0 0;
-  color: #aab1ba;
-  max-width: 520px;
-  line-height: 1.45;
+  margin: 0;
+  color: #d8d8d8;
+  font-size: 24px;
+  font-weight: 650;
 }
 
 .profileLink {
   align-self: center;
-  background: #2c313a;
-  color: #f4f4f4;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.18), rgba(34, 197, 94, 0.07));
+  color: #d8d8d8;
+  border: 1px solid rgba(34, 197, 94, 0.1);
+  border-radius: 6px;
   padding: 10px 14px;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.profileLink:hover {
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.28), rgba(34, 197, 94, 0.13));
+  transform: translateY(-1px);
 }
 
 .profileState {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 14px;
+  background: rgba(20, 22, 23, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
   padding: 18px;
-  color: #dfe3ea;
+  color: #cfcfcf;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
 }
 
 .profileStateError {
-  color: #ffb4b4;
+  color: #ffb6b6;
+  background: rgba(220, 38, 38, 0.1);
+  border-color: rgba(220, 38, 38, 0.24);
 }
 
 .profileGrid {
@@ -71,15 +72,15 @@
 .profileSummaryCard,
 .profileInfoCard {
   position: relative;
-  background: linear-gradient(180deg, #1c2026 0%, #161a1f 100%);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.32);
+  background: rgba(20, 22, 23, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
 }
 
 .profileSummaryCard {
   text-align: center;
-  padding: 22px 22px 24px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -91,33 +92,37 @@
   height: 116px;
   border-radius: 50%;
   object-fit: cover;
-  border: 6px solid #262b33;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
-  margin-top: 6px;
+  border: 5px solid #202423;
+  box-shadow: 0 0 0 2px rgba(79, 157, 105, 0.32);
+  margin-top: 4px;
 }
 
 .profileSummaryCard h2 {
   margin: 10px 0 0;
+  color: #d8d8d8;
   font-size: 23px;
+  font-weight: 650;
 }
 
 .profileHandle {
   margin: 0;
-  color: #aeb5be;
-  font-size: 15px;
+  color: #4f9d69;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .profileBio {
   margin: 4px 0 0;
-  color: #c9ced5;
+  color: #bdbdbd;
   line-height: 1.5;
+  font-size: 13px;
 }
 
 .profileStatRow {
   width: 100%;
   margin-top: 12px;
   padding-top: 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
@@ -126,21 +131,23 @@
 .profileStatRow > div {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.035);
 }
 
 .profileStatValue {
   font-size: 22px;
-  font-weight: 700;
-  color: #f3f4f6;
-  margin-top: 20px;
+  font-weight: 750;
+  color: #d8d8d8;
 }
 
 .profileStatLabel {
-  font-size: 12px;
-  color: #9ca3af;
+  font-size: 11px;
+  color: #9a9a9a;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
 }
 
 .profileInfoCard {
@@ -157,42 +164,45 @@
 
 .profileInfoHeader h3 {
   margin: 0;
-  font-size: 18px;
+  color: #d0d0d0;
+  font-size: 17px;
+  font-weight: 650;
 }
 
 .profileInfoHeader span {
-  color: #aab1ba;
+  color: #9a9a9a;
   font-size: 13px;
 }
 
 .profileInfoList {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 12px;
   margin: 0;
 }
 
 .profileInfoList div {
-  padding: 14px 16px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.035);
   min-width: 0;
 }
 
 .profileInfoList dt {
   margin-bottom: 8px;
-  font-size: 12px;
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #a3aab4;
+  color: #9a9a9a;
 }
 
 .profileInfoList dd {
   margin: 0;
-  color: #f4f5f7;
+  color: #d8d8d8;
   line-height: 1.45;
   word-break: break-word;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 @media (max-width: 900px) {
@@ -208,6 +218,7 @@
 @media (max-width: 640px) {
   .profileHeader {
     flex-direction: column;
+    align-items: flex-start;
   }
 
   .profileLink {

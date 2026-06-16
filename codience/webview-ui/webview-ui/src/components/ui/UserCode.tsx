@@ -32,7 +32,6 @@ const DeviceCodeCard = () => {
 
         console.log("🔵 Fetching device code...");
 
-        // 1️⃣ Fetch device code
         const deviceResponse = await fetchDeviceCode();
 
         console.log("✅ Device Code API Response:", deviceResponse);
@@ -41,17 +40,14 @@ const DeviceCodeCard = () => {
 
         console.log("🔵 Sending device code to exchange API...");
 
-        // 2️⃣ Exchange device code
         const token = await exchangeDeviceCode(deviceResponse);
 
         console.log("✅ Exchange API Response:", token);
 
-        // 3️⃣ Save username
         localStorage.setItem("User", token.login);
 
         console.log("📦 Username stored in localStorage:", token.login);
 
-        // 4️⃣ Navigate if success
         navigate("/getRepo");
       } catch (err: any) {
         console.error("❌ Authentication flow failed:", err);

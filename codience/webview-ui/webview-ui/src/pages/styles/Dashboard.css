@@ -4,27 +4,22 @@ body,
   height: 100%;
 }
 
-/* Root layout */
 .dashboardRoot {
   display: flex;
-  /* Allow the page to scroll when content exceeds viewport while keeping
-     the scrollbar visually hidden for a cleaner look. */
   height: 100vh;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
-  /* background: #161719; */
   color: #d7d7d7;
-  position: relative; /* allow absolutely positioned children to anchor relative to viewport container */
-}
+  position: relative; }
 
-/* Hide webkit scrollbars for the root container */
+
 .dashboardRoot::-webkit-scrollbar {
   width: 0px;
   height: 0px;
 }
 
-/* Main area */
+
 .mainArea {
   flex: 1;
   display: flex;
@@ -34,7 +29,6 @@ body,
   height: 100%;
 }
 
-/* Top header */
 .topHeader {
   display: flex;
   justify-content: space-between;
@@ -70,21 +64,18 @@ body,
   font-size: 13px;
 }
 
-/* Cards row */
 .cardsContainer {
   display: flex;
   gap: 15px;
   margin-top: 8px;
   margin-bottom: 5px;
   align-items: stretch;
-  flex: 0 0 88px; /* reserve fixed cards area so table can fill remaining height */
-}
+  flex: 0 0 88px; }
 
 .dashboardRoot .card {
   background: #222425;
   border-radius: 8px;
   padding: 8px;
-  /* make the card boxes smaller while preserving font sizes */
   flex: 0 0 140px;
   height: 80px;
   display: flex;
@@ -95,17 +86,16 @@ body,
 }
 
 .cardLabel {
-  font-size: 13px; /* keep label readable */
+  font-size: 13px; 
   color: #bdbdbd;
 }
 
 .cardValue {
-  font-size: 36px; /* preserve prominent value font size */
+  font-size: 36px; 
   font-weight: 700;
   color: #fff;
 }
 
-/* specific card colors */
 .card.open {
   background: linear-gradient(180deg, rgba(34, 197, 94, 0.12), #212524);
 }
@@ -113,12 +103,10 @@ body,
   background: linear-gradient(180deg, rgba(220, 38, 38, 0.08), #222425);
 }
 
-/* Main content area: table + right panel */
 .topCardsAndTable {
   display: grid;
-  grid-template-columns: 2fr 1fr; /* left = two thirds, right = one third */
+  grid-template-columns: 2fr 1fr;
   gap: 18px;
-  /* make this area exactly viewport height minus header so columns can fill 100% */
   height: calc(100vh - 72px);
   align-items: start;
 }
@@ -137,17 +125,13 @@ body,
   gap: 12px;
   min-width: 0;
   height: 100%;
-  /* ensure the right column itself stretches to the same height as topCardsAndTable */
   align-self: stretch;
 }
 
-/* make the right column a positioning context so we can pin the bottom chart */
 .rightColumn {
   position: relative;
 }
 
-/* bottom chart is absolutely positioned inside the right column so it sits
-   flush to the bottom of the column and does not scroll with the rightPanel */
 .bottomChartContainer {
   position: absolute;
   bottom: 0;
@@ -155,19 +139,18 @@ body,
   right: 0;
   height: 220px;
   width: 100%;
-  flex: 0 0 auto; /* fallback */
+  flex: 0 0 auto;
 }
 
 .bottomChartContainer .recharts-responsive-container {
   margin-top: 30px;
 }
 
-/* ensure the scrollable rightPanel leaves room for the absolutely positioned chart */
 .rightPanel {
-  padding-bottom: 220px; /* reserve space equal to bottom chart height */
-}
-/* Pull requests panel - left */
-.pullRequestsPanel {
+  padding-bottom: 220px; }
+
+
+  .pullRequestsPanel {
   flex: 1 1 auto;
   background: transparent;
   display: flex;
@@ -180,7 +163,6 @@ body,
   font-weight: 600;
 }
 
-/* Wrap existing PRsTable so it fits the theme */
 .prsTableWrapper {
   background: #141617;
   padding: 12px;
@@ -193,27 +175,23 @@ body,
   min-width: 360px;
 }
 
-/* The scrollable table container (inner) - style scrollbars to match project */
 .dashboardRoot .prsTableContainer {
   background: linear-gradient(180deg, #0f1112, #0b0c0d);
   border-radius: 6px;
-  /* padding: 6px; */
   overflow: auto;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.02);
-  -ms-overflow-style: none; /* IE/Edge */
-  scrollbar-width: none; /* Firefox */
-  flex: 1 1 auto; /* grow to fill available vertical space inside wrapper */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  flex: 1 1 auto;
   min-height: 0;
 }
 
-/* Hide webkit scrollbars */
 .dashboardRoot .prsTableContainer::-webkit-scrollbar {
   width: 0px;
   height: 0px;
 }
 
-/* Pagination styling within dashboard */
 .dashboardRoot .prsPagination {
   padding-top: 10px;
   gap: 12px;
@@ -241,17 +219,15 @@ body,
   border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
-/* Right side panel */
 .rightPanel {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  flex: 1 1 auto; /* allow rightPanel to take remaining space above the bottom chart */
-  overflow: auto; /* only this area will scroll */
+  flex: 1 1 auto;
+  overflow: auto;
 }
 
-/* blocks inside right panel */
 .blockTitle {
   color: #bfbfbf;
   margin: 0 0 8px 0;
@@ -259,7 +235,6 @@ body,
   font-weight: 600;
 }
 
-/* reviewers block styling */
 .recommendedBlock {
   background: #161718;
   border-radius: 8px;
@@ -283,9 +258,9 @@ body,
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(180deg, rgba(77, 124, 255, 0.18), rgba(77, 124, 255, 0.08));
-  color: #eef2ff;
+  border: 1px solid rgba(79, 157, 105, 0.18);
+  background: linear-gradient(180deg, #202423, #171a19);
+  color: #b7e4c5;
   cursor: pointer;
   transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
   flex: 0 0 auto;
@@ -293,7 +268,8 @@ body,
 
 .iconSettingsButton:hover:not(:disabled) {
   transform: translateY(-1px);
-  border-color: rgba(255, 255, 255, 0.18);
+  border-color: rgba(79, 157, 105, 0.38);
+  background: linear-gradient(180deg, rgba(79, 157, 105, 0.22), rgba(79, 157, 105, 0.08));
 }
 
 .iconSettingsButton:disabled {
@@ -307,7 +283,6 @@ body,
   gap: 10px;
 }
 
-/* selected PR brief */
 .selectedPRBrief {
   display: flex;
   gap: 8px;
@@ -334,7 +309,6 @@ body,
   color: #a7a7a7;
 }
 
-/* reviewers table */
 .reviewersTable {
   width: 100%;
   border-collapse: collapse;
@@ -377,7 +351,6 @@ body,
   text-align: right;
 }
 
-/* Assign button */
 .assignBtn {
   background: linear-gradient(
     180deg,
@@ -392,7 +365,6 @@ body,
   font-size: 12px;
 }
 
-/* states for rows */
 .loadingRow td,
 .errorRow td,
 .emptyRow td {
@@ -401,7 +373,6 @@ body,
   text-align: center;
 }
 
-/* PR Info block */
 .prInfoBlock {
   background: #161718;
   border-radius: 8px;
@@ -434,7 +405,6 @@ body,
   color: #ffffff;
 }
 
-/* helpers */
 .noSelection {
   color: #9a9a9a;
   font-size: 13px;
@@ -442,7 +412,6 @@ body,
   text-align: center;
 }
 
-/* Tablet / narrow desktop: stack right panel under PRs */
 @media (max-width: 1200px) {
   .topCardsAndTable {
     grid-template-columns: 1fr;
@@ -458,7 +427,6 @@ body,
   }
 }
 
-/* For truly small screens allow the page to scroll normally and simplify layout */
 @media (max-width: 1200px) {
   .dashboardRoot {
     height: auto;
@@ -478,7 +446,6 @@ body,
   .dashboardRoot .prsTableContainer {
     max-height: 520px;
   }
-  /* On small screens the bottom chart should flow normally beneath content */
   .bottomChartContainer {
     position: static;
     height: 220px;
@@ -489,10 +456,9 @@ body,
   }
 }
 
-/* Fixed bottom bar chart (small card on bottom-right) */
-/* bottom chart inside right column */
+
 .bottomChartContainer {
   height: 180px;
   width: 100%;
-  flex: 0 0 auto; /* do not shrink, stay visible at bottom */
+  flex: 0 0 auto; 
 }

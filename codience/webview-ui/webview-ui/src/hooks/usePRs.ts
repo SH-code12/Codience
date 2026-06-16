@@ -79,7 +79,6 @@ export const usePRs = () => {
   const load = async (force = false) => {
     const currentRepo = localStorage.getItem("RepoName");
 
-    // If cache belongs to a different repo, force reload
     if (!force && prCache.repo && currentRepo && prCache.repo !== currentRepo) {
       force = true;
     }

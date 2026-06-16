@@ -9,7 +9,7 @@ export interface Reviewer {
 export interface WeeklyWorkloadEntry {
   reviewerId: string;
   reviewerName: string;
-  weeklyLoad: number[]; // [week1, week2, week3, week4]
+  weeklyLoad: number[];
 }
 export interface ReviewersAnalyticsResponse {
   reviewers: Reviewer[];
@@ -18,7 +18,7 @@ export interface ReviewersAnalyticsResponse {
 
 export interface RecommendedReviewer {
   reviewerName: string;
-  confidence: number; // 0..1
+  confidence: number;
   justification?: string;
 }
 

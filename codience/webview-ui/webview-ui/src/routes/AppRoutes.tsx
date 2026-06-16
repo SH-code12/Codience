@@ -8,9 +8,8 @@ import SideBarLayout from "../pages/SideBarLayout";
 import Home from "../pages/Home";
 import ReviewersAnalytics from "../pages/ReviewersAnalytics";
 import ReviewerRecommendationSettings from "../pages/ReviewerRecommendationSettings";
-import SignUpPage from "../pages/SignUpPage";
-import LoginPage from "../pages/LoginPage";
 import Profile from "../pages/Profile";
+import PrSummaryDetails from "../pages/PrSummaryDetails";
 
 export default function AppRoutes() {
   return (
@@ -19,14 +18,13 @@ export default function AppRoutes() {
       <Route path="/signIn" element={<UserCode />} />
       <Route path="/jira-login" element={<JiraLogin />} />
       <Route path="/jira-project" element={<JiraProjectName />} />
-      <Route path="/signUp" element={<SignUpPage />} />
-      <Route path="/login" element={<LoginPage />} />
       <Route path="/getRepo" element={<GetRepoName />} />
 
       <Route element={<SideBarLayout />}>
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/dashboard" element={<Home />}>
+          <Route path="pr-summary/:prNumber" element={<PrSummaryDetails />} />
           <Route
             path="reviewer-settings/:prNumber"
             element={<ReviewerRecommendationSettings />}

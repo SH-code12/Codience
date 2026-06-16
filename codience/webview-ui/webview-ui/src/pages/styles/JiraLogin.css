@@ -49,3 +49,33 @@
   cursor: progress;
   opacity: 0.85;
 }
+
+.jiraLoginSecondaryButton {
+    margin-top: 12px;
+  border: 1px solid rgba(185, 185, 185, 0.22);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.03);
+  color: #e5e7eb;
+  width: min(100%, 320px);
+  text-align: center;
+  padding: 14px 18px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.jiraLoginSecondaryButton:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+.jiraLoginSecondaryButton:focus-visible {
+  outline: 2px solid #b9b9b9;
+  outline-offset: 3px;
+}
+
+.jiraLoginSecondaryButton:disabled {
+  cursor: progress;
+  opacity: 0.75;
+}

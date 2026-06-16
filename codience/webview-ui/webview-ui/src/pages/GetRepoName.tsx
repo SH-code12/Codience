@@ -174,7 +174,11 @@ const GetRepoName = () => {
           )}
         </div>
 
-        <button onClick={submit} disabled={!selectedRepo}>
+        <button
+          onClick={submit}
+          disabled={!selectedRepo}
+          className="reviewersAuthButton repoContinueButton"
+        >
           Continue
         </button>
       </div>

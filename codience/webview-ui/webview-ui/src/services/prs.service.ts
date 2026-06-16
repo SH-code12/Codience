@@ -72,7 +72,6 @@ const parseOrchestrateRisk = (payload: unknown): OrchestrateRisk => {
 
   const record = payload as Record<string, unknown>;
 
-  // API shape example: { "bug_probability": 0.6828987457292666 }
   if (typeof record.bug_probability === "number") {
     const probability = Math.max(0, Math.min(1, record.bug_probability));
     const score = Number((probability * 100).toFixed(2));
@@ -114,7 +113,7 @@ export const fetchPRs = async (): Promise<PullRequest[]> => {
 
   const url = `https://codience.onrender.com/api/GitHubAuth/${userName}/${repoName}/pulls`;
 
-  console.log("🔵 Fetching PRs from API...");
+  console.log("Fetching PRs from API...");
   console.log("API URL:", url);
 
   try {

@@ -50,6 +50,12 @@ export const jiraService = {
     localStorage.setItem("JiraProjectKey", projectKey);
   },
 
+  clearSession() {
+    localStorage.removeItem("JiraAccessToken");
+    localStorage.removeItem("JiraCloudId");
+    localStorage.removeItem("JiraProjectKey");
+  },
+
   getCodeFromSearch(search: string = window.location.search) {
     return new URLSearchParams(search).get("code");
   },

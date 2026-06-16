@@ -7,7 +7,6 @@ const JiraLogin = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [status, setStatus] = useState("Waiting for Jira authorization code...");
   const exchangeStartedRef = useRef(false);
 
   const exchangeCode = async (code: string) => {
@@ -18,13 +17,11 @@ const JiraLogin = () => {
     exchangeStartedRef.current = true;
     setLoading(true);
     setError(null);
-    setStatus("Exchanging Jira authorization code...");
 
     try {
       const data = await jiraService.exchangeCode(code);
 
       jiraService.storeSession(data);
-      setStatus("Jira login complete. Loading project list...");
 
       navigate("/jira-project", {
         state: {
@@ -34,7 +31,6 @@ const JiraLogin = () => {
     } catch (exchangeError: any) {
       exchangeStartedRef.current = false;
       setError(exchangeError?.message || "Failed to exchange Jira authorization code.");
-      setStatus("Waiting for Jira authorization code...");
     } finally {
       setLoading(false);
     }
@@ -44,17 +40,20 @@ const JiraLogin = () => {
     try {
       setLoading(true);
       setError(null);
-      setStatus("Opening Jira authorization page...");
 
       const url = await jiraService.fetchLoginUrl();
 
       window.location.assign(url);
     } catch (loginError: any) {
       setError(loginError?.message || "Failed to start Jira login.");
-      setStatus("Waiting for Jira authorization code...");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleAuthenticateLater = () => {
+    jiraService.clearSession();
+    navigate("/home");
   };
 
   useEffect(() => {
@@ -85,8 +84,6 @@ const JiraLogin = () => {
   return (
     <div className="jiraLoginPage">
       <div className="deviceCodeContainer">
-        <p>{status}</p>
-
         <button
           type="button"
           className="jiraLoginButton"
@@ -94,6 +91,15 @@ const JiraLogin = () => {
           disabled={loading}
         >
           {loading ? "Opening Jira..." : "Continue to Jira"}
+        </button>
+
+        <button
+          type="button"
+          className="jiraLoginSecondaryButton"
+          onClick={handleAuthenticateLater}
+          disabled={loading}
+        >
+          Authenticate with Jira later
         </button>
 
         {error && <p className="errorText">{error}</p>}

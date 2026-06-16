@@ -103,10 +103,6 @@ const normalizeReviewerResponse = (
 
 export const fetchReviewersAnalytics =
   async (): Promise<ReviewersAnalyticsResponse> => {
-    // 🔥 Replace with real API later
-    // const res = await fetch("/api/reviewers/analytics");
-    // return await res.json();
-
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({

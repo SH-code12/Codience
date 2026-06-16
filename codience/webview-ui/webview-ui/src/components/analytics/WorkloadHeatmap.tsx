@@ -19,17 +19,14 @@ const WorkloadHeatmap: React.FC<Props> = ({ workload }) => {
           gridTemplateColumns: `120px repeat(${workload.length}, 1fr)`,
         }}
       >
-        {/* Empty corner */}
         <div />
 
-        {/* Reviewer Headers */}
         {workload.map((reviewer) => (
           <div key={reviewer.reviewerId} className="heatmap-header">
             {reviewer.reviewerName}
           </div>
         ))}
 
-        {/* Week Rows */}
         {weeks.map((week, weekIndex) => (
           <React.Fragment key={week}>
             <div className="heatmap-week-label">{week}</div>
