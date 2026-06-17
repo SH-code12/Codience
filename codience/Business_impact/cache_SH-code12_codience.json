@@ -1,0 +1,26 @@
+[
+  {
+    "pr_number": 23,
+    "weighted_score": 54.1164,
+    "tier": "medium",
+    "timestamp": "2026-06-17T23:59:03.651735"
+  },
+  {
+    "pr_number": 20,
+    "weighted_score": 53.766225,
+    "tier": "medium",
+    "timestamp": "2026-06-17T23:59:03.651752"
+  },
+  {
+    "pr_number": 21,
+    "weighted_score": 49.5365,
+    "tier": "medium",
+    "timestamp": "2026-06-17T23:59:03.651757"
+  },
+  {
+    "pr_number": 22,
+    "weighted_score": 47.6734,
+    "tier": "medium",
+    "timestamp": "2026-06-17T23:59:03.651761"
+  }
+]

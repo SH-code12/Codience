@@ -69,3 +69,8 @@ You can author your README using Visual Studio Code. Here are some useful editor
 * [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
 
 **Enjoy!**
+## business imact 
+Run Model
+1. ollama run qwen2.5-coder:1.5b
+Stop Model
+2. /exit

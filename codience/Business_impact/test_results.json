@@ -1,0 +1,87 @@
+[
+  {
+    "pr_number": 1001,
+    "pr_title": "Fix payment gateway timeout causing transaction failures",
+    "weighted_score": 75.111675,
+    "tier": "high",
+    "should_block_merge": true,
+    "recommended_reviewers": 3,
+    "ai_summary": "Increasing Stripe timeout from 5s to 30s and adding retry logic for failed payments could lead to increased transaction failures, potentially causing revenue loss.",
+    "score_breakdown": {
+      "blast_radius": 0.1575,
+      "user_exposure": 1.0,
+      "deadline": 0.1,
+      "business_impact": 0.75111675,
+      "formula_score": 0.75186125,
+      "local_model_score": 0.75
+    }
+  },
+  {
+    "pr_number": 1002,
+    "pr_title": "Fix JWT token validation vulnerability",
+    "weighted_score": 62.964949999999995,
+    "tier": "medium",
+    "should_block_merge": true,
+    "recommended_reviewers": 2,
+    "ai_summary": "The addition of proper signature verification for JWT tokens in the authentication system could mitigate a critical vulnerability that allows unauthorized access to user accounts.",
+    "score_breakdown": {
+      "blast_radius": 0.105,
+      "user_exposure": 1.0,
+      "deadline": 0.1,
+      "business_impact": 0.6296495,
+      "formula_score": 0.7160825,
+      "local_model_score": 0.5
+    }
+  },
+  {
+    "pr_number": 1003,
+    "pr_title": "Add user preferences table",
+    "weighted_score": 51.683225,
+    "tier": "medium",
+    "should_block_merge": true,
+    "recommended_reviewers": 2,
+    "ai_summary": "The addition of a user preferences table to the system introduces a new database schema that requires careful consideration for data integrity and security.",
+    "score_breakdown": {
+      "blast_radius": 0.0525,
+      "user_exposure": 1.0,
+      "deadline": 0.1,
+      "business_impact": 0.51683225,
+      "formula_score": 0.52805375,
+      "local_model_score": 0.5
+    }
+  },
+  {
+    "pr_number": 1004,
+    "pr_title": "Update button styles on dashboard",
+    "weighted_score": 42.484500000000004,
+    "tier": "medium",
+    "should_block_merge": false,
+    "recommended_reviewers": 2,
+    "ai_summary": "The update to button styles on the dashboard could potentially affect user experience and usability, especially if not done carefully.",
+    "score_breakdown": {
+      "blast_radius": 0.0,
+      "user_exposure": 0.6,
+      "deadline": 0.1,
+      "business_impact": 0.42484500000000003,
+      "formula_score": 0.20807499999999998,
+      "local_model_score": 0.75
+    }
+  },
+  {
+    "pr_number": 1005,
+    "pr_title": "Update README with setup instructions",
+    "weighted_score": 36.39450000000001,
+    "tier": "low",
+    "should_block_merge": false,
+    "recommended_reviewers": 2,
+    "ai_summary": "The update to the README file introduces new setup instructions for developers, which could potentially confuse or mislead existing users.",
+    "score_breakdown": {
+      "blast_radius": 0.0,
+      "user_exposure": 0.2,
+      "deadline": 0.1,
+      "business_impact": 0.3639450000000001,
+      "formula_score": 0.106575,
+      "local_model_score": 0.75
+    }
+  }
+]

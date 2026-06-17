@@ -1,0 +1,32 @@
+[
+  {
+    "pr_number": 22,
+    "weighted_score": 53.7634,
+    "tier": "medium",
+    "timestamp": "2026-06-17T23:34:14.117404"
+  },
+  {
+    "pr_number": 22,
+    "weighted_score": 53.7634,
+    "tier": "medium",
+    "timestamp": "2026-06-17T23:34:14.117423"
+  },
+  {
+    "pr_number": 23,
+    "weighted_score": 50.20640000000001,
+    "tier": "medium",
+    "timestamp": "2026-06-17T23:34:14.117429"
+  },
+  {
+    "pr_number": 21,
+    "weighted_score": 49.5365,
+    "tier": "medium",
+    "timestamp": "2026-06-17T23:34:14.117434"
+  },
+  {
+    "pr_number": 20,
+    "weighted_score": 43.76622499999999,
+    "tier": "medium",
+    "timestamp": "2026-06-17T23:34:14.117438"
+  }
+]
