@@ -24,6 +24,15 @@ const Dashboard: React.FC = () => {
   }, [prs]);
 
   useEffect(() => {
+    if (!selectedPR || !prs) return;
+
+    const refreshedPR = prs.find((pr) => pr.number === selectedPR.number);
+    if (refreshedPR && refreshedPR !== selectedPR) {
+      setSelectedPR(refreshedPR);
+    }
+  }, [prs, selectedPR?.number]);
+
+  useEffect(() => {
     setUpdatedPRs(prs);
   }, [prs]);
   const userName = localStorage.getItem("User");
@@ -117,16 +126,13 @@ const Dashboard: React.FC = () => {
       counts[label]++;
     });
 
-    const hasAny = Object.values(counts).some((v) => v > 0);
-    if (!hasAny) {
-      labels.forEach(
-        (l, idx) =>
-          (counts[l] = Math.max(
-            1,
-            Math.round((idx + 1) * ((prs?.length ?? 5) / days)),
-          )),
-      );
-    }
+  const hasAny = Object.values(counts).some((v) => v > 0);
+
+if (!hasAny) {
+  labels.forEach((l) => {
+    counts[l] = 0;
+  });
+}
 
     return labels.map((l) => ({ date: l, count: counts[l] ?? 0 }));
   }, [visiblePRs, updatedPRs, prs]);
@@ -246,8 +252,16 @@ const Dashboard: React.FC = () => {
                       </div>
                     </div>
                     <div className="infoRow">
-                      <div className="infoLabel">Assigned Reviewer</div>
-                      <div className="infoValue">Not Assigned Yet</div>
+                      <div className="infoLabel">Business Impact</div>
+                      <div className="infoValue">
+                        {selectedPR.business_impact?.weighted_score}
+                      </div>
+                    </div>
+                    <div className="infoRow">
+                      <div className="infoLabel">Impact Tier</div>
+                      <div className="infoValue">
+                        {selectedPR.business_impact?.tier}
+                      </div>
                     </div>
                   </div>
                 ) : (

@@ -18,7 +18,6 @@ const SideBar = () => {
       <nav className="navBar">
         <NavLink to="/home">Home</NavLink>
         <NavLink to="/dashboard">Dashboard</NavLink>
-        <NavLink to="/reviewersAnalytics">Reviewers Analytics</NavLink>
         <NavLink to="/profile">Profile</NavLink>
         <NavLink to="/getRepo">Change Repo</NavLink>
       </nav>

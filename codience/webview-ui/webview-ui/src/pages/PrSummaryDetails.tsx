@@ -1,6 +1,9 @@
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ReviewersList from "../components/reviewers/ReviewersList";
 import { usePrSummary } from "../hooks/usePrSummary";
+import { fetchBusinessImpactForPR } from "../services/prs.service";
+import type { BusinessImpactType } from "../types/BusinessImpactType";
 import type { PullRequest } from "../types/PullRequest";
 import "./styles/PrSummaryDetails.css";
 
@@ -36,8 +39,12 @@ const PrSummaryDetails = () => {
   const { prNumber } = useParams();
   const selectedPR = (location.state as LocationState | null)?.selectedPR ?? null;
   const parsedPrNumber = Number(prNumber);
+  const [businessImpact, setBusinessImpact] =
+    useState<BusinessImpactType | null>(selectedPR?.business_impact ?? null);
   const prForReviewers =
-    selectedPR ??
+    (selectedPR
+      ? { ...selectedPR, business_impact: businessImpact }
+      : null) ??
     (Number.isFinite(parsedPrNumber)
       ? {
           number: parsedPrNumber,
@@ -47,6 +54,7 @@ const PrSummaryDetails = () => {
           name: "",
           files_changed: 0,
           risk: null,
+          business_impact: null,
         }
       : null);
   const { summary, loading, error } = usePrSummary(
@@ -54,6 +62,41 @@ const PrSummaryDetails = () => {
   );
 
   const pageTitle = prForReviewers?.title ?? `PR #${prNumber ?? ""}`;
+
+  useEffect(() => {
+    if (!Number.isFinite(parsedPrNumber)) return;
+
+    const currentScore = businessImpact?.weighted_score;
+    if (
+      currentScore !== undefined &&
+      currentScore !== null &&
+      currentScore !== "Loading..."
+    ) {
+      return;
+    }
+
+    let cancelled = false;
+
+    fetchBusinessImpactForPR(parsedPrNumber)
+      .then((nextBusinessImpact) => {
+        if (!cancelled) {
+          setBusinessImpact(nextBusinessImpact);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setBusinessImpact({
+            weighted_score: "N/A",
+            tier: "unknown",
+            ai_summary: "Business impact is unavailable.",
+          });
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [parsedPrNumber, businessImpact?.weighted_score]);
 
   return (
     <div className="prSummaryPage">
@@ -90,6 +133,24 @@ const PrSummaryDetails = () => {
             <h3>Recommended Reviewers</h3>
             <ReviewersList selectedPR={prForReviewers} />
           </aside>
+
+          <article className="prSummaryPanel prSummaryFullWidth">
+            <h3>Business Impact</h3>
+            <div className="prSummaryText">
+              <p>
+                <strong>Weighted Score:</strong>{" "}
+                {prForReviewers?.business_impact?.weighted_score ?? "Loading..."}
+              </p>
+              <p>
+                <strong>Tier:</strong>{" "}
+                {prForReviewers?.business_impact?.tier ?? "Loading..."}
+              </p>
+              <p>
+                <strong>AI Summary:</strong>{" "}
+                {prForReviewers?.business_impact?.ai_summary ?? "Loading..."}
+              </p>
+            </div>
+          </article>
         </div>
       </section>
     </div>

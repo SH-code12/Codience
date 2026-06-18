@@ -1,21 +1,3 @@
-export interface Reviewer {
-  id: string;
-  name: string;
-  reviewedPRs: number;
-  avgReviewTime: string;
-  aiRecommendations: number;
-}
-
-export interface WeeklyWorkloadEntry {
-  reviewerId: string;
-  reviewerName: string;
-  weeklyLoad: number[];
-}
-export interface ReviewersAnalyticsResponse {
-  reviewers: Reviewer[];
-  workload: WeeklyWorkloadEntry[];
-}
-
 export interface RecommendedReviewer {
   reviewerName: string;
   confidence: number;

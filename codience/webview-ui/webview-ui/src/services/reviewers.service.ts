@@ -1,6 +1,5 @@
 import axios from "axios";
 import type {
-  ReviewersAnalyticsResponse,
   RecommendedReviewer,
   ReviewerRecommendationRequest,
   ReviewerRecommendationSettings,
@@ -101,80 +100,6 @@ const normalizeReviewerResponse = (
     justification: item.justification,
   }));
 
-export const fetchReviewersAnalytics =
-  async (): Promise<ReviewersAnalyticsResponse> => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          reviewers: [
-            {
-              id: "1",
-              name: "Fady Mohammed",
-              reviewedPRs: 20,
-              avgReviewTime: "2 days",
-              aiRecommendations: 15,
-            },
-            {
-              id: "2",
-              name: "Sami Mostafa",
-              reviewedPRs: 10,
-              avgReviewTime: "3 days",
-              aiRecommendations: 11,
-            },
-            {
-              id: "3",
-              name: "Farida Ahmed",
-              reviewedPRs: 18,
-              avgReviewTime: "2 days",
-              aiRecommendations: 17,
-            },
-            {
-              id: "4",
-              name: "Omar Yasser",
-              reviewedPRs: 25,
-              avgReviewTime: "2 days",
-              aiRecommendations: 15,
-            },
-            {
-              id: "5",
-              name: "Mahmoud Ahmed",
-              reviewedPRs: 12,
-              avgReviewTime: "2 days",
-              aiRecommendations: 18,
-            },
-          ],
-          workload: [
-            {
-              reviewerId: "1",
-              reviewerName: "Fady Mohammed",
-              weeklyLoad: [8, 11, 11, 0],
-            },
-            {
-              reviewerId: "2",
-              reviewerName: "Sami Mostafa",
-              weeklyLoad: [12, 1, 6, 0],
-            },
-            {
-              reviewerId: "3",
-              reviewerName: "Omar Yasser",
-              weeklyLoad: [2, 8, 11, 0],
-            },
-            {
-              reviewerId: "4",
-              reviewerName: "Farida Ahmed",
-              weeklyLoad: [6, 3, 3, 0],
-            },
-            {
-              reviewerId: "5",
-              reviewerName: "Mahmoud Ahmed",
-              weeklyLoad: [8, 2, 1, 0],
-            },
-          ],
-        });
-      }, 500);
-    });
-  };
-
 export const fetchRecommendedReviewers = async (
   pr: ReviewerRecommendationRequest | null,
   settings: ReviewerRecommendationSettings | null = null,
@@ -201,4 +126,4 @@ export const fetchRecommendedReviewers = async (
   return requestPromise;
 };
 
-export default { fetchReviewersAnalytics, fetchRecommendedReviewers };
+export default { fetchRecommendedReviewers };

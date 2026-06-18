@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  enrichPRsWithBusinessImpact,
   enrichPRsWithFilesChanged,
   enrichPRsWithRisk,
   fetchPRs,
@@ -36,6 +37,20 @@ const setPRCache = (next: Partial<Pick<PRCache, "data" | "loading" | "error" | "
 const isResolvedFilesChanged = (value: PullRequest["files_changed"]) =>
   typeof value === "number" || value === "Error";
 
+const isResolvedRisk = (risk: PullRequest["risk"]) =>
+  Boolean(
+    risk &&
+      risk.risk_score !== "Loading..." &&
+      risk.risk_level !== "loading",
+  );
+
+const isResolvedBusinessImpact = (businessImpact: PullRequest["business_impact"]) =>
+  Boolean(
+    businessImpact &&
+      businessImpact.weighted_score !== "Loading..." &&
+      businessImpact.tier !== "loading",
+  );
+
 const mergePRCacheItem = (updatedPR: PullRequest) => {
   if (!prCache.data) return;
 
@@ -47,11 +62,21 @@ const mergePRCacheItem = (updatedPR: PullRequest) => {
         ? pr.files_changed
         : updatedPR.files_changed;
 
+      const riskSource =
+        isResolvedRisk(updatedPR.risk) || !isResolvedRisk(pr.risk)
+          ? updatedPR.risk ?? pr.risk
+          : pr.risk;
+
+      const businessImpactSource =
+        isResolvedBusinessImpact(updatedPR.business_impact) ||
+        !isResolvedBusinessImpact(pr.business_impact)
+          ? updatedPR.business_impact ?? pr.business_impact
+          : pr.business_impact;
+
       const mergedRisk = {
-        risk_score: updatedPR.risk?.risk_score ?? pr.risk?.risk_score ?? "N/A",
-        risk_level:
-          updatedPR.risk?.risk_level ?? pr.risk?.risk_level ?? "unknown",
-        comments: updatedPR.risk?.comments ?? pr.risk?.comments ?? 0,
+        risk_score: riskSource?.risk_score ?? "N/A",
+        risk_level: riskSource?.risk_level ?? "unknown",
+        comments: riskSource?.comments ?? pr.risk?.comments ?? 0,
         files_changed: nextFilesChanged,
       };
 
@@ -60,6 +85,12 @@ const mergePRCacheItem = (updatedPR: PullRequest) => {
         ...updatedPR,
         files_changed: nextFilesChanged,
         risk: mergedRisk,
+        business_impact:
+          businessImpactSource ?? {
+            weighted_score: "N/A",
+            tier: "unknown",
+            ai_summary: "Business impact is unavailable.",
+          },
       };
     }),
   });
@@ -117,6 +148,12 @@ export const usePRs = () => {
           mergePRCacheItem(updatedPR);
         }).catch((riskErr) => {
           console.error("Risk enrichment failed:", riskErr);
+        });
+
+        void enrichPRsWithBusinessImpact(res, (updatedPR) => {
+          mergePRCacheItem(updatedPR);
+        }).catch((businessImpactErr) => {
+          console.error("Business impact enrichment failed:", businessImpactErr);
         });
 
         return res;

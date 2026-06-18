@@ -18,6 +18,16 @@ export const RiskCell: React.FC<{ risk_level?: string }> = ({ risk_level }) => {
   return <td className="riskCell unknown">Unknown</td>;
 };
 
+export const TierCell: React.FC<{ tier?: string }> = ({ tier }) => {
+  if (tier === "loading" || !tier) {
+    return <td className="riskCell unknown">Loading...</td>;
+  }
+  if (tier === "low") return <td className="riskCell low">Low</td>;
+  if (tier === "medium") return <td className="riskCell med">Medium</td>;
+  if (tier === "high") return <td className="riskCell high">High</td>;
+  return <td className="riskCell unknown">Unknown</td>;
+};
+
 const PRRow: React.FC<Props> = ({ pr, selected, onSelect }) => {
   const navigate = useNavigate();
 
@@ -37,6 +47,8 @@ const PRRow: React.FC<Props> = ({ pr, selected, onSelect }) => {
       <td className="titleCell">{pr.title}</td>
       <td>{pr.risk?.risk_score ?? "Loading..."}</td>
       <RiskCell risk_level={pr.risk?.risk_level} />
+      <td>{pr.business_impact?.weighted_score ?? "Loading..."}</td>
+      <TierCell tier={pr.business_impact?.tier} />
       <td>{pr.files_changed ?? 0}</td>
       <td>{pr.createdAt}</td>
       <td className={`status ${pr.state}`}>{pr.state}</td>

@@ -19,6 +19,15 @@ const toSortableFilesChanged = (value: number | string | undefined) => {
   return Number.isFinite(parsed) ? parsed : 0;
 };
 
+const toSortableScore = (value: number | string | undefined) => {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : 0;
+};
+
 const PRsTable = ({ prs, onSelect, onVisibleChange }: Props) => {
   if (!prs) return null;
 
@@ -33,6 +42,13 @@ const PRsTable = ({ prs, onSelect, onVisibleChange }: Props) => {
           risk_level: "loading",
           comments: 0,
           files_changed: 0,
+        } as any),
+      business_impact:
+        pr.business_impact ??
+        ({
+          weighted_score: "Loading...",
+          tier: "loading",
+          ai_summary: "Loading...",
         } as any),
     })),
   );
@@ -50,6 +66,13 @@ const PRsTable = ({ prs, onSelect, onVisibleChange }: Props) => {
             comments: 0,
             files_changed: pr.files_changed ?? 0,
           } as any),
+        business_impact:
+          pr.business_impact ??
+          ({
+            weighted_score: "Loading...",
+            tier: "loading",
+            ai_summary: "Loading...",
+          } as any),
       })),
     );
   }, [prs]);
@@ -57,12 +80,15 @@ const PRsTable = ({ prs, onSelect, onVisibleChange }: Props) => {
   const [filterRisk, setFilterRisk] = useState<
     "all" | "low" | "medium" | "high"
   >("all");
+  const [filterBusinessImpact, setFilterBusinessImpact] = useState<
+    "all" | "low" | "medium" | "high"
+  >("all");
   const [filterStatus, setFilterStatus] = useState<"all" | "open" | "closed">(
     "all",
   );
-  const [sortBy, setSortBy] = useState<"none" | "risk" | "title" | "files">(
-    "none",
-  );
+  const [sortBy, setSortBy] = useState<
+    "none" | "risk" | "businessImpact" | "title" | "files"
+  >("none");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
 
   const [selectedPR, setSelectedPR] = useState<number | null>(null);
@@ -83,6 +109,12 @@ const PRsTable = ({ prs, onSelect, onVisibleChange }: Props) => {
       );
     }
 
+    if (filterBusinessImpact !== "all") {
+      list = list.filter(
+        (p) => (p.business_impact?.tier ?? "unknown") === filterBusinessImpact,
+      );
+    }
+
     if (filterStatus !== "all") {
       list = list.filter((p) => (p.state ?? "").toLowerCase() === filterStatus);
     }
@@ -94,6 +126,10 @@ const PRsTable = ({ prs, onSelect, onVisibleChange }: Props) => {
           const map = (lvl?: string) =>
             lvl === "high" ? 3 : lvl === "medium" ? 2 : lvl === "low" ? 1 : 0;
           res = map(a.risk?.risk_level) - map(b.risk?.risk_level);
+        } else if (sortBy === "businessImpact") {
+          res =
+            toSortableScore(a.business_impact?.weighted_score) -
+            toSortableScore(b.business_impact?.weighted_score);
         } else if (sortBy === "title") {
           res = (a.title ?? "").localeCompare(b.title ?? "");
         } else if (sortBy === "files") {
@@ -106,7 +142,14 @@ const PRsTable = ({ prs, onSelect, onVisibleChange }: Props) => {
     }
 
     return list;
-  }, [updatedPRs, filterRisk, filterStatus, sortBy, sortDir]);
+  }, [
+    updatedPRs,
+    filterRisk,
+    filterBusinessImpact,
+    filterStatus,
+    sortBy,
+    sortDir,
+  ]);
 
   useEffect(() => {
     onVisibleChange?.(visiblePRs);
@@ -145,6 +188,21 @@ const PRsTable = ({ prs, onSelect, onVisibleChange }: Props) => {
             </select>
           </label>
           <label>
+            Impact:
+            <select
+              value={filterBusinessImpact}
+              onChange={(e) => {
+                setFilterBusinessImpact(e.target.value as any);
+                setCurrentPage(1);
+              }}
+            >
+              <option value="all">All</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+          <label>
             Status:
             <select
               value={filterStatus}
@@ -166,6 +224,7 @@ const PRsTable = ({ prs, onSelect, onVisibleChange }: Props) => {
             >
               <option value="none">None</option>
               <option value="risk">Risk Level</option>
+              <option value="businessImpact">Business Impact</option>
               <option value="title">Title</option>
               <option value="files">Files Changed</option>
             </select>
@@ -186,6 +245,8 @@ const PRsTable = ({ prs, onSelect, onVisibleChange }: Props) => {
               <th>PR Title</th>
               <th>Risk Score</th>
               <th>Risk Level</th>
+              <th>Business Impact</th>
+              <th>Impact Tier</th>
               <th>Files Changed</th>
               <th>Created At</th>
               <th>Status</th>

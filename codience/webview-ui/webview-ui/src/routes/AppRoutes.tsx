@@ -6,7 +6,6 @@ import JiraProjectName from "../pages/JiraProjectName";
 import GetRepoName from "../pages/GetRepoName";
 import SideBarLayout from "../pages/SideBarLayout";
 import Home from "../pages/Home";
-import ReviewersAnalytics from "../pages/ReviewersAnalytics";
 import ReviewerRecommendationSettings from "../pages/ReviewerRecommendationSettings";
 import Profile from "../pages/Profile";
 import PrSummaryDetails from "../pages/PrSummaryDetails";
@@ -30,7 +29,6 @@ export default function AppRoutes() {
             element={<ReviewerRecommendationSettings />}
           />
         </Route>
-        <Route path="/reviewersAnalytics" element={<ReviewersAnalytics />} />
         <Route
           path="/reviewer-settings/:prNumber"
           element={<ReviewerRecommendationSettings />}
