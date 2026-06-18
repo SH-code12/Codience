@@ -9,11 +9,12 @@ from typing import List, Optional
 import asyncio
 import os
 from datetime import datetime
+from pydantic import BaseModel, Field
 
 # Import your existing modules
 from models import PRPayload, RankBatchRequest, RankedPRList, PRScoreResult
 from coreRanking import PRRankingEngine
-from pr_fetcher_with_dotnet import PRFetcherWithDotNet
+from pr_fetcher import PRFetcherWithDotNet
 from dotnet_jira_client import get_dotnet_client, fetch_authenticated_github_email
 from dotenv import load_dotenv
 
@@ -219,40 +220,38 @@ async def rank_repo_prs(
 # Add this import at the top if not already present
 from typing import Optional
 import re
+ #---------------------------------------------------------------------------
+# Ranking Endpoints (Optimized & New)
+# ---------------------------------------------------------------------------
 
-# Add this endpoint after your existing ranking endpoints
 @app.get("/api/rank/pr/{owner}/{repo}/{pr_number}")
 async def rank_single_pr_by_id(owner: str, repo: str, pr_number: int):
     """
-    Fetch and evaluate a single Pull Request by its explicit number.
-    Applies live .NET Jira context maps, runs local LLM analysis summaries, 
-    and returns a clean business-focused metric payload.
+    Fetch and evaluate a single Pull Request by its explicit number immediately,
+    bypassing heavy open-PR batch sweeps.
     """
     try:
         repo_name = f"{owner}/{repo}"
         user_email = fetch_authenticated_github_email() or "unknown@domain.internal"
         
-        # Pull single targeted payload structure via indirect batch limit logic
-        prs = pr_fetcher.fetch_open_prs(repo_name, max_prs=50, user_email=user_email)
-        target_pr = next((p for p in prs if p.pr_number == pr_number), None)
-        
-        # Fallback manual retrieval loop if state isn't visible via open collection
-        if not target_pr:
-            if pr_fetcher.github:
-                raw_pr_data = pr_fetcher.github.get_pull_request(owner, repo, pr_number)
-                payload = pr_fetcher._github_pr_to_dict(raw_pr_data, owner, repo)
-                enriched_payload = pr_fetcher.pr_enricher.enrich_pr_with_jira(payload, fallback_email=user_email)
-                target_pr = pr_fetcher._dict_to_pr_payload(enriched_payload, raw_pr_data, owner, repo)
-            else:
-                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="GitHub Client uninitialized.")
-                
-        if not target_pr:
-            raise HTTPException(status_code=404, detail=f"PR #{pr_number} could not be resolved from {repo_name}")
+        if not pr_fetcher.github:
+            raise HTTPException(status_code=401, detail="GitHub Client uninitialized. Set GITHUB_TOKEN.")
+
+        # 1. Directly fetch targeted single PR from GitHub (O(1) search)
+        try:
+            raw_pr_data = pr_fetcher.github.get_pull_request(owner, repo, pr_number)
+        except Exception:
+            raise HTTPException(status_code=404, detail=f"PR #{pr_number} could not be found or accessed in {repo_name}")
+
+        # 2. Convert and enrich using direct structural calls
+        payload = pr_fetcher._github_pr_to_dict(raw_pr_data, owner, repo)
+        enriched_payload = pr_fetcher.pr_enricher.enrich_pr_with_jira(payload, fallback_email=user_email)
+        target_pr = pr_fetcher._dict_to_pr_payload(enriched_payload, raw_pr_data, owner, repo)
             
-        # Execute calculation cycle pipeline directly 
+        # 3. Execute calculation pipeline directly 
         score_res: PRScoreResult = await ranking_engine.score_single_pr(target_pr, reporter_email=user_email)
         
-        # Structure payload to match custom frontend tracking contract precisely
+        # 4. Structure output tracking payload precisely
         bd = score_res.score_breakdown or {}
         return {
             "pr_number": score_res.pr_number,
@@ -274,6 +273,72 @@ async def rank_single_pr_by_id(owner: str, repo: str, pr_number: int):
         raise he
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed single PR rank computation process: {str(e)}")
+
+class JiraConfigPayload(BaseModel):
+    jira_api_token: str = Field(..., description="The Jira Personal Access Token or API Token")
+    jira_cloud_id: str = Field(..., description="Jira Cloud Tenant Site ID or Base URL instance")
+    jira_project_key: str = Field(..., description="Target Jira Project Key Prefix (e.g., PROJ)")
+# Initialize FastAPI
+
+@app.post("/api/rank/pr/{owner}/{repo}/{pr_number}/with-config")
+async def rank_single_pr_with_explicit_config(
+    owner: str, 
+    repo: str, 
+    pr_number: int, 
+    config: JiraConfigPayload
+):
+    """
+    Fetch and evaluate a single PR by dynamically overriding target Jira configurations 
+    provided straight from the incoming JSON payload instead of global .env attributes.
+    """
+    try:
+        repo_name = f"{owner}/{repo}"
+        user_email = fetch_authenticated_github_email() or "unknown@domain.internal"
+        
+        if not pr_fetcher.github:
+            raise HTTPException(status_code=401, detail="GitHub Client uninitialized.")
+
+        # 1. Direct targeted retrieval
+        try:
+            raw_pr_data = pr_fetcher.github.get_pull_request(owner, repo, pr_number)
+        except Exception:
+            raise HTTPException(status_code=404, detail=f"PR #{pr_number} could not be resolved from {repo_name}")
+
+        # 2. Build dictionary payload
+        payload = pr_fetcher._github_pr_to_dict(raw_pr_data, owner, repo)
+        
+        # 3. CRITICAL: Inject dynamic client tokens into execution context instead of system env
+        # Pass the custom tokens directly down into the specialized .NET backend wrapper context
+        enriched_payload = pr_fetcher.pr_enricher.enrich_pr_with_explicit_jira_config(
+            payload, 
+            fallback_email=user_email,
+            token=config.jira_api_token,
+            cloud_id=config.jira_cloud_id,
+            project_key=config.jira_project_key
+        )
+        
+        # 4. Generate structured models and calculate
+        target_pr = pr_fetcher._dict_to_pr_payload(enriched_payload, raw_pr_data, owner, repo)
+        score_res: PRScoreResult = await ranking_engine.score_single_pr(target_pr, reporter_email=user_email)
+        
+        bd = score_res.score_breakdown or {}
+        return {
+            "pr_number": score_res.pr_number,
+            "pr_title": score_res.pr_title,
+            "weighted_score": score_res.weighted_score,
+            "tier": score_res.tier.value,
+            "should_block_merge": score_res.should_block_merge,
+            "ai_summary": score_res.llm_semantic.business_summary if score_res.llm_semantic else "No summary available.",
+            "score_breakdown": {
+                "blast_radius": round(score_res.blast_radius.score, 4) if score_res.blast_radius else 0.0,
+                "user_exposure": round(score_res.user_exposure.score, 4) if score_res.user_exposure else 0.0,
+                "deadline": round(score_res.deadline.score, 4) if score_res.deadline else 0.0,
+                "business_impact": round(score_res.weighted_score, 4),
+                "formula_score": round(bd.get("formula_score", bd.get("business_impact", 0.0) / 100.0), 6)
+            }
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Dynamic configuration ranking route failed: {str(e)}")
 # ---------------------------------------------------------------------------
 # Utility Endpoints
 # ---------------------------------------------------------------------------

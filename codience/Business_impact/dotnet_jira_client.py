@@ -287,6 +287,53 @@ class PRJiraEnricher:
             })
 
         return converted
+        
+    def enrich_pr_with_explicit_jira_config(
+            self, 
+            payload: dict, 
+            fallback_email: str, 
+            token: str, 
+            cloud_id: str, 
+            project_key: str
+        ) -> dict:
+            """
+            Exposes an override function that communicates directly with the .NET context pipeline,
+            passing credentials via explicit headers or runtime arguments.
+            """
+            # 1. First, parse out the ticket keys from the PR metadata strings
+            keys = self.extract_jira_keys_from_pr(
+                pr_title=payload.get("pr_title", ""),
+                pr_body=payload.get("pr_body", ""),
+                branch_name=payload.get("head_branch", ""),
+                labels=payload.get("github_labels", []),
+            )
+
+            enriched_tickets: List[Dict[str, Any]] = []
+
+            # 2. Try looking them up inside the local instance parsing cache
+            if keys:
+                enriched_tickets.extend(self.fetch_tickets_by_keys(keys))
+
+            # 3. If no specific keys were matched, pull assigned tickets dynamically from the .NET microservice
+            if not enriched_tickets and payload.get("author"):
+                jira_username = self._map_github_to_jira(payload["author"], fallback_email)
+                
+                try:
+                    # Forwarding incoming explicit credentials directly over the .NET Client abstraction layer
+                    print(f"📡 Requesting tickets from .NET microservice using explicit credentials for: {jira_username}")
+                    author_tickets = self.client.get_assigned_tickets(
+                        assignee_name=jira_username,
+                        token=token,
+                        cloud_id=cloud_id,
+                        project_key=project_key
+                    )
+                    enriched_tickets.extend(author_tickets[:5])
+                except Exception as e:
+                    print(f"⚠️ Failed fetching ad-hoc tickets over explicit .NET pipeline channel: {e}")
+
+            # 4. Convert structural shapes back down into standard models payload
+            payload["linked_jira_tickets"] = self._convert_to_models(enriched_tickets)
+            return payload
 
 
 # ---------------------------------------------------------------------------
