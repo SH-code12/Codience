@@ -216,7 +216,64 @@ async def rank_repo_prs(
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+# Add this import at the top if not already present
+from typing import Optional
+import re
 
+# Add this endpoint after your existing ranking endpoints
+@app.get("/api/rank/pr/{owner}/{repo}/{pr_number}")
+async def rank_single_pr_by_id(owner: str, repo: str, pr_number: int):
+    """
+    Fetch and evaluate a single Pull Request by its explicit number.
+    Applies live .NET Jira context maps, runs local LLM analysis summaries, 
+    and returns a clean business-focused metric payload.
+    """
+    try:
+        repo_name = f"{owner}/{repo}"
+        user_email = fetch_authenticated_github_email() or "unknown@domain.internal"
+        
+        # Pull single targeted payload structure via indirect batch limit logic
+        prs = pr_fetcher.fetch_open_prs(repo_name, max_prs=50, user_email=user_email)
+        target_pr = next((p for p in prs if p.pr_number == pr_number), None)
+        
+        # Fallback manual retrieval loop if state isn't visible via open collection
+        if not target_pr:
+            if pr_fetcher.github:
+                raw_pr_data = pr_fetcher.github.get_pull_request(owner, repo, pr_number)
+                payload = pr_fetcher._github_pr_to_dict(raw_pr_data, owner, repo)
+                enriched_payload = pr_fetcher.pr_enricher.enrich_pr_with_jira(payload, fallback_email=user_email)
+                target_pr = pr_fetcher._dict_to_pr_payload(enriched_payload, raw_pr_data, owner, repo)
+            else:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="GitHub Client uninitialized.")
+                
+        if not target_pr:
+            raise HTTPException(status_code=404, detail=f"PR #{pr_number} could not be resolved from {repo_name}")
+            
+        # Execute calculation cycle pipeline directly 
+        score_res: PRScoreResult = await ranking_engine.score_single_pr(target_pr, reporter_email=user_email)
+        
+        # Structure payload to match custom frontend tracking contract precisely
+        bd = score_res.score_breakdown or {}
+        return {
+            "pr_number": score_res.pr_number,
+            "pr_title": score_res.pr_title,
+            "weighted_score": score_res.weighted_score,
+            "tier": score_res.tier.value,
+            "should_block_merge": score_res.should_block_merge,
+            "ai_summary": score_res.llm_semantic.business_summary if score_res.llm_semantic else "No summary available.",
+            "score_breakdown": {
+                "blast_radius": round(score_res.blast_radius.score, 4) if score_res.blast_radius else 0.0,
+                "user_exposure": round(score_res.user_exposure.score, 4) if score_res.user_exposure else 0.0,
+                "deadline": round(score_res.deadline.score, 4) if score_res.deadline else 0.0,
+                "business_impact": round(score_res.weighted_score, 4),
+                "formula_score": round(bd.get("formula_score", bd.get("business_impact", 0.0) / 100.0), 6),
+                "local_model_score": round(score_res.llm_semantic.raw_score, 4) if score_res.llm_semantic else 0.0
+            }
+        }
+    except HTTPException as he:
+        raise he
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed single PR rank computation process: {str(e)}")
 # ---------------------------------------------------------------------------
 # Utility Endpoints
 # ---------------------------------------------------------------------------
