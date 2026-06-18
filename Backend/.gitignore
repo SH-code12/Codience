@@ -1,3 +1,24 @@
-# Local environment variables
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+.vs/
 .env
-.env.*
+
+# IDEs
+.idea/
+*.swp
+*.swo
+
+# Sensitive Keys and Configuration
+API/Keys/
+*.pem
+appsettings.Development.json
+appsettings.local.json
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

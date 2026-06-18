@@ -22,4 +22,5 @@ public interface IGitHubAppService
 
     Task<ConnectRepoResponseDto> ConnectRepositoryAsync(string userName, string owner, string repo);
     Task DeleteInstallationAsync(long installationId);
+    Task<IReadOnlyList<GitHubPullRequestDto>> GetPullRequestsAsync(long? repositoryId);
 }

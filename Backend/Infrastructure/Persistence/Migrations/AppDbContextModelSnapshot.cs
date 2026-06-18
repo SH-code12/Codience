@@ -112,6 +112,14 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("DiffUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<long>("GitHubId")
                         .HasColumnType("bigint");
 
