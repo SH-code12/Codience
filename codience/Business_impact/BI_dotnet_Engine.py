@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from pr_fetcher_with_dotnet import PRFetcherWithDotNet
+from pr_fetcher import PRFetcherWithDotNet
 from dotnet_jira_client import get_dotnet_client, fetch_authenticated_github_email
 from coreRanking import PRRankingEngine
 from models import ImpactTier
