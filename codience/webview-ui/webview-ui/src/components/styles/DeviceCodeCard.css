@@ -17,6 +17,52 @@
 .deviceCodeContainer p {
   font-weight: bold;
 }
+
+.deviceCodeContainer .userCodeRow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.deviceCodeContainer .userCodeValue {
+  margin: 0;
+}
+
+.deviceCodeContainer .copyDeviceCodeButton {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.deviceCodeContainer .copyDeviceCodeButton[data-copied="true"] {
+  opacity: 0.65;
+  transform: scale(0.96);
+}
+
+.deviceCodeContainer .copyDeviceCodeIcon {
+  width: 1.15rem;
+  height: 1.15rem;
+  display: block;
+  filter: invert(1);
+}
+
+.deviceCodeContainer .copyDeviceCodeButton:hover {
+  transform: scale(1.04);
+}
+
+.deviceCodeContainer .copyDeviceCodeButton:focus-visible {
+  outline: 2px solid #b9b9b9;
+  outline-offset: 3px;
+  border-radius: 999px;
+}
+
 .deviceCodeContainer .userCode {
   background-color: #4a5059;
   padding: 10px;
@@ -28,9 +74,7 @@
 }
 
 .deviceCodeContainer .userCode:hover {
-  /* border: #64676c 1px solid;
-   */
-   padding-inline: 15px;
+  padding-inline: 15px;
 }
 
 .deviceCodeContainer a {
@@ -59,5 +103,3 @@
 .deviceCodeContainer .signInLink {
   background-color: #0f6824;
 }
-
-

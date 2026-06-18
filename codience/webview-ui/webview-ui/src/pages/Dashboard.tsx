@@ -1,39 +1,42 @@
 import React, { useEffect, useMemo, useState } from "react";
-import axios from "axios";
-import PRsTable from "../components/PRsTable";
+import { useNavigate } from "react-router-dom";
+import PRsTable from "../components/prs/PRsTable";
+import CardsRow from "../components/ui/CardsRow";
+import PRsCharts from "../components/prs/PRsCharts";
+import ReviewersList from "../components/reviewers/ReviewersList";
+import RiskBarChart from "../components/ui/RiskBarChart";
 import type { PullRequest } from "../types/PullRequest";
 import "./styles/Dashboard.css";
+import { usePRs } from "../hooks/usePRs";
 
-interface Props {
-  prs: PullRequest[] | null;
-  projectName: string | null;
-}
-
-type ReviewerEntry = {
-  confidence: number;
-  reviewerName: string;
-};
-
-type ReviewersResponse = {
-  skills: string[];
-  topReviewers: ReviewerEntry[];
-};
-
-const REVIEWERS_API =
-  "https://fordless-samella-unexpendable.ngrok-free.dev/api/recommend";
-
-const Dashboard: React.FC<Props> = ({ prs, projectName }) => {
+const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
+  const projectName: string | null = localStorage.getItem("RepoName");
+  const { data: prs, loading, error } = usePRs();
   const [selectedPR, setSelectedPR] = useState<PullRequest | null>(null);
-  const [reviewers, setReviewers] = useState<ReviewerEntry[] | null>(null);
-  const [loadingReviewers, setLoadingReviewers] = useState(false);
-  const [reviewersError, setReviewersError] = useState<string | null>(null);
-
-  // 🧩 NEW: local copy of PRs that includes risk updates
   const [updatedPRs, setUpdatedPRs] = useState<PullRequest[] | null>(prs);
+  const [visiblePRs, setVisiblePRs] = useState<PullRequest[] | null>(null);
 
+  useEffect(() => {
+    if (!selectedPR && prs && prs.length > 0) {
+      setSelectedPR(prs[0]);
+    }
+  }, [prs]);
+
+  useEffect(() => {
+    if (!selectedPR || !prs) return;
+
+    const refreshedPR = prs.find((pr) => pr.number === selectedPR.number);
+    if (refreshedPR && refreshedPR !== selectedPR) {
+      setSelectedPR(refreshedPR);
+    }
+  }, [prs, selectedPR?.number]);
+
+  useEffect(() => {
+    setUpdatedPRs(prs);
+  }, [prs]);
   const userName = localStorage.getItem("User");
 
-  // 🧠 Compute stats using the UPDATED PRs (not the initial ones)
   const stats = useMemo(() => {
     let open = 0;
     let highRisk = 0;
@@ -51,120 +54,141 @@ const Dashboard: React.FC<Props> = ({ prs, projectName }) => {
     setSelectedPR(pr);
   };
 
-  // 🧩 Handler to receive risk updates from PRsTable
   const handleRiskUpdate = (newPRs: PullRequest[]) => {
     setUpdatedPRs(newPRs);
   };
 
-  // 🔁 Fetch reviewers when selectedPR changes
-  useEffect(() => {
-    if (!selectedPR) {
-      setReviewers(null);
-      setReviewersError(null);
-      setLoadingReviewers(false);
-      return;
-    }
+  const openReviewerSettings = () => {
+    if (!selectedPR) return;
 
-    let cancelled = false;
-    setLoadingReviewers(true);
-    setReviewersError(null);
-
-    const body = {
-      number: selectedPR.number,
-      title: selectedPR.title,
-    };
-
-    axios
-      .post<ReviewersResponse>(REVIEWERS_API, body, {
-        headers: { "Content-Type": "application/json" },
-        timeout: 8000,
-      })
-      .then((res) => {
-        if (cancelled) return;
-        const arr = res.data?.topReviewers ?? [];
-        arr.sort((a, b) => b.confidence - a.confidence);
-        setReviewers(arr);
-      })
-      .catch((err) => {
-        if (cancelled) return;
-        console.error("Reviewers fetch error:", err);
-        setReviewersError("Failed to load recommended reviewers");
-        setReviewers(null);
-      })
-      .finally(() => {
-        if (!cancelled) setLoadingReviewers(false);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [selectedPR]);
-
-  const renderReviewersRows = () => {
-    if (loadingReviewers) {
-      return (
-        <tr className="loadingRow">
-          <td colSpan={3}>Loading recommended reviewers…</td>
-        </tr>
-      );
-    }
-    if (reviewersError) {
-      return (
-        <tr className="errorRow">
-          <td colSpan={3}>{reviewersError}</td>
-        </tr>
-      );
-    }
-    if (!reviewers || reviewers.length === 0) {
-      return (
-        <tr className="emptyRow">
-          <td colSpan={3}>No recommended reviewers found for this PR.</td>
-        </tr>
-      );
-    }
-    return reviewers.map((r, idx) => (
-      <tr key={r.reviewerName + idx}>
-        <td className="revName">{r.reviewerName}</td>
-        <td className="revConfidence">{(r.confidence * 100).toFixed(1)}%</td>
-        <td className="revActions"></td>
-      </tr>
-    ));
+    navigate(`/dashboard/reviewer-settings/${selectedPR.number}`, {
+      state: { selectedPR },
+    });
   };
+
+  const chartData = useMemo(() => {
+    const levels = ["low", "medium", "high"] as const;
+    const source = visiblePRs ?? updatedPRs;
+    if (!source) {
+      return levels.map((l) => ({ level: l, range: "-", count: 0 }));
+    }
+
+    return levels.map((level) => {
+      const prsForLevel = source.filter(
+        (p) => (p as any)?.risk?.risk_level === level,
+      );
+      if (prsForLevel.length === 0) return { level, range: "-", count: 0 };
+
+      const scores = prsForLevel
+        .map((p) => {
+          const raw = (p as any)?.risk?.risk_score;
+          const s = typeof raw === "string" ? parseFloat(raw) : raw;
+          return Number.isFinite(s) ? Math.max(0, Math.min(100, s)) : null;
+        })
+        .filter((v): v is number => v !== null && v !== undefined);
+
+      if (scores.length === 0)
+        return { level, range: "-", count: prsForLevel.length };
+
+      const min = Math.min(...scores);
+      const max = Math.max(...scores);
+      return {
+        level,
+        range: `${Math.round(min)}-${Math.round(max)}`,
+        count: prsForLevel.length,
+      };
+    });
+  }, [visiblePRs, updatedPRs]);
+
+  const prsPerDay = useMemo(() => {
+    const days = 7;
+    const now = new Date();
+    const labels: string[] = [];
+    for (let i = days - 1; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
+      labels.push(
+        d.toLocaleDateString(undefined, { month: "short", day: "numeric" }),
+      );
+    }
+
+    const counts: Record<string, number> = {};
+    labels.forEach((l) => (counts[l] = 0));
+
+    const source = visiblePRs ?? updatedPRs ?? prs ?? [];
+    source.forEach((pr) => {
+      const date = pr.createdAt ? new Date(pr.createdAt) : null;
+      if (!date || Number.isNaN(date.getTime())) return;
+      const label = date.toLocaleDateString(undefined, {
+        month: "short",
+        day: "numeric",
+      });
+      if (counts[label] === undefined) counts[label] = 0;
+      counts[label]++;
+    });
+
+  const hasAny = Object.values(counts).some((v) => v > 0);
+
+if (!hasAny) {
+  labels.forEach((l) => {
+    counts[l] = 0;
+  });
+}
+
+    return labels.map((l) => ({ date: l, count: counts[l] ?? 0 }));
+  }, [visiblePRs, updatedPRs, prs]);
+
+  const openClosedData = useMemo(() => {
+    const source = visiblePRs ?? updatedPRs ?? prs ?? [];
+    let open = 0;
+    let closed = 0;
+    source.forEach((p) => {
+      if (p.state === "open") open++;
+      else closed++;
+    });
+    if (open === 0 && closed === 0) {
+      open = 1;
+      closed = 0;
+    }
+    return [
+      { name: "Open", value: open },
+      { name: "Closed", value: closed },
+    ];
+  }, [visiblePRs, updatedPRs, prs]);
+
+  if (loading) return <p className="loading">Loading...</p>;
+  if (error) return <p className="loading">{error}</p>;
 
   return (
     <div className="dashboardRoot">
       <main className="mainArea">
         <header className="topHeader">
           <h2 className="projectTitle">{projectName ?? "ProjectName"}</h2>
-          <div className="searchUser">
-            <input placeholder="Search..." className="searchInput" />
+          <div className="userArea">
             <div className="userBadge">{userName}</div>
           </div>
         </header>
 
         <section className="topCardsAndTable">
-          <div className="cardsContainer">
-            <div className="card statCard">
-              <div className="cardLabel">Your PRs</div>
-              <div className="cardValue">
-                {updatedPRs ? updatedPRs.length : 0}
-              </div>
-            </div>
-            <div className="card statCard open">
-              <div className="cardLabel">Open PRs</div>
-              <div className="cardValue">{stats.open}</div>
-            </div>
-            <div className="card statCard highRisk">
-              <div className="cardLabel">High Priority</div>
-              <div className="cardValue">{stats.highPriority}</div>
-            </div>
-            <div className="card statCard highRisk">
-              <div className="cardLabel">High Risk</div>
-              <div className="cardValue">{stats.highRisk}</div>
-            </div>
-          </div>
-
-          <div className="tableAndRightPanel">
+          <div className="leftColumn">
+            <CardsRow
+              items={[
+                {
+                  label: "Your PRs",
+                  value: updatedPRs ? updatedPRs.length : 0,
+                },
+                { label: "Open PRs", value: stats.open, className: "open" },
+                {
+                  label: "High Priority",
+                  value: stats.highPriority,
+                  className: "highRisk",
+                },
+                {
+                  label: "High Risk",
+                  value: stats.highRisk,
+                  className: "highRisk",
+                },
+              ]}
+            />
             <div className="pullRequestsPanel">
               <div className="panelHeader">
                 <h3>Pull Requests</h3>
@@ -173,39 +197,35 @@ const Dashboard: React.FC<Props> = ({ prs, projectName }) => {
                 <PRsTable
                   prs={prs}
                   onSelect={handleSelectPR}
-                  onRiskUpdate={handleRiskUpdate} // 👈 pass callback
+                  onRiskUpdate={handleRiskUpdate}
+                  onVisibleChange={(v) => setVisiblePRs(v)}
+                />
+                <PRsCharts
+                  prsPerDay={prsPerDay}
+                  openClosedData={openClosedData}
                 />
               </div>
             </div>
+          </div>
 
+          <div className="rightColumn">
             <aside className="rightPanel">
               <div className="recommendedBlock">
-                <h4 className="blockTitle">Recommended Reviewers</h4>
+                <div className="blockTitleRow">
+                  <h4 className="blockTitle">Recommended Reviewers</h4>
+                  <button
+                    type="button"
+                    className="iconSettingsButton"
+                    onClick={openReviewerSettings}
+                    disabled={!selectedPR}
+                    aria-label="Open reviewer recommendation settings"
+                    title="Open reviewer recommendation settings"
+                  >
+                    <span aria-hidden="true">⚙</span>
+                  </button>
+                </div>
                 <div className="reviewersBox">
-                  {selectedPR ? (
-                    <>
-                      <div className="selectedPRBrief">
-                        <div className="prNumber">#{selectedPR.number}</div>
-                        <div className="prTitle">{selectedPR.title}</div>
-                        <div className="prState">{selectedPR.state}</div>
-                      </div>
-
-                      <table className="reviewersTable">
-                        <thead>
-                          <tr>
-                            <th>Reviewer</th>
-                            <th>Confidence</th>
-                            <th></th>
-                          </tr>
-                        </thead>
-                        <tbody>{renderReviewersRows()}</tbody>
-                      </table>
-                    </>
-                  ) : (
-                    <div className="noSelection">
-                      Click a PR to see recommended reviewers
-                    </div>
-                  )}
+                  <ReviewersList selectedPR={selectedPR} />
                 </div>
               </div>
 
@@ -232,8 +252,16 @@ const Dashboard: React.FC<Props> = ({ prs, projectName }) => {
                       </div>
                     </div>
                     <div className="infoRow">
-                      <div className="infoLabel">Assigned Reviewer</div>
-                      <div className="infoValue">Not Assigned Yet</div>
+                      <div className="infoLabel">Business Impact</div>
+                      <div className="infoValue">
+                        {selectedPR.business_impact?.weighted_score}
+                      </div>
+                    </div>
+                    <div className="infoRow">
+                      <div className="infoLabel">Impact Tier</div>
+                      <div className="infoValue">
+                        {selectedPR.business_impact?.tier}
+                      </div>
                     </div>
                   </div>
                 ) : (
@@ -241,6 +269,9 @@ const Dashboard: React.FC<Props> = ({ prs, projectName }) => {
                 )}
               </div>
             </aside>
+            <div className="bottomChartContainer">
+              <RiskBarChart data={chartData} />
+            </div>
           </div>
         </section>
       </main>

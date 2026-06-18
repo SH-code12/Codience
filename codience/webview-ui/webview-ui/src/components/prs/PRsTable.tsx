@@ -1,0 +1,309 @@
+import { useEffect, useMemo, useState } from "react";
+import type { PullRequest } from "../../types/PullRequest";
+import "../styles/PRsTable.css";
+import PRRow from "./PRRow";
+
+type Props = {
+  prs: PullRequest[] | null;
+  onSelect?: (pr: PullRequest) => void;
+  onRiskUpdate?: (updated: PullRequest[]) => void;
+  onVisibleChange?: (visible: PullRequest[]) => void;
+};
+
+const toSortableFilesChanged = (value: number | string | undefined) => {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : 0;
+};
+
+const toSortableScore = (value: number | string | undefined) => {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : 0;
+};
+
+const PRsTable = ({ prs, onSelect, onVisibleChange }: Props) => {
+  if (!prs) return null;
+
+  const [updatedPRs, setUpdatedPRs] = useState<PullRequest[]>(() =>
+    prs.map((pr) => ({
+      ...pr,
+      files_changed: pr.files_changed ?? 0,
+      risk:
+        pr.risk ??
+        ({
+          risk_score: "Loading...",
+          risk_level: "loading",
+          comments: 0,
+          files_changed: 0,
+        } as any),
+      business_impact:
+        pr.business_impact ??
+        ({
+          weighted_score: "Loading...",
+          tier: "loading",
+          ai_summary: "Loading...",
+        } as any),
+    })),
+  );
+
+  useEffect(() => {
+    setUpdatedPRs(
+      prs.map((pr) => ({
+        ...pr,
+        files_changed: pr.files_changed ?? 0,
+        risk:
+          pr.risk ??
+          ({
+            risk_score: "Loading...",
+            risk_level: "loading",
+            comments: 0,
+            files_changed: pr.files_changed ?? 0,
+          } as any),
+        business_impact:
+          pr.business_impact ??
+          ({
+            weighted_score: "Loading...",
+            tier: "loading",
+            ai_summary: "Loading...",
+          } as any),
+      })),
+    );
+  }, [prs]);
+
+  const [filterRisk, setFilterRisk] = useState<
+    "all" | "low" | "medium" | "high"
+  >("all");
+  const [filterBusinessImpact, setFilterBusinessImpact] = useState<
+    "all" | "low" | "medium" | "high"
+  >("all");
+  const [filterStatus, setFilterStatus] = useState<"all" | "open" | "closed">(
+    "all",
+  );
+  const [sortBy, setSortBy] = useState<
+    "none" | "risk" | "businessImpact" | "title" | "files"
+  >("none");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+
+  const [selectedPR, setSelectedPR] = useState<number | null>(null);
+
+  const handleSelect = (pr: PullRequest) => {
+    setSelectedPR(pr.number);
+    onSelect?.(pr);
+  };
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(10);
+  const visiblePRs = useMemo(() => {
+    let list = [...updatedPRs];
+
+    if (filterRisk !== "all") {
+      list = list.filter(
+        (p) => (p.risk?.risk_level ?? "unknown") === filterRisk,
+      );
+    }
+
+    if (filterBusinessImpact !== "all") {
+      list = list.filter(
+        (p) => (p.business_impact?.tier ?? "unknown") === filterBusinessImpact,
+      );
+    }
+
+    if (filterStatus !== "all") {
+      list = list.filter((p) => (p.state ?? "").toLowerCase() === filterStatus);
+    }
+
+    if (sortBy !== "none") {
+      list.sort((a, b) => {
+        let res = 0;
+        if (sortBy === "risk") {
+          const map = (lvl?: string) =>
+            lvl === "high" ? 3 : lvl === "medium" ? 2 : lvl === "low" ? 1 : 0;
+          res = map(a.risk?.risk_level) - map(b.risk?.risk_level);
+        } else if (sortBy === "businessImpact") {
+          res =
+            toSortableScore(a.business_impact?.weighted_score) -
+            toSortableScore(b.business_impact?.weighted_score);
+        } else if (sortBy === "title") {
+          res = (a.title ?? "").localeCompare(b.title ?? "");
+        } else if (sortBy === "files") {
+          res =
+            toSortableFilesChanged(a.files_changed) -
+            toSortableFilesChanged(b.files_changed);
+        }
+        return sortDir === "asc" ? res : -res;
+      });
+    }
+
+    return list;
+  }, [
+    updatedPRs,
+    filterRisk,
+    filterBusinessImpact,
+    filterStatus,
+    sortBy,
+    sortDir,
+  ]);
+
+  useEffect(() => {
+    onVisibleChange?.(visiblePRs);
+  }, [visiblePRs, onVisibleChange]);
+
+  const totalPages = Math.max(1, Math.ceil(visiblePRs.length / pageSize));
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const pageItems = visiblePRs.slice(startIndex, endIndex);
+
+  const goToPage = (p: number) => {
+    const next = Math.max(1, Math.min(totalPages, p));
+    setCurrentPage(next);
+  };
+
+  return (
+    <div>
+      <div
+        style={{ display: "flex", justifyContent: "flex-end", marginBottom: 8 }}
+      >
+        <div className="prsControls">
+          <label>
+            Risk:
+            <select
+              value={filterRisk}
+              onChange={(e) => {
+                setFilterRisk(e.target.value as any);
+                setCurrentPage(1);
+              }}
+            >
+              <option value="all">All</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+          <label>
+            Impact:
+            <select
+              value={filterBusinessImpact}
+              onChange={(e) => {
+                setFilterBusinessImpact(e.target.value as any);
+                setCurrentPage(1);
+              }}
+            >
+              <option value="all">All</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+          <label>
+            Status:
+            <select
+              value={filterStatus}
+              onChange={(e) => {
+                setFilterStatus(e.target.value as any);
+                setCurrentPage(1);
+              }}
+            >
+              <option value="all">All</option>
+              <option value="open">Open</option>
+              <option value="closed">Closed</option>
+            </select>
+          </label>
+          <label>
+            Sort:
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as any)}
+            >
+              <option value="none">None</option>
+              <option value="risk">Risk Level</option>
+              <option value="businessImpact">Business Impact</option>
+              <option value="title">Title</option>
+              <option value="files">Files Changed</option>
+            </select>
+          </label>
+          <button
+            className="sortDir"
+            onClick={() => setSortDir((s) => (s === "asc" ? "desc" : "asc"))}
+          >
+            {sortDir === "asc" ? "↑" : "↓"}
+          </button>
+        </div>
+      </div>
+
+      <div className="prsTableContainer">
+        <table className="prsTable">
+          <thead>
+            <tr>
+              <th>PR Title</th>
+              <th>Risk Score</th>
+              <th>Risk Level</th>
+              <th>Business Impact</th>
+              <th>Impact Tier</th>
+              <th>Files Changed</th>
+              <th>Created At</th>
+              <th>Status</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pageItems.map((pr) => (
+              <PRRow
+                key={pr.number}
+                pr={pr}
+                selected={selectedPR === pr.number}
+                onSelect={handleSelect}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="prsPagination">
+        <div className="paginationControls">
+          <button
+            onClick={() => goToPage(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            <p className="controls">&lt;</p>
+          </button>
+          <span className="pageInfo">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={() => goToPage(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            <p className="controls">&gt;</p>
+          </button>
+        </div>
+        <div className="pageSizeControl">
+          <label>
+            Rows:
+            <select
+              value={pageSize}
+              onChange={(e) => {
+                setPageSize(Number(e.target.value));
+                setCurrentPage(1);
+              }}
+            >
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={25}>25</option>
+              <option value={50}>50</option>
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PRsTable;

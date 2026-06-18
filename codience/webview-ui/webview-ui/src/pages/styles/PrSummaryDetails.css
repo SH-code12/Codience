@@ -1,0 +1,170 @@
+.prSummaryPage {
+  position: fixed;
+  inset: 0;
+  z-index: 35;
+  min-height: 100vh;
+  padding: 28px;
+  background: rgba(16, 18, 19, 0.94);
+  color: #cfcfcf;
+  box-sizing: border-box;
+  overflow: auto;
+  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+.prSummaryCard {
+  width: min(1120px, calc(100vw - 56px));
+  margin: 0 auto;
+  background: #141617;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.48);
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.prSummaryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.prSummaryHeader h2 {
+  margin: 4px 0 8px;
+  color: #d8d8d8;
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 650;
+}
+
+.prSummaryHeader span {
+  color: #858587;
+  font-size: 13px;
+}
+
+.prSummaryEyebrow {
+  margin: 0;
+  color: #4f9d69;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.prSummaryBackButton {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.02);
+  color: #d0d0d0;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.prSummaryBackButton:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.14);
+  transform: translateY(-1px);
+}
+
+.prSummaryGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.8fr);
+  gap: 16px;
+}
+
+.prSummaryPanel {
+  background: rgba(255, 255, 255, 0.018);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 16px;
+  min-width: 0;
+}
+
+.prSummaryFullWidth {
+  grid-column: 1 / -1;
+}
+
+.prSummaryPanel h3 {
+  margin: 0 0 12px;
+  color: #d8d8d8;
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.prSummaryText {
+  color: #cfcfcf;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.prSummaryText h3 {
+  margin: 18px 0 8px;
+  color: #d8d8d8;
+  font-size: 15px;
+}
+
+.prSummaryText h3:first-child {
+  margin-top: 0;
+}
+
+.prSummaryText p {
+  margin: 0 0 10px;
+}
+
+.prSummaryBullet {
+  position: relative;
+  padding-left: 18px;
+}
+
+.prSummaryBullet::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.8em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #4f9d69;
+}
+
+.prSummaryState {
+  padding: 14px;
+  border-radius: 6px;
+  color: #9a9a9a;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.035);
+  font-size: 13px;
+}
+
+.prSummaryError {
+  color: #ffb6b6;
+  background: rgba(220, 38, 38, 0.1);
+  border-color: rgba(220, 38, 38, 0.24);
+}
+
+@media (max-width: 900px) {
+  .prSummaryPage {
+    padding: 16px;
+  }
+
+  .prSummaryCard {
+    width: min(100%, calc(100vw - 32px));
+    padding: 18px;
+  }
+
+  .prSummaryHeader {
+    flex-direction: column;
+  }
+
+  .prSummaryBackButton {
+    width: 100%;
+  }
+
+  .prSummaryGrid {
+    grid-template-columns: 1fr;
+  }
+}

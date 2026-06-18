@@ -8,8 +8,8 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider(
       SidebarProvider.viewType,
-      provider
-    )
+      provider,
+    ),
   );
 }
 
@@ -23,7 +23,7 @@ class SidebarProvider implements vscode.WebviewViewProvider {
   resolveWebviewView(
     webviewView: vscode.WebviewView,
     context: vscode.WebviewViewResolveContext,
-    _token: vscode.CancellationToken
+    _token: vscode.CancellationToken,
   ) {
     const webview = webviewView.webview;
 
@@ -34,7 +34,7 @@ class SidebarProvider implements vscode.WebviewViewProvider {
           this._extensionUri,
           "webview-ui",
           "webview-ui",
-          "dist"
+          "dist",
         ),
       ],
     };
@@ -44,26 +44,31 @@ class SidebarProvider implements vscode.WebviewViewProvider {
       "webview-ui",
       "webview-ui",
       "dist",
-      "index.html"
+      "index.html",
     );
 
     let html = fs.readFileSync(indexPath, "utf-8");
 
-    html = html.replace(/(src|href)="(.+?)"/g, (match, attr, link) => {
-      if (/^https?:\/\//.test(link)) {
-        return match;
-      }
-      const uri = webview.asWebviewUri(
-        vscode.Uri.joinPath(
-          this._extensionUri,
-          "webview-ui",
-          "webview-ui",
-          "dist",
-          link
-        )
-      );
-      return `${attr}="${uri}"`;
-    });
+    html = html.replace(
+      /(src|href)="(.+?)"/g,
+      (_match: string, attr: string, link: string) => {
+        if (/^https?:\/\//.test(link)) {
+          return _match;
+        }
+
+        const uri = webview.asWebviewUri(
+          vscode.Uri.joinPath(
+            this._extensionUri,
+            "webview-ui",
+            "webview-ui",
+            "dist",
+            link,
+          ),
+        );
+
+        return `${attr}="${uri}"`;
+      },
+    );
 
     // Inject CSP (Content Security Policy)
     html = html.replace(
@@ -78,9 +83,15 @@ class SidebarProvider implements vscode.WebviewViewProvider {
         connect-src
           https://codience.onrender.com
           https://sphery-arlen-nondecorative.ngrok-free.dev
-          https://fordless-samella-unexpendable.ngrok-free.dev;
+          https://fordless-samella-unexpendable.ngrok-free.dev
+          http://localhost:5051/
+          http://localhost:8000/
+          http://127.0.0.1:8000/
+          http://127.0.0.1:8001/
+          http://127.0.0.1:8002/;
+          http://127.0.0.1:8003/;
       ">
-  `
+  `,
     );
 
     webview.html = html;

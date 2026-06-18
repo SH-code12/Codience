@@ -1,44 +1,183 @@
 .getRepoName {
-  margin: auto;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
-  flex-flow: column;
   align-items: center;
   justify-content: center;
-}
-.repoNameContainer {
-  background-color: #e4e4e404;
-  width: 70%;
-  max-width: 450px;
-  height: 500px;
-  border-radius: 8px;
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  justify-content: space-around;
-  color: #eee;
-}
-.repoNameContainer input {
-  width: 80%;
-  height: 30px;
-  outline: none;
-  border: none;
-  padding-inline: 5px;
-  border-radius: 3px;
-  background-color: #eee;
-  font-size: 18px;
-}
-.repoNameContainer button {
-  width: 90%;
-  padding-block: 5px;
-  border-radius: 5px;
-  border: none;
-  outline: none;
-  background-color: #0f6824;
-  font-weight: bold;
-  font-size: 16px;
+  padding: 24px;
+  background: #101213;
+  color: #d7d7d7;
+  box-sizing: border-box;
+  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
 }
 
-.repoNameContainer button:hover {
-  background-color: #09b7319c;
+.repoNameContainer {
+  width: min(100%, 460px);
+  min-height: 420px;
+  padding: 28px;
+  border-radius: 8px;
+  background: #141617;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.48);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+  box-sizing: border-box;
+}
+
+.repoNameContainer h3 {
+  margin: 0;
+  color: #ececec;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 600;
+  text-align: center;
+}
+
+.repoSearchBox {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.repoNameContainer input {
+  width: 100%;
+  height: 44px;
+  outline: none;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 0 14px;
+  border-radius: 6px;
+  background: #0f1112;
+  color: #ececec;
+  font-size: 14px;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+
+.repoNameContainer input:focus {
+  border-color: rgba(79, 157, 105, 0.8);
+  box-shadow: 0 0 0 3px rgba(79, 157, 105, 0.13);
+}
+
+.repoNameContainer input::placeholder {
+  color: #6f7378;
+}
+
+.repoMenu {
+  width: 100%;
+  max-height: 220px;
+  overflow-y: auto;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #161718;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.42);
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.repoMenu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.repoMenu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.repoMenu::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.repoMenu::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.repoNameContainer .repoMenuItem {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 10px 12px;
+  text-align: left;
+  background: transparent;
+  color: #e7e7e7;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.repoNameContainer .repoMenuItem:hover,
+.repoNameContainer .repoMenuItem:focus {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.06);
+  transform: translateY(-1px);
+}
+
+.repoMenuItemTitle {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  color: #ececec;
+}
+
+.repoMenuState {
+  padding: 14px;
+  color: #9a9a9a;
+  font-size: 13px;
+  text-align: center;
+}
+
+.repoMenuError {
+  color: #ffb6b6;
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.24);
+  border-radius: 6px;
+}
+
+.repoNameContainer .repoContinueButton {
+  width: 100%;
+  min-height: 42px;
+  margin-top: 4px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  background: linear-gradient(
+    180deg,
+    rgba(34, 197, 94, 0.26),
+    rgba(34, 197, 94, 0.12)
+  );
+  color: #f4fff7;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s ease, opacity 0.15s ease, transform 0.15s ease;
+}
+
+.repoNameContainer .repoContinueButton:hover:not(:disabled) {
+  background: linear-gradient(
+    180deg,
+    rgba(34, 197, 94, 0.34),
+    rgba(34, 197, 94, 0.16)
+  );
+  transform: translateY(-1px);
+}
+
+.repoNameContainer .repoContinueButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 520px) {
+  .getRepoName {
+    padding: 16px;
+  }
+
+  .repoNameContainer {
+    min-height: 360px;
+    padding: 22px;
+  }
+
+  .repoNameContainer h3 {
+    font-size: 21px;
+  }
 }
