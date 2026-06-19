@@ -1,26 +1,26 @@
 [
   {
-    "pr_number": 23,
-    "weighted_score": 76.29639999999999,
-    "tier": "high",
-    "timestamp": "2026-06-18T18:36:04.947480"
-  },
-  {
     "pr_number": 22,
-    "weighted_score": 59.8534,
+    "weighted_score": 66.04303499999999,
     "tier": "medium",
-    "timestamp": "2026-06-18T18:36:04.947489"
-  },
-  {
-    "pr_number": 21,
-    "weighted_score": 49.5365,
-    "tier": "medium",
-    "timestamp": "2026-06-18T18:36:04.947490"
+    "timestamp": "2026-06-19T06:09:49.808389"
   },
   {
     "pr_number": 20,
-    "weighted_score": 43.4465,
+    "weighted_score": 64.00429875,
     "tier": "medium",
-    "timestamp": "2026-06-18T18:36:04.947492"
+    "timestamp": "2026-06-19T06:09:49.808400"
+  },
+  {
+    "pr_number": 23,
+    "weighted_score": 63.93681,
+    "tier": "medium",
+    "timestamp": "2026-06-19T06:09:49.808403"
+  },
+  {
+    "pr_number": 21,
+    "weighted_score": 58.90752764999999,
+    "tier": "medium",
+    "timestamp": "2026-06-19T06:09:49.808406"
   }
 ]

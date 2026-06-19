@@ -36,9 +36,9 @@ class PRRankingEngine:
             business_summary=business_impact.get('business_summary', ''),
             affected_systems=business_impact.get('affected_systems', []),
             user_impact_bucket=user.bucket,
-            raw_score=business_impact.get('llm_score', 0.5),
+            raw_score=business_impact.get('llm_score', 0.55),
             confidence=1.0,
-            final_score=business_impact.get('llm_score', 0.5),
+            final_score=business_impact['llm_score'],
             model_used="qwen2.5-coder:1.5b"
         )
         
@@ -91,7 +91,7 @@ class PRRankingEngine:
         )
     
     def _generate_github_comment(self, pr: PRPayload, score: float, 
-                                 business_impact: dict, should_block: bool) -> str:
+                                business_impact: dict, should_block: bool) -> str:
         """Generates clear production reports markdown format"""
         tier_emoji = "🔴" if score >= 70 else "🟡" if score >= 40 else "🟢"
         block_warning = "⚠️ **CRITICAL: High risk parameters met. Verification required.** ⚠️" if should_block else ""

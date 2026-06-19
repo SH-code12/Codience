@@ -1,62 +1,62 @@
 [
   {
+    "pr_number": 22,
+    "pr_title": "Frontend v2 Test PR_3",
+    "weighted_score": 80.33461875,
+    "tier": "high",
+    "should_block_merge": true,
+    "score_breakdown": {
+      "blast_radius": 0.76,
+      "user_exposure": 0.039,
+      "deadline": 0.1,
+      "business_impact": 0.8033461875000001,
+      "formula_score": 0.62384625,
+      "local_model_score": 0.9
+    }
+  },
+  {
     "pr_number": 23,
     "pr_title": "Frontend v2",
-    "weighted_score": 70.2064,
+    "weighted_score": 78.34224375000001,
     "tier": "high",
     "should_block_merge": false,
     "score_breakdown": {
       "blast_radius": 0.21,
-      "user_exposure": 0.6,
+      "user_exposure": 0.039,
       "deadline": 0.1,
-      "business_impact": 0.702064,
-      "formula_score": 0.5034400000000001,
-      "local_model_score": 1.0
-    }
-  },
-  {
-    "pr_number": 22,
-    "pr_title": "Frontend v2 Test PR_3",
-    "weighted_score": 53.7634,
-    "tier": "medium",
-    "should_block_merge": false,
-    "score_breakdown": {
-      "blast_radius": 0.21,
-      "user_exposure": 0.6,
-      "deadline": 0.1,
-      "business_impact": 0.537634,
-      "formula_score": 0.22938999999999998,
-      "local_model_score": 1.0
+      "business_impact": 0.7834224375000001,
+      "formula_score": 0.56692125,
+      "local_model_score": 0.9
     }
   },
   {
     "pr_number": 21,
     "pr_title": "Backend Test PR_2",
-    "weighted_score": 49.5365,
-    "tier": "medium",
+    "weighted_score": 74.0195145,
+    "tier": "high",
     "should_block_merge": true,
     "score_breakdown": {
-      "blast_radius": 0.0,
-      "user_exposure": 1.0,
+      "blast_radius": 0.3667,
+      "user_exposure": 0.039,
       "deadline": 0.1,
-      "business_impact": 0.495365,
-      "formula_score": 0.49227499999999996,
-      "local_model_score": 0.5
+      "business_impact": 0.740195145,
+      "formula_score": 0.4434147,
+      "local_model_score": 0.9
     }
   },
   {
     "pr_number": 20,
     "pr_title": "Ai/dl Test PR",
-    "weighted_score": 43.76622499999999,
-    "tier": "medium",
+    "weighted_score": 72.881325,
+    "tier": "high",
     "should_block_merge": false,
     "score_breakdown": {
       "blast_radius": 0.0525,
-      "user_exposure": 0.6,
+      "user_exposure": 0.039,
       "deadline": 0.1,
-      "business_impact": 0.4376622499999999,
-      "formula_score": 0.3961037499999999,
-      "local_model_score": 0.5
+      "business_impact": 0.7288132500000001,
+      "formula_score": 0.410895,
+      "local_model_score": 0.9
     }
   }
 ]

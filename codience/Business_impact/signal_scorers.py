@@ -2,9 +2,11 @@
 signal_scorers.py
 ─────────────────
 UserExposure and DeadlinePressure signals
+ USER IMPACT (AR-Prioritizer style)
+UI = α log(users) + β severity + γ revenue
 """
 
-import re
+import math
 from datetime import date, datetime
 from models import UserExposureDetail, UserExposureBucket, DeadlineDetail, JiraTicket
 
@@ -38,15 +40,15 @@ MINOR_KW = [
 ]
 
 JIRA_SEV_MAP: dict[str, float] = {
-    "blocker": 1.0, "critical": 1.0,
-    "major": 0.65, "high": 0.80,
+    "blocker": 1.0, "critical": 9.0,
+    "major": 0.65, "high": 0.70,
     "medium": 0.50, "normal": 0.50,
     "minor": 0.25, "low": 0.20,
     "trivial": 0.10,
 }
 
 BUCKET_SCORE = {
-    UserExposureBucket.CRITICAL: 1.00,
+    UserExposureBucket.CRITICAL: 0.90,
     UserExposureBucket.MAJOR: 0.60,
     UserExposureBucket.MINOR: 0.20,
 }
@@ -93,6 +95,10 @@ def score_user_exposure(
     label_bucket, _ = _kw_bucket(label_text) if label_text else (UserExposureBucket.MINOR, [])
 
     max_users = max((t.affected_users_count or 0 for t in jira_tickets), default=0)
+    severity_score = max(
+        (JIRA_SEV_MAP.get(t.severity.lower(), 0.3) for t in jira_tickets),
+        default=0.3
+    )
     if max_users > 10_000:
         users_bucket = UserExposureBucket.CRITICAL
     elif max_users > 500:
@@ -100,10 +106,24 @@ def score_user_exposure(
     else:
         users_bucket = UserExposureBucket.MINOR
 
+    revenue_flag = 1.0 if any(
+        k in (pr_title + pr_body).lower()
+        for k in ["payment", "billing", "checkout", "invoice", "subscription"]
+    ) else 0.25
+    
     final_bucket = min(
         [kw_bucket, jira_bucket, label_bucket, users_bucket],
         key=lambda b: BUCKET_RANK.index(b),
     )
+
+    # AR-Prioritizer formula
+    ui_raw = (
+        0.5 * math.log(1 + max_users) +
+        0.3 * severity_score +
+        0.2 * revenue_flag
+    )
+    normalized_score = min(ui_raw / 5.0, 1.0) 
+    score = ui_raw / 10.0
 
     parts = []
     if kw_hits:
@@ -115,71 +135,52 @@ def score_user_exposure(
 
     return UserExposureDetail(
         bucket=final_bucket,
-        score=round(BUCKET_SCORE[final_bucket], 4),
+        score=round(normalized_score, 4),
         matched_keywords=kw_hits,
         jira_severity=worst_sev,
-        explanation="; ".join(parts) or "No strong user-exposure signal",
+        explanation=f"UI = 0.5*log({max_users}) + 0.3*{severity_score:.2f} + 0.2*{revenue_flag} = {normalized_score:.4f}"
     )
-
 # ─────────────────────────────────────────────────────────────────────────────
 # DEADLINE PRESSURE
+# DP = 1 / (1 + e^(k * days))
 # ─────────────────────────────────────────────────────────────────────────────
 
-def _parse_iso(s: str | None) -> date | None:
-    if not s:
-        return None
-    for fmt in ("%Y-%m-%d", "%Y-%m-%dT%H:%M:%SZ", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%dT%H:%M:%S.%fZ"):
-        try:
-            return datetime.strptime(s, fmt).date()
-        except ValueError:
-            continue
-    return None
-
-def _sigmoid_deadline(days: int) -> float:
-    if days <= 0:
-        return 1.0
-    import math
-    return round(max(1.0 / (1.0 + 0.15 * days), 0.10), 4)
-
-def score_deadline(
-    jira_tickets: list[JiraTicket],
-    pr_milestone_due_date: str | None,
-) -> DeadlineDetail:
+def score_deadline(jira_tickets, milestone):
 
     today = date.today()
-    candidates: list[tuple[date, str]] = []
 
+    dates = []
     for t in jira_tickets:
-        for attr, label in [("sprint_end_date", "sprint"), ("milestone_due_date", "milestone")]:
-            d = _parse_iso(getattr(t, attr))
+        for d in [t.sprint_end_date, t.milestone_due_date]:
             if d:
-                candidates.append((d, label))
+                try:
+                    dates.append(datetime.fromisoformat(d).date())
+                except:
+                    pass
 
-    d = _parse_iso(pr_milestone_due_date)
-    if d:
-        candidates.append((d, "milestone"))
+    if milestone:
+        try:
+            dates.append(datetime.fromisoformat(milestone).date())
+        except:
+            pass
 
-    if not candidates:
+    if not dates:
         return DeadlineDetail(
-            days_remaining=None, source="none", score=0.10,
-            explanation="No sprint or milestone deadline found",
+            days_remaining=None,
+            source="none",
+            score=0.1,
+            explanation="no deadline signal"
         )
 
-    best_date, source = min(candidates, key=lambda x: x[0])
-    days = max((best_date - today).days, 0)
-    score = _sigmoid_deadline(days)
+    nearest = min(dates)
+    days = max((nearest - today).days, 0)
 
-    if days == 0:
-        expl = f"Deadline TODAY (source: {source}) 🚨"
-    elif days <= 3:
-        expl = f"{days}d to {source} deadline — critical urgency"
-    elif days <= 7:
-        expl = f"{days}d to {source} deadline — high pressure"
-    elif days <= 14:
-        expl = f"{days}d to {source} deadline — moderate pressure"
-    else:
-        expl = f"{days}d to {source} deadline"
+    k = 0.15
+    dp = 1 / (1 + math.exp(k * days))
 
     return DeadlineDetail(
-        days_remaining=days, source=source, score=score, explanation=expl,
+        days_remaining=days,
+        source="milestone",
+        score=round(dp, 4),
+        explanation=f"{days} days remaining (sigmoid pressure)"
     )

@@ -1,10 +1,13 @@
 """
 business_impact_scorer.py — Main business impact scoring powered by local Qwen2.5-Coder
+        # FINAL RESEARCH MODEL:
+        # Score = Σ w_i x_i
 """
 
 from __future__ import annotations
 import json
 import httpx
+import math
 import re
 from typing import Dict, Any, Optional
 from dataclasses import dataclass
@@ -15,8 +18,8 @@ class BusinessImpactConfig:
     """Configuration for local model routing parameters"""
     ollama_url: str = "http://127.0.0.1:11434/api/generate"
     model_name: str = "qwen2.5-coder:1.5b"
-    model_weight: float = 0.40
-    formula_weight: float = 0.60
+    model_weight: float = 0.63
+    formula_weight: float = 0.37
 
 
 class BusinessImpactScorer:
@@ -41,23 +44,28 @@ class BusinessImpactScorer:
             "database": 0.7 if any(p in combined_text for p in ["database", "migration", "schema"]) else 0.0,
             "api":      0.6 if any(p in combined_text for p in ["api", "endpoint", "route", "controller"]) else 0.0,
         }
-        component_crit = max(component_scores.values(), default=0.3)
+        component_crit = max(component_scores.values(), default=0.45)
 
-        security_keywords = ["security", "vulnerability", "exploit", "injection", "xss", "csrf", "bypass"]
-        security_risk = 0.8 if any(k in combined_text for k in security_keywords) else 0.2
+        security_keywords = ["security", "vulnerability", "exploit", "injection", "xss", "csrf", "bypass",        "authentication",
+        "authorization",
+        "jwt",
+        "oauth",
+        "login",
+        "password"]
+        security_risk = 0.8 if any(k in combined_text for k in security_keywords) else 0.44
 
         revenue_keywords = ["payment", "billing", "subscription", "invoice", "checkout", "transaction"]
-        revenue_impact = 0.9 if any(k in combined_text for k in revenue_keywords) else 0.1
+        revenue_impact = 0.9 if any(k in combined_text for k in revenue_keywords) else 0.35
 
         score = (
-            0.30 * component_crit +
+            0.25 * component_crit +
             0.25 * user_score +
             0.20 * security_risk +
-            0.15 * revenue_impact +
+            0.30 * revenue_impact +
             0.10 * blast_score
         )
 
-        deadline_boost = 1.0 + (deadline_score * 0.15)
+        deadline_boost = 1.0 + (deadline_score * 0.35)
         return min(score * deadline_boost, 1.0)
 
     async def calculate_local_qwen_score(self, pr: PRPayload, reporter_email: str = "") -> Dict[str, Any]:
@@ -70,12 +78,14 @@ class BusinessImpactScorer:
             jira_context = "No linked tickets available."
 
         # ✅ Added context-resolved dynamic signature tracker mapping line
-        prompt = f"""You are a Senior Technical Architect tracking code risk. Analyze this Pull Request:
+        prompt = f"""You are a software architect and product owner. Analyze this Pull Request:
 
 PR SUBMITTER PROFILE: {reporter_email if reporter_email else "unknown@domain.internal"}
 PR TITLE: {pr.pr_title}
 PR DESCRIPTION: {pr.pr_body}
 METADATA LABELS: {', '.join(pr.github_labels)}
+FILES:
+{pr.changed_files}
 LINKED JIRA TICKETS:
 {jira_context}
 
@@ -84,9 +94,13 @@ Output exactly one valid JSON object. Do not output any markdown text, notes, or
 
 Expected Schema:
 {{
-    "business_summary": "1-sentence business risk explanation",
-    "affected_systems": ["auth", "payments"],
-    "ai_risk_score": 0.50
+    "business_summary": "...",
+    "affected_systems": [" "],
+    "customer_impact":0.0-1.0,
+    "revenue_impact":0.0-1.0,
+    "security_impact":0.0-1.0,
+    "deployment_risk":0.0-1.0,
+    "ai_risk_score": 0.0-1.0
 }}
 """
 
@@ -100,7 +114,7 @@ Expected Schema:
         }
 
         default_fallback = {
-            "ai_score": 0.5,
+            "ai_score": 0.56,
             "summary": "Local engine timeout or processing error.",
             "affected_systems": ["unknown"]
         }
@@ -122,9 +136,26 @@ Expected Schema:
                     
                     return {
                         "ai_score": float(ai_score),
-                        "summary": parsed.get("business_summary", "Processed locally by Qwen."),
-                        "affected_systems": parsed.get("affected_systems", [])
+
+                        "customer_impact":
+                            float(parsed.get("customer_impact",0.5)),
+
+                        "revenue_impact":
+                            float(parsed.get("revenue_impact",0.5)),
+
+                        "security_impact":
+                            float(parsed.get("security_impact",0.5)),
+
+                        "deployment_risk":
+                            float(parsed.get("deployment_risk",0.5)),
+
+                        "summary":
+                            parsed.get("business_summary",""),
+
+                        "affected_systems":
+                            parsed.get("affected_systems",[])
                     }
+                    
                 else:
                     print(f"⚠️ Ollama returned non-200 HTTP response: {response.status_code}")
         except Exception as e:

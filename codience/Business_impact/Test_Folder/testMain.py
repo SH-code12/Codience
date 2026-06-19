@@ -9,7 +9,6 @@ from typing import List, Optional
 import asyncio
 import os
 from datetime import datetime
-from pydantic import BaseModel, Field
 
 # Import your existing modules
 from models import PRPayload, RankBatchRequest, RankedPRList, PRScoreResult
@@ -19,7 +18,12 @@ from dotnet_jira_client import get_dotnet_client, fetch_authenticated_github_ema
 from dotenv import load_dotenv
 
 load_dotenv()
+from pydantic import BaseModel, Field
 
+class JiraConfigPayload(BaseModel):
+    jira_api_token: str = Field(..., description="The Jira Personal Access Token or API Token")
+    jira_cloud_id: str = Field(..., description="Jira Cloud Tenant Site ID or Base URL instance")
+    jira_project_key: str = Field(..., description="Target Jira Project Key Prefix (e.g., PROJ)")
 # Initialize FastAPI
 app = FastAPI(
     title="PR Business Impact Ranking API",
@@ -220,7 +224,15 @@ async def rank_repo_prs(
 # Add this import at the top if not already present
 from typing import Optional
 import re
- #---------------------------------------------------------------------------
+# Add these models to your imports or model registry if not already present
+from pydantic import BaseModel, Field
+
+class JiraConfigPayload(BaseModel):
+    jira_api_token: str = Field(..., description="The Jira Personal Access Token or API Token")
+    jira_cloud_id: str = Field(..., description="Jira Cloud Tenant Site ID or Base URL instance")
+    jira_project_key: str = Field(..., description="Target Jira Project Key Prefix (e.g., PROJ)")
+
+# ---------------------------------------------------------------------------
 # Ranking Endpoints (Optimized & New)
 # ---------------------------------------------------------------------------
 
@@ -274,11 +286,6 @@ async def rank_single_pr_by_id(owner: str, repo: str, pr_number: int):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed single PR rank computation process: {str(e)}")
 
-class JiraConfigPayload(BaseModel):
-    jira_api_token: str = Field(..., description="The Jira Personal Access Token or API Token")
-    jira_cloud_id: str = Field(..., description="Jira Cloud Tenant Site ID or Base URL instance")
-    jira_project_key: str = Field(..., description="Target Jira Project Key Prefix (e.g., PROJ)")
-# Initialize FastAPI
 
 @app.post("/api/rank/pr/{owner}/{repo}/{pr_number}/with-config")
 async def rank_single_pr_with_explicit_config(
@@ -333,10 +340,8 @@ async def rank_single_pr_with_explicit_config(
                 "blast_radius": round(score_res.blast_radius.score, 4) if score_res.blast_radius else 0.0,
                 "user_exposure": round(score_res.user_exposure.score, 4) if score_res.user_exposure else 0.0,
                 "deadline": round(score_res.deadline.score, 4) if score_res.deadline else 0.0,
-                "formula_score": round(bd.get("formula_score", bd.get("business_impact", 0.0) / 100.0), 6),
-                "local_model_score": round(score_res.llm_semantic.raw_score, 4) if score_res.llm_semantic else 0.0,
                 "business_impact": round(score_res.weighted_score, 4),
-
+                "formula_score": round(bd.get("formula_score", bd.get("business_impact", 0.0) / 100.0), 6)
             }
         }
     except Exception as e:
@@ -455,9 +460,9 @@ if __name__ == "__main__":
     print("\nPress Ctrl+C to stop\n")
     
     uvicorn.run(
-        "main:app",
+        "testMain:app",
         host="0.0.0.0",
-        port=8001,
+        port=8003,
         reload=True,
         log_level="info"
     )
