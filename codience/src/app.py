@@ -1,21 +1,15 @@
 # Fast API for reviewer recommendation
 import os
 
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
-
 from typing import Optional, Any
 from fastapi import FastAPI
 # pyrefly: ignore [missing-import]
 
 from codience.src.models import (
-    BaseRepoRequest,
-    RankingOptions,
     RecommendReviewersRequest,
     TicketListRequest,
     CommitHistoryRequest,
-    CandidateProfile,
     ReviewerMatchRequest,
-    OrchestratorUser,
     OrchestratorRequest,
     ReviewerResponse,
 )
@@ -34,16 +28,12 @@ from codience.src.Reviewer_Recommender.PRNew.commit_history_utils import map_com
 
 app = FastAPI(title="Codience Reviewer Recommender API")
 
-# --- Helpers -----------------------------------------------------------------
-# Helper functions and business logic are imported from codience.src.helpers
-
-
 @app.post("/api/recommend-reviewers", response_model=dict[str, list[ReviewerResponse]])
 async def recommend_reviewers(request: RecommendReviewersRequest):
     normalized_required = _normalize_reviewers(request.required_reviewers)
     options = request.options.model_dump(exclude_none=True) if request.options else {}
     
-    # Bound options
+    # Bound options 
     if "top_k" in options:
         options["top_k"] = max(1, min(20, options["top_k"]))
 

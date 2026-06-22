@@ -119,3 +119,15 @@ PR TEXT:
 
 Return JSON only: {{"seniority_signals": ["signal1", "signal2"]}}
 """
+
+MEANINGFUL_COMMIT_FILTER_PROMPT = """
+You are an expert engineering manager. Analyze the following commit to determine if it provides meaningful evidence of a developer's technical skills (e.g., writing logic, designing architecture, fixing complex bugs).
+
+Commit Message: {commit_message}
+Files Modified: {filenames_str}
+
+Is this a meaningful commit for skill profiling? 
+Ignore trivial commits like "merge branch", typo fixes, or automated dependency updates.
+
+Reply with EXACTLY ONE WORD: "YES" or "NO".
+"""

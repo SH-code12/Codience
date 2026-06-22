@@ -65,7 +65,10 @@ def _tversky_bulk(
     """Bulk Tversky scoring with caching and debugging."""
     m_c = commit_multiset(pr_file_paths)
     pr_hash = ProfileCache.hash_pr(pr_file_paths)
-    dtag = ProfileCache.decay_tag(DECAY_FACTOR, DECAY_HALFLIFE)
+
+    date_str = ref.strftime("%Y-%m-%d")
+    base_dtag = ProfileCache.decay_tag(DECAY_FACTOR, DECAY_HALFLIFE)
+    dtag = f"{base_dtag}_{date_str}"    
     out = {}
     
     # DEBUG: Print PR files

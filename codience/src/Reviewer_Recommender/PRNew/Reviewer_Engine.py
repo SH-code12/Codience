@@ -2,17 +2,14 @@ import os
 import requests
 from datetime import datetime, timezone
 from collections import defaultdict
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Optional
 # pyrefly: ignore [missing-import]
 from dotenv import load_dotenv
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from .analysis_PR import extract_pr_skills
 
 # Import your history logic - UPDATED IMPORT
-from .commit_history_utils import fetch_commits, map_commits_to_skills, load_from_cache, get_cached_author_count, load_multiple_from_cache, fetch_commit_history_for_author
+from .commit_history_utils import session, fetch_commits, map_commits_to_skills, load_from_cache, get_cached_author_count, load_multiple_from_cache, fetch_commit_history_for_author
 
 # Import AI Agents
 from .scorer_agent import calculate_match_scores
@@ -37,19 +34,19 @@ def fetch_real_pr_data(owner, repo, pr_number):
         "Accept": "application/vnd.github.v3+json" 
     }
     
-    pr_resp = requests.get(pr_url, headers=headers)
+    pr_resp = session.get(pr_url, headers=headers, timeout=15)
     if pr_resp.status_code != 200:
         print(f"❌ Failed to fetch PR info: {pr_resp.status_code}")
         try:
             print(f"GitHub Error: {pr_resp.json().get('message')}")
-        except:
+        except Exception:
             print(f"Raw Response: {pr_resp.text}")
         return None
         
     pr_json = pr_resp.json()
     
     files_url = f"{pr_url}/files"
-    files_resp = requests.get(files_url, headers=headers)
+    files_resp = session.get(files_url, headers=headers, timeout=15)
     files_data = []
     if files_resp.status_code == 200:
         files_json = files_resp.json()
@@ -79,7 +76,7 @@ def fetch_repo_contributors(owner, repo, max_pages=5, per_page=100):
 
     for page in range(1, max_pages + 1):
         url = f"https://api.github.com/repos/{owner}/{repo}/contributors"
-        resp = requests.get(url, headers=headers, params={"per_page": per_page, "page": page}, timeout=20)
+        resp = session.get(url, headers=headers, params={"per_page": per_page, "page": page}, timeout=20)
         if resp.status_code != 200:
             if page == 1:
                 print(f"⚠️ Could not fetch contributors list: {resp.status_code}")
@@ -116,7 +113,7 @@ class ReviewerRecommender:
         self.repo_contributors = set()
         self._profile_cache = ProfileCache()
 
-    def initialize_with_cache_check(self, required_developers: Optional[List[str]] = None, 
+    def initialize_with_cache_check(self, required_developers: Optional[list[str]] = None, 
                                     max_developers: int = 50, 
                                     max_commits: int = 500,
                                     commits_per_reviewer: int = 50,
@@ -140,7 +137,7 @@ class ReviewerRecommender:
         else:
             return self._initialize_top_developers(max_developers, max_commits, commits_per_reviewer)
     
-    def _initialize_specific_developers(self, required_developers: List[Any], 
+    def _initialize_specific_developers(self, required_developers: list[Any], 
                                         commits_per_reviewer: int,
                                         max_commits: int) -> bool:
         """Initialize for specific developers - skills from cache, commits from GitHub"""
@@ -287,7 +284,7 @@ class ReviewerRecommender:
             print(f"📊 Total commits for Tversky: {len(self.indexed_commits)}")
             return False
     
-    def _fetch_commits_bulk(self, authors: List[str], limit: int = 50) -> Dict[str, List[dict]]:
+    def _fetch_commits_bulk(self, authors: list[str], limit: int = 50) -> dict[str, list[dict]]:
         """Fetch commit history for multiple authors in parallel"""
         from concurrent.futures import ThreadPoolExecutor, as_completed
         
@@ -311,7 +308,7 @@ class ReviewerRecommender:
         
         return results
     
-    def _fetch_commits_for_author_with_files(self, author_name: str, limit: int = 50) -> List[dict]:
+    def _fetch_commits_for_author_with_files(self, author_name: str, limit: int = 50) -> list[dict]:
         """Fetch commits for an author with file details included"""
         target = max(0, int(limit))
         if target <= 0:
@@ -328,7 +325,7 @@ class ReviewerRecommender:
         
         while len(collected) < target:
             batch_size = min(100, target - len(collected))
-            resp = requests.get(
+            resp = session.get(
                 url,
                 headers=headers,
                 params={"author": author_name, "per_page": batch_size, "page": page},
@@ -346,13 +343,13 @@ class ReviewerRecommender:
                 try:
                     detail_url = commit.get("url")
                     if detail_url:
-                        detail_resp = requests.get(detail_url, headers=headers, timeout=15)
+                        detail_resp = session.get(detail_url, headers=headers, timeout=15)
                         if detail_resp.status_code == 200:
                             detail = detail_resp.json()
                             commit["files"] = detail.get("files", [])
                         else:
                             commit["files"] = []
-                except:
+                except Exception:
                     commit["files"] = []
                 collected.append(commit)
             
@@ -528,7 +525,7 @@ class ReviewerRecommender:
         page = 1
         while len(collected) < target:
             batch_size = min(100, target - len(collected))
-            resp = requests.get(
+            resp = session.get(
                 url,
                 headers=headers,
                 params={"author": author_name, "per_page": batch_size, "page": page},
