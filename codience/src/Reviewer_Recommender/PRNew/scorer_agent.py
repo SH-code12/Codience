@@ -145,6 +145,7 @@ def _call_llm_scorer(
     rag_roles: list,
     candidates: List[dict],
     tv_by_name: Dict[str, float],
+    judge_feedback: Optional[str] = None,
 ) -> List[dict]:
     """Call LLM for AI scoring with Tversky as context."""
     if not candidates:
@@ -187,6 +188,9 @@ def _call_llm_scorer(
         candidates_text="\n\n".join(lines),
     )
 
+    if judge_feedback:
+        prompt += f"\n\nJUDGE FEEDBACK FROM PREVIOUS RUN:\n{judge_feedback}\nPlease address this feedback in your scoring by adjusting the scores or ranking accordingly."
+
     result = generate_with_resilience(prompt, purpose="candidate_scoring")
     if not result.get("ok"):
         print(f"⚠️ Scorer LLM failed: {result.get('reason')}")
@@ -210,6 +214,7 @@ def calculate_match_scores(
     cache: Optional[ProfileCache] = None,
     prioritize_recent: bool = True,
     ref_date: Optional[datetime] = None,
+    judge_feedback: Optional[str] = None,
 ) -> List[Dict[str, Any]]:
     """
     Score all candidates using Tversky + AI + supporting signals.
@@ -240,7 +245,7 @@ def calculate_match_scores(
     print(f"  📊 Tversky: scored {len(tv_scores)} candidates.")
     
     # 2. AI scores
-    ai_results = _call_llm_scorer(pr_analysis, rag_roles, candidates, tv_scores)
+    ai_results = _call_llm_scorer(pr_analysis, rag_roles, candidates, tv_scores, judge_feedback=judge_feedback)
     ai_by_name = {r["name"].lower(): r for r in ai_results}
     
     # 3. Apply formula

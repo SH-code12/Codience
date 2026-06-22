@@ -2,6 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 from fastapi.testclient import TestClient
 import numpy as np
+import sys
 
 # Import the FastAPI application
 from codience.src.app import app
@@ -12,6 +13,42 @@ client = TestClient(app)
 # =====================================================================
 # PART 1: API UNIT TESTS (FastAPI TestClient)
 # =====================================================================
+
+class TestEvaluatorAgent(unittest.TestCase):
+    @patch("codience.src.Reviewer_Recommender.PRNew.evaluator_agent.generate_with_resilience")
+    def test_evaluate_recommendations_accepted(self, mock_generate):
+        from codience.src.Reviewer_Recommender.PRNew.evaluator_agent import evaluate_recommendations
+        
+        # Mock LLM returning an accepted response
+        mock_generate.return_value = {
+            "ok": True,
+            "text": '{"accepted": true, "feedback": "Looks good"}'
+        }
+        
+        pr_data = {"title": "Add eval layer", "description": "Adds LLM judge"}
+        recommendations = [{"name": "MalakHisham121", "confidence_score": 90}]
+        
+        result = evaluate_recommendations(pr_data, recommendations)
+        self.assertTrue(result["accepted"])
+        self.assertEqual(result["feedback"], "Looks good")
+
+    @patch("codience.src.Reviewer_Recommender.PRNew.evaluator_agent.generate_with_resilience")
+    def test_evaluate_recommendations_rejected(self, mock_generate):
+        from codience.src.Reviewer_Recommender.PRNew.evaluator_agent import evaluate_recommendations
+        
+        # Mock LLM returning a rejected response with feedback
+        mock_generate.return_value = {
+            "ok": True,
+            "text": '{"accepted": false, "feedback": "Candidate lacks Python skills."}'
+        }
+        
+        pr_data = {"title": "Python script", "description": "Needs Python"}
+        recommendations = [{"name": "JavaDev", "confidence_score": 80}]
+        
+        result = evaluate_recommendations(pr_data, recommendations)
+        self.assertFalse(result["accepted"])
+        self.assertEqual(result["feedback"], "Candidate lacks Python skills.")
+
 
 class TestReviewerRecommenderAPI(unittest.TestCase):
     
@@ -167,7 +204,7 @@ def run_model_evaluation_demo():
 if __name__ == "__main__":
     print("🧪 Running API Unit Tests...")
     # Run unittest suite programmatically
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestReviewerRecommenderAPI)
+    suite = unittest.TestLoader().loadTestsFromModule(sys.modules[__name__])
     unittest.TextTestRunner(verbosity=2).run(suite)
     
     # Run evaluation metrics demonstration

@@ -131,3 +131,25 @@ Ignore trivial commits like "merge branch", typo fixes, or automated dependency 
 
 Reply with EXACTLY ONE WORD: "YES" or "NO".
 """
+
+JUDGE_EVALUATION_PROMPT = """
+You are an expert Engineering Manager evaluating the proposed reviewers for a Pull Request.
+
+PULL REQUEST DATA:
+Title: {title}
+Description: {description}
+
+PROPOSED REVIEWERS:
+{reviewers_text}
+
+Task:
+Evaluate whether this list of reviewers is acceptable and appropriate for the given PR. 
+Consider their technical skills, historical relevance, and score justifications.
+Are there obvious mismatches? Are the top reviewers actually qualified based on their skills and the PR's languages/skills?
+
+Return your evaluation as a valid JSON object strictly matching this schema:
+{{
+    "accepted": true/false,
+    "feedback": "string (If accepted, say 'Looks good'. If rejected, provide specific, actionable feedback to the recommendation agent on what to improve, e.g., 'Candidate X lacks Java skills but the PR is in Java. Please prioritize Java developers.')"
+}}
+"""

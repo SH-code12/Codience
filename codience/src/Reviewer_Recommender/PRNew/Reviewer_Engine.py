@@ -14,6 +14,7 @@ from .commit_history_utils import session, fetch_commits, map_commits_to_skills,
 # Import AI Agents
 from .scorer_agent import calculate_match_scores
 from .jira_agent import analyze_jira_context
+from .evaluator_agent import evaluate_recommendations
 from ..Data.searching_into_vectordb import search_vector_db
 from ..Data.commit_diff_vectordb import search_similar_commits
 from .profile_cache import ProfileCache
@@ -781,55 +782,80 @@ class ReviewerRecommender:
         print(f"\n🔍 DEBUG: PR files being compared:")
         for f in pr_file_paths[:10]:
             print(f"   - {f}")
-        ai_rankings = calculate_match_scores(
-            pr_analysis=analysis,
-            rag_roles=rag_roles,
-            candidates=preliminary_candidates,
-            pr_file_paths=pr_file_paths,
-            repo=f"{self.owner}/{self.repo}",
-            cache=self._profile_cache,
-            prioritize_recent=prioritize_recent_activity
-        )
-        ai_by_name = {r.get("name", "").lower(): r for r in ai_rankings}
-
-        final_candidates = []
-        for c in preliminary_candidates:
-            ai_result = ai_by_name.get(c["name"].lower(), {})
-            ai_score = float(ai_result.get("confidence_score", 0)) / 100.0
-            final_score = ai_result.get("confidence_score", 0)
             
-            reasons = c.get("reasons", [])
-            if not reasons:
-                if c.get("required_reviewer"):
-                    reasons.append("required_reviewer")
-                if c.get("skill_score", 0) >= 0.5:
-                    reasons.append("strong_skill_match")
-                if prioritize_recent_activity and c.get("recency_score", 0) >= 0.5:
-                    reasons.append("recent_activity_priority")
+        max_retries = 1
+        current_retry = 0
+        judge_feedback = None
+        recommended = []
+        
+        while current_retry <= max_retries:
+            if current_retry > 0:
+                print(f"🔄 Re-evaluating with judge feedback (Attempt {current_retry + 1}/{max_retries + 1})...")
+                
+            ai_rankings = calculate_match_scores(
+                pr_analysis=analysis,
+                rag_roles=rag_roles,
+                candidates=preliminary_candidates,
+                pr_file_paths=pr_file_paths,
+                repo=f"{self.owner}/{self.repo}",
+                cache=self._profile_cache,
+                prioritize_recent=prioritize_recent_activity,
+                judge_feedback=judge_feedback
+            )
+            ai_by_name = {r.get("name", "").lower(): r for r in ai_rankings}
 
-            final_candidates.append({
-                "name": c["name"],
-                "confidence_score": final_score,
-                "justification": ai_result.get("justification", "Tversky-based scoring with AI enhancement."),
-                "reasons": reasons,
-                "required_reviewer": c.get("required_reviewer", False),
-                "score_breakdown": ai_result.get("score_breakdown", {
-                    "skill_score": c.get("skill_score", 0),
-                    "recency_score": c.get("recency_score", 0),
-                    "preliminary_score": c.get("prelim_score", 0),
-                    "ai_score": round(ai_score, 4),
-                }),
-            })
+            final_candidates = []
+            for c in preliminary_candidates:
+                ai_result = ai_by_name.get(c["name"].lower(), {})
+                ai_score = float(ai_result.get("confidence_score", 0)) / 100.0
+                final_score = ai_result.get("confidence_score", 0)
+                
+                reasons = c.get("reasons", [])
+                if not reasons:
+                    if c.get("required_reviewer"):
+                        reasons.append("required_reviewer")
+                    if c.get("skill_score", 0) >= 0.5:
+                        reasons.append("strong_skill_match")
+                    if prioritize_recent_activity and c.get("recency_score", 0) >= 0.5:
+                        reasons.append("recent_activity_priority")
 
-        final_candidates.sort(key=lambda x: x["confidence_score"], reverse=True)
+                final_candidates.append({
+                    "name": c["name"],
+                    "confidence_score": final_score,
+                    "justification": ai_result.get("justification", "Tversky-based scoring with AI enhancement."),
+                    "reasons": reasons,
+                    "required_reviewer": c.get("required_reviewer", False),
+                    "score_breakdown": ai_result.get("score_breakdown", {
+                        "skill_score": c.get("skill_score", 0),
+                        "recency_score": c.get("recency_score", 0),
+                        "preliminary_score": c.get("prelim_score", 0),
+                        "ai_score": round(ai_score, 4),
+                    }),
+                })
 
-        if required_only_mode:
-            recommended = final_candidates[:top_k]
-        else:
-            recommended = [
-                c for c in final_candidates
-                if c["name"].lower() not in required_set
-            ][:top_k]
+            final_candidates.sort(key=lambda x: x["confidence_score"], reverse=True)
+
+            if required_only_mode:
+                recommended = final_candidates[:top_k]
+            else:
+                recommended = [
+                    c for c in final_candidates
+                    if c["name"].lower() not in required_set
+                ][:top_k]
+                
+            print(f"\n⚖️ Passing top {len(recommended)} recommendations to LLM Judge...")
+            judge_result = evaluate_recommendations(pr_data, recommended)
+            
+            if judge_result.get("accepted"):
+                print("✅ Judge accepted the recommendations.")
+                break
+            else:
+                judge_feedback = judge_result.get("feedback")
+                print(f"❌ Judge rejected the recommendations. Feedback: {judge_feedback}")
+                current_retry += 1
+                
+        if current_retry > max_retries:
+            print("⚠️ Max retries reached. Returning best available recommendations despite judge's rejection.")
 
         return {
             "recommended_reviewers": recommended,
