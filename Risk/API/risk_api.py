@@ -2,6 +2,7 @@
 import math
 
 from fastapi import FastAPI,HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import numpy as np
 import pickle
@@ -63,6 +64,15 @@ def load_model():
 
 # --- FastAPI App Setup ---
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Adjust this to your needs
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 log("Attempting to load the model...")
 try:
