@@ -1,5 +1,3 @@
-using System.ComponentModel.Design.Serialization;
-using System.Text.Json.Serialization;
 
 namespace Core.Domain.Models;
 

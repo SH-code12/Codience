@@ -73,3 +73,15 @@ D:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\Share.dll
 D:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\refint\Share.dll
 D:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\Share.pdb
 D:\GraduationProject\Codience\Backend\Share\obj\Debug\net9.0\ref\Share.dll
+d:\GP\Codience\Backend\Share\bin\Debug\net9.0\Share.deps.json
+d:\GP\Codience\Backend\Share\bin\Debug\net9.0\Share.dll
+d:\GP\Codience\Backend\Share\bin\Debug\net9.0\Share.pdb
+d:\GP\Codience\Backend\Share\obj\Debug\net9.0\Share.GeneratedMSBuildEditorConfig.editorconfig
+d:\GP\Codience\Backend\Share\obj\Debug\net9.0\Share.AssemblyInfoInputs.cache
+d:\GP\Codience\Backend\Share\obj\Debug\net9.0\Share.AssemblyInfo.cs
+d:\GP\Codience\Backend\Share\obj\Debug\net9.0\Share.csproj.CoreCompileInputs.cache
+d:\GP\Codience\Backend\Share\obj\Debug\net9.0\Share.sourcelink.json
+d:\GP\Codience\Backend\Share\obj\Debug\net9.0\Share.dll
+d:\GP\Codience\Backend\Share\obj\Debug\net9.0\refint\Share.dll
+d:\GP\Codience\Backend\Share\obj\Debug\net9.0\Share.pdb
+d:\GP\Codience\Backend\Share\obj\Debug\net9.0\ref\Share.dll

@@ -7,6 +7,8 @@ using Infrastructure.Persistence.Data;
 using Infrastructure.Persistence.Repositories;
 using Infrastructure.Presentation.Controllers;
 using Microsoft.EntityFrameworkCore;
+using Infrastructure.Presentation;
+using Infrastructure.Presentation.Hubs;
 using dotenv.net;
 
 // =====================================================
@@ -50,14 +52,18 @@ builder.Services.AddSwaggerGen();
 // =====================================================
 // CORS
 // =====================================================
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy
+            .WithOrigins(
+                "http://127.0.0.1:5500",
+                "http://localhost:5500"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
     });
 });
 
@@ -91,9 +97,13 @@ builder.Services.AddScoped<IRiskService, RiskService>();
 builder.Services.AddScoped<CsvProcessor>();
 
 builder.Services.AddScoped(
-    typeof(IGenericRepository<AuthUser, Guid>),
-    typeof(GenericRepository<AuthUser, Guid>)
+    typeof(IGenericRepository<, >),
+    typeof(GenericRepository<, >)
+
 );
+
+builder.Services.AddSignalR();
+builder.Services.AddScoped<IRealTimeNotification,RealTimeNotification>();
 
 
 // =====================================================
@@ -162,6 +172,8 @@ using (var scope = app.Services.CreateScope())
         db.Database.Migrate();
     }
 }
+//===SIGNALR HUBS===
+app.MapHub<PullRequestHub>("/hubs/pullrequests");
 
 
 // =====================================================

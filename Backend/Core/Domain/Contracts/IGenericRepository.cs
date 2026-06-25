@@ -11,6 +11,7 @@ where TKey : IEquatable<TKey>
     Task<IEnumerable<TEntity>> GetAllAsync();
     Task AddAsync(TEntity entity);
     Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
+    Task RemoveAsync(TEntity entity);
 
     
 }

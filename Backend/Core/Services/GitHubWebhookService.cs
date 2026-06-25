@@ -16,7 +16,7 @@ public class GithubWebhookService : IGitHubWebhookService
     private readonly IChangeMetricsService _changeMetricsService;
     private readonly IHistoryMetricsService _historyMetricsService;
     private readonly IExperienceMetricsService _experienceMetricsService;
-
+    private readonly IRealTimeNotification _notificationService;
 
     public GithubWebhookService(
         HttpClient httpClient,
@@ -25,7 +25,8 @@ public class GithubWebhookService : IGitHubWebhookService
         IChangeMetricsService changeMetricsService,
         IHistoryMetricsService historyMetricsService,
         IExperienceMetricsService experienceMetricsService,
-        GitHubJwtProvider gitHubJwtProvider)
+        GitHubJwtProvider gitHubJwtProvider,
+        IRealTimeNotification notificationService)
     {
         _httpClient = httpClient;
         _authUow = authUow;
@@ -34,6 +35,7 @@ public class GithubWebhookService : IGitHubWebhookService
         _historyMetricsService = historyMetricsService;
         _experienceMetricsService = experienceMetricsService;
         _gitHubJwtProvider = gitHubJwtProvider;
+        _notificationService = notificationService;
     }
 
     // ==============================
@@ -103,40 +105,56 @@ public class GithubWebhookService : IGitHubWebhookService
     // ==============================
     // MAIN METRICS EVENT HANDLER
     // ==============================
-    public async Task<WebhookMetrics?> HandleEventAsync(string eventType, string payload)
+    public async Task<(GitHubPullRequestDto response, WebhookMetrics metrics)?> HandleEventAsync(string eventType, string payload)
+{
+    if (eventType != "pull_request")
+        return null;
+
+    using var doc = JsonDocument.Parse(payload);
+    var root = doc.RootElement;
+
+    var action = root.GetProperty("action").GetString();
+
+    if (action is not ("opened" or "synchronize" or "reopened"))
+        return null;
+
+    var repoElement = root.GetProperty("repository");
+
+    var owner = repoElement.GetProperty("owner").GetProperty("login").GetString() ?? "";
+    var repo = repoElement.GetProperty("name").GetString() ?? "";
+
+    var pullNumber = root.GetProperty("number").GetInt32();
+
+    var files = await _gitHubAuthService.GetChangedFilesAsync(owner, repo, pullNumber);
+    var changeMetrics = _changeMetricsService.Calculate(files);
+
+    var historyMetrics = await _historyMetricsService.Calculate(owner, repo, pullNumber);
+
+    var experienceMetrics = await _experienceMetricsService
+        .CalculateExperienceMetrics(owner, repo, pullNumber);
+
+    var result = new WebhookMetrics
     {
-        if (eventType != "pull_request")
-            return null;
+        ChangeMetrics = changeMetrics,
+        HistoryMetrics = historyMetrics,
+        ExperienceMetrics = experienceMetrics
+    };
 
-        using var doc = JsonDocument.Parse(payload);
-        var root = doc.RootElement;
-
-        var action = root.GetProperty("action").GetString();
-
-        if (action is not ("opened" or "synchronize" or "reopened"))
-            return null;
-
-        var repoElement = root.GetProperty("repository");
-
-        var owner = repoElement.GetProperty("owner").GetProperty("login").GetString() ?? "";
-        var repo = repoElement.GetProperty("name").GetString() ?? "";
-
-        var pullNumber = root.GetProperty("number").GetInt32();
+    var response = new GitHubPullRequestDto(
+        number: pullNumber,
+        title: root.GetProperty("pull_request").GetProperty("title").GetString() ?? "",
+        state: root.GetProperty("pull_request").GetProperty("state").GetString() ?? "",
+        createdAt: root.GetProperty("pull_request").GetProperty("created_at").GetDateTime(),
+        repositoryName: repo,
+        owner: owner
+    );
+    Console.WriteLine("SignalR notification sent");
+   
+    await _notificationService.NotifyPullRequestCreatedAsync(response);
+    Console.WriteLine(response);
     
-        var files = await _gitHubAuthService.GetChangedFilesAsync(owner, repo, pullNumber);
-        var changeMetrics = _changeMetricsService.Calculate(files);
 
-        var historyMetrics = await _historyMetricsService.Calculate(owner, repo, pullNumber);
-
-        var experienceMetrics = await _experienceMetricsService
-            .CalculateExperienceMetrics(owner, repo, pullNumber);
-
-        return new WebhookMetrics
-        {
-            ChangeMetrics = changeMetrics,
-            HistoryMetrics = historyMetrics,
-            ExperienceMetrics = experienceMetrics
-        };
-    }
+    return (response, result);
+}
 
 }

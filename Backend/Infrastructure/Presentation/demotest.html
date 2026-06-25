@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SignalR Dashboard Demo</title>
+</head>
+<body>
+
+<h2>GitHub Pull Requests Dashboard</h2>
+
+<button onclick="connect()">Connect</button>
+
+<hr>
+
+<h3>Status</h3>
+<div id="status">Disconnected</div>
+
+<hr>
+
+<h3>Live Pull Requests</h3>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>PR Number</th>
+            <th>Title</th>
+            <th>Repository</th>
+            <th>State</th>
+            <th>Created</th>
+        </tr>
+    </thead>
+
+    <tbody id="prTable">
+    </tbody>
+</table>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js"></script>
+
+<script>
+
+let connection;
+
+async function connect() {
+
+    connection = new signalR.HubConnectionBuilder()
+        .withUrl("http://localhost:5051/hubs/pullrequests")
+        .withAutomaticReconnect()
+        .build();
+
+    connection.on("PullRequestCreated", data => {
+        alert("New Pull Request Created: " + data.title);
+
+        console.log("PR Received", data);
+
+        const row = `
+            <tr>
+                <td>${data.number}</td>
+                <td>${data.title}</td>
+                <td>${data.repositoryName}</td>
+                <td>${data.state}</td>
+                <td>${data.createdAt}</td>
+            </tr>
+        `;
+
+        document
+            .getElementById("prTable")
+            .insertAdjacentHTML("afterbegin", row);
+    });
+
+    await connection.start();
+
+    document.getElementById("status").innerHTML =
+        "✅ Connected";
+
+    await connection.invoke(
+        "RegisterRepository",
+        "95bbca99-517c-4832-8e58-9ac26ed13c6e",
+        "NadaAhmed2810",
+        "LINQ01"
+    );
+
+    console.log("Repository Registered");
+}
+
+</script>
+
+</body>
+</html>

@@ -35,5 +35,10 @@ where TKey : IEquatable<TKey>
 
    => await _context.Set<TEntity>().FirstOrDefaultAsync(predicate);
 
+   public async Task RemoveAsync(TEntity entity)
+   {
+       _context.Set<TEntity>().Remove(entity);
+       await _context.SaveChangesAsync();
+   }
 
 }

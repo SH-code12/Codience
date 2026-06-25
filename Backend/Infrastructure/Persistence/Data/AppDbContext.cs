@@ -11,6 +11,7 @@ namespace Infrastructure.Persistence.Data
         public DbSet<GitHubPullRequest> PullRequests { get; set; }
         public DbSet<GitHubFile> GitHubFiles { get; set; }
         public DbSet<JiraIssue> JiraIssues { get; set; }
+        public DbSet<UserConnection> UserConnections { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

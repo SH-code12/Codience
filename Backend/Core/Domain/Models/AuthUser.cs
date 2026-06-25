@@ -17,6 +17,8 @@ public class AuthUser : BaseEntity<Guid>
         public ICollection<GitHubRepo> Repositories { get; set; } = new List<GitHubRepo>();
         public ICollection<GitHubPullRequest> PullRequests { get; set; } = new List<GitHubPullRequest>();
         public ICollection<JiraIssue> JiraIssues { get; set; } = new List<JiraIssue>();
+        public ICollection<UserConnection> Connections { get; set; }
+        = new List<UserConnection>();
 
     
 }
