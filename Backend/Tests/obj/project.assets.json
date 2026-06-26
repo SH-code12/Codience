@@ -2507,11 +2507,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\GP\\Codience\\Backend\\Tests\\Tests.csproj",
+      "projectUniqueName": "D:\\GP\\Codience\\Backend\\Tests\\Tests.csproj",
       "projectName": "Tests",
-      "projectPath": "d:\\GP\\Codience\\Backend\\Tests\\Tests.csproj",
+      "projectPath": "D:\\GP\\Codience\\Backend\\Tests\\Tests.csproj",
       "packagesPath": "C:\\Users\\Noura\\.nuget\\packages\\",
-      "outputPath": "d:\\GP\\Codience\\Backend\\Tests\\obj\\",
+      "outputPath": "D:\\GP\\Codience\\Backend\\Tests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -2533,14 +2533,14 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "d:\\GP\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj": {
-              "projectPath": "d:\\GP\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj"
+            "D:\\GP\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj": {
+              "projectPath": "D:\\GP\\Codience\\Backend\\Core\\Abstraction\\Core.Abstraction.csproj"
             },
-            "d:\\GP\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj": {
-              "projectPath": "d:\\GP\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj"
+            "D:\\GP\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj": {
+              "projectPath": "D:\\GP\\Codience\\Backend\\Core\\Domain\\Core.Domain.csproj"
             },
-            "d:\\GP\\Codience\\Backend\\Core\\Services\\Core.Services.csproj": {
-              "projectPath": "d:\\GP\\Codience\\Backend\\Core\\Services\\Core.Services.csproj"
+            "D:\\GP\\Codience\\Backend\\Core\\Services\\Core.Services.csproj": {
+              "projectPath": "D:\\GP\\Codience\\Backend\\Core\\Services\\Core.Services.csproj"
             },
             "D:\\GP\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj": {
               "projectPath": "D:\\GP\\Codience\\Backend\\Infrastructure\\Presentation\\Infrastructure.Presentation.csproj"

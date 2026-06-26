@@ -5,6 +5,8 @@ using Share;
 using System.Net.Http.Json;
 using Core.Domain.Models;
 using Core.Domain.Contracts;
+using System.Text.Json;
+using share;
 
 public class GitHubAuthService : IGithubAuthService
 {
@@ -273,26 +275,20 @@ public class GitHubAuthService : IGithubAuthService
     }
     public async Task<GitHubPullRequestDto> GetPullRequest(string owner, int pullNumber, string repo)
     {
-        var userRepo =
-            _authUow.GetGenericRepository<AuthUser, Guid>();
+        var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
 
-        var authUser =
-            await userRepo.FirstOrDefaultAsync(
-                u => u.AuthUserName == owner);
+        var authUser = await userRepo.FirstOrDefaultAsync(u => u.AuthUserName == owner);
 
         if (authUser == null)
             throw new Exception("User not found");
 
         _httpClient.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue(
-                "Bearer",
-                authUser.AccessToken);
+            new AuthenticationHeaderValue("Bearer", authUser.AccessToken);
 
         _httpClient.DefaultRequestHeaders.UserAgent
             .ParseAdd("Codience");
 
-        var url =
-    $"https://api.github.com/repos/{owner}/{repo}/pulls/{pullNumber}";
+        var url =$"https://api.github.com/repos/{owner}/{repo}/pulls/{pullNumber}";
 
         var response =
             await _httpClient.GetAsync(url);
@@ -305,8 +301,7 @@ public class GitHubAuthService : IGithubAuthService
             throw new Exception(
                 $"GitHub error: {response.StatusCode} {error}");
         }
-        var pr = await response.Content
-       .ReadFromJsonAsync<GitHubPullRequestDto>();
+        var pr = await response.Content.ReadFromJsonAsync<GitHubPullRequestDto>();
 
         if (pr == null)
             throw new Exception("Pull request not found");
@@ -381,8 +376,7 @@ public class GitHubAuthService : IGithubAuthService
     {
         var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
 
-        var authUser = await userRepo
-            .FirstOrDefaultAsync(u => u.AuthUserName == owner);
+        var authUser = await userRepo.FirstOrDefaultAsync(u => u.AuthUserName == owner);
 
         if (authUser == null)
             throw new Exception("User not found");
@@ -419,24 +413,17 @@ public class GitHubAuthService : IGithubAuthService
             throw new Exception("User not found");
 
         _httpClient.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue(
-                "Bearer",
-                authUser.AccessToken);
+            new AuthenticationHeaderValue("Bearer", authUser.AccessToken);
 
-        _httpClient.DefaultRequestHeaders.UserAgent
-            .ParseAdd("Codience");
+        _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Codience");
 
-        var url =
-    $"https://api.github.com/repos/{owner}/{repo}/pulls/{pullNumber}/commits";
+        var url =$"https://api.github.com/repos/{owner}/{repo}/pulls/{pullNumber}/commits";
 
-        var response =
-            await _httpClient.GetAsync(url);
+        var response = await _httpClient.GetAsync(url);
 
         response.EnsureSuccessStatusCode();
 
-        var commits =
-            await response.Content
-            .ReadFromJsonAsync<List<GitHubCommitDto>>();
+        var commits = await response.Content.ReadFromJsonAsync<List<GitHubCommitDto>>();
 
         return commits ?? new List<GitHubCommitDto>();
     }
@@ -447,32 +434,24 @@ public class GitHubAuthService : IGithubAuthService
 
         var userRepo = _authUow.GetGenericRepository<AuthUser, Guid>();
 
-        var authUser =
-            await userRepo.FirstOrDefaultAsync(
-                u => u.AuthUserName == userName);
+        var authUser = await userRepo.FirstOrDefaultAsync(u => u.AuthUserName == userName);
 
         if (authUser == null)
             throw new Exception("User not found");
 
         _httpClient.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue(
-                "Bearer",
-                authUser.AccessToken);
+            new AuthenticationHeaderValue("Bearer",authUser.AccessToken);
 
-        var response =
-            await _httpClient.GetAsync(
-                $"https://api.github.com/user/repos?page={page}&per_page={pageSize}");
+        var response = await _httpClient.GetAsync($"https://api.github.com/user/repos?page={page}&per_page={pageSize}");
 
         response.EnsureSuccessStatusCode();
 
-        var repos =
-            await response.Content.ReadFromJsonAsync<List<GitHubRepo>>();
+        var repos = await response.Content.ReadFromJsonAsync<List<GitHubRepo>>();
 
         if (repos == null)
             repos = new List<GitHubRepo>();
 
-        var repoRepository =
-            _authUow.GetGenericRepository<GitHubRepo, int>();
+        var repoRepository = _authUow.GetGenericRepository<GitHubRepo, int>();
 
         foreach (var repo in repos)
         {
@@ -499,17 +478,39 @@ public class GitHubAuthService : IGithubAuthService
                 link.Contains("rel=\"next\"");
         }
 
-        var repoDtos = repos.Select(r =>
-            new GitHubRepoDto(
-                r.Name,
-                r.HtmlUrl,
-                r.Description));
+        var repoDtos = repos.Select(r =>new GitHubRepoDto(r.Name,r.HtmlUrl,r.Description));
 
-        return new PagedResult<GitHubRepoDto>(
-            repoDtos,
-            page,
-            pageSize,
-            hasNext);
+        return new PagedResult<GitHubRepoDto>(repoDtos,page,pageSize,hasNext);
     }
+
+   public async Task<IEnumerable<GitHubCollaboratorDto>> GetCollaboratorsAsync(string userName,string owner,string repo)
+   { 
+    _httpClient.DefaultRequestHeaders.UserAgent.Clear();
+    _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Codience");
+
+    var userRepository = _authUow.GetGenericRepository<AuthUser, Guid>();
+
+    var authUser = await userRepository.FirstOrDefaultAsync(u => u.AuthUserName == userName);
+
+    if (authUser == null)
+        throw new Exception($"Authenticated user '{userName}' not found.");
+
+    _httpClient.DefaultRequestHeaders.Authorization =
+        new AuthenticationHeaderValue("Bearer", authUser.AccessToken);
+
+    var response = await _httpClient.GetAsync(
+        $"https://api.github.com/repos/{owner}/{repo}/collaborators");
+
+    if (!response.IsSuccessStatusCode)
+    {
+        var error = await response.Content.ReadAsStringAsync();
+        throw new Exception($"GitHub API error: {response.StatusCode} - {error}");
+    }
+
+    return await response.Content.ReadFromJsonAsync<List<GitHubCollaboratorDto>>()
+           ?? Enumerable.Empty<GitHubCollaboratorDto>();
+}
+
+
 }
 

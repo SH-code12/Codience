@@ -62,10 +62,7 @@ public class GitHubAuthController : ControllerBase
     }
 
     [HttpGet("{userName}/{repoName}/pulls")]
-    public async Task<ActionResult<IEnumerable<GitHubPullRequestDto>>> GetPullRequests(
-           string userName,
-           string repoName,
-           CancellationToken ct)
+    public async Task<ActionResult<IEnumerable<GitHubPullRequestDto>>> GetPullRequests(string userName,string repoName,CancellationToken ct)
     {
         try
         {
@@ -154,6 +151,12 @@ GetExperienceMetrics(string owner, string repo, int pullNumber)
             await _gitHubAuthService
             .GetRepositoriesAsync(userName, page, pageSize);
 
+        return Ok(result);
+    }
+    [HttpGet("{userName}/{owner}/{repo}/collaborators")]
+    public async Task<IActionResult> GetCollaborators(string userName, string owner, string repo)
+    {
+        var result = await _gitHubAuthService.GetCollaboratorsAsync(userName, owner, repo);
         return Ok(result);
     }
 }

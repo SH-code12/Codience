@@ -1,6 +1,5 @@
-
+using share;
 using Share;
-
 namespace Core.Abstraction;
 
 public interface IGithubAuthService
@@ -23,4 +22,5 @@ public interface IGithubAuthService
     Task<IEnumerable<GitHubCommitDto>>GetCommitsByPath(string owner, string repo, string filePath);
     Task<IEnumerable<GitHubCommitDto>> GetAllCommits(string owner, string repo,string author);
     Task<IEnumerable<GitHubCommitDto>> GetPullRequestCommits(string owner, string repo, int pullNumber);
+    Task<IEnumerable<GitHubCollaboratorDto>> GetCollaboratorsAsync(string userName,string owner,string repo);
 }
