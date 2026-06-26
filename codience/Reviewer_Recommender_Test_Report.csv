@@ -1,0 +1,29 @@
+Test ID,Category,Module,Test Case,Description,Status
+TC-001,API,test_app,test_analyze_jira_tickets_success,Verifies that the Jira analysis API endpoint functions correctly and calls the underlying service.,Passed
+TC-002,API,test_app,test_analyze_commit_history_success,Verifies that the commit history mapping API endpoint behaves as expected.,Passed
+TC-003,API,test_app,test_recommend_reviewer_success,Verifies the reviewer recommendation API returns the composite recommendations correctly.,Passed
+TC-004,Integration,test_integration,test_engine_initialization,Verifies that the ReviewerRecommender engine initializes properly with valid dependencies.,Passed
+TC-005,Integration,test_integration,test_engine_recommend_v2_empty_pr,Ensures that the engine gracefully handles reviewer recommendations when an empty PR diff is provided.,Passed
+TC-006,Unit,test_engine_math,test_parse_commit_datetime,Tests the datetime parsing logic for commits handling different date string formats robustly.,Passed
+TC-007,Unit,test_engine_math,test_build_contributor_stats,Validates the calculation of contributor statistics including additions/deletions and commit counts.,Passed
+TC-008,Unit,test_engine_math,test_limit_commits_per_reviewer,Verifies that the engine correctly caps or limits the number of commits processed per reviewer to maintain performance.,Passed
+TC-009,Unit,test_engine_math,test_normalize_required_reviewers,Checks the normalization of required reviewer data structures passed from Jira integration.,Passed
+TC-010,Unit,test_multiset_engine,test_tokenise_path,Tests the tokenization logic for file paths to build the proper multiset representations.,Passed
+TC-011,Unit,test_multiset_engine,test_commit_multiset,Validates the creation of a multiset derived from commit modifications.,Passed
+TC-012,Unit,test_multiset_engine,test_extinguish,Tests the extinguish logic that decays the relevance of older code modifications over time.,Passed
+TC-013,Unit,test_multiset_engine,test_build_reviewer_profile_no_decay,Verifies the creation of a reviewer profile without applying time decay (static profile).,Passed
+TC-014,Unit,test_multiset_engine,test_build_reviewer_profile_with_decay,Verifies the creation of a reviewer profile with time decay applied correctly to older commits.,Passed
+TC-015,Unit,test_multiset_engine,test_tversky_similarity,Tests the calculation of Tversky similarity between PR multisets and reviewer profiles.,Passed
+TC-016,Unit,test_multiset_engine,test_jaccard_similarity,Tests the calculation of Jaccard similarity for computing overlapping expertise.,Passed
+TC-017,Unit,test_multiset_engine,test_score_reviewer,Validates the final scoring mathematical logic for a reviewer based on all similarity metrics.,Passed
+TC-018,API,test_app,test_analyze_jira_tickets_validation_error,Verifies the endpoint rejects requests missing the required username parameter.,Passed
+TC-019,API,test_app,test_analyze_jira_tickets_empty_list,Ensures the endpoint correctly handles an empty list of tickets gracefully.,Passed
+TC-020,API,test_app,test_analyze_commit_history_validation_error,Verifies the endpoint rejects requests missing the commits parameter.,Passed
+TC-021,API,test_app,test_analyze_commit_history_empty_list,Ensures the endpoint returns empty skills when provided an empty commit list.,Passed
+TC-022,API,test_app,test_recommend_reviewer_validation_error,Verifies the endpoint properly validates the structure of candidates and pr_data.,Passed
+TC-023,API,test_app,test_recommend_reviewers_default_engine,Tests the main recommender endpoint to ensure it instantiates the correct engine when required_reviewers is absent.,Passed
+TC-024,API,test_app,test_recommend_reviewers_required_engine,Tests the main recommender endpoint properly builds the required reviewer sub-engine.,Passed
+TC-025,API,test_app,test_recommend_reviewers_validation_error,Validates that the endpoint requires repository and pr parameters.,Passed
+TC-026,API,test_app,test_orchestrator_success,Tests the orchestrator endpoint maps users correctly and evaluates their profile via the engine.,Passed
+TC-027,API,test_app,test_orchestrator_empty_users,Ensures the orchestrator can process an empty user list without crashing.,Passed
+TC-028,API,test_app,test_orchestrator_validation_error,Verifies orchestrator request validation (missing required repo info).,Passed
