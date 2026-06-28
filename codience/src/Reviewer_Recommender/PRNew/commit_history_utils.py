@@ -3,7 +3,7 @@ import time
 import requests
 import json
 import re
-import concurrent.futures
+import re
 from collections import defaultdict
 from dotenv import load_dotenv
 from requests.adapters import HTTPAdapter
@@ -11,15 +11,11 @@ from urllib3.util.retry import Retry
 import sys
 import pickle
 from pathlib import Path
-from typing import List, Dict, Optional, Set, Any 
-
-# Add paths to Python path
-sys.path.insert(0, '/home/shahd/Desktop/Grduation')
-sys.path.insert(0, '/home/shahd/Desktop/Grduation/codience/src/Reviewer_Recommender/PRNew')
+from typing import Optional, Any 
 
 # Imports
 from .llm import generate_with_resilience, print_rate_limiter_stats
-from .prompts import FILE_DIFF_SUMMARY_PROMPT, COMMIT_CHUNK_SUMMARY_PROMPT, DEVELOPER_PROFILE_REDUCE_PROMPT
+from .prompts import FILE_DIFF_SUMMARY_PROMPT, COMMIT_CHUNK_SUMMARY_PROMPT, DEVELOPER_PROFILE_REDUCE_PROMPT, MEANINGFUL_COMMIT_FILTER_PROMPT
 from .profile_cache import ProfileCache
 from codience.src.Reviewer_Recommender.Data.commit_diff_vectordb import index_commits_to_db
 
@@ -34,7 +30,8 @@ session.mount("https", HTTPAdapter(max_retries=retries))
 
 # Initialize persistent cache
 _profile_cache = ProfileCache()
-CHECKPOINT_FILE = "/tmp/commit_skills_checkpoint.json"
+import tempfile
+CHECKPOINT_FILE = os.path.join(tempfile.gettempdir(), "commit_skills_checkpoint.json")
 
 def fetch_commits(owner, repo, limit=300):
     url = f"{BASE_URL}/repos/{owner}/{repo}/commits"
@@ -64,7 +61,8 @@ def fetch_commits(owner, repo, limit=300):
             page += 1
 
         return collected[:target]
-    except:
+    except Exception as e:
+        print(f"⚠️ Failed to fetch commits: {e}")
         return []
 
 EXT_TO_SKILL = {
@@ -81,6 +79,52 @@ KEYWORD_TO_SKILL = {
     "k8s": "Kubernetes", "test": "Testing/QA", "react": "React", "vue": "Vue", 
     "aws": "AWS", "azure": "Azure", "gcp": "GCP", "pipeline": "CI/CD", "refactor": "Refactoring"
 }
+
+def is_meaningful_commit_ai(commit_message: str, files: list) -> bool:
+    """Use local LLM to evaluate if a commit contains meaningful skill signals."""
+    filenames = [f.get("filename") for f in files if f.get("filename")]
+    if not filenames or not commit_message:
+        return False
+        
+    filenames_str = ", ".join(filenames[:20]) # Limit to 20 files for token efficiency
+    
+    prompt = MEANINGFUL_COMMIT_FILTER_PROMPT.format(
+        commit_message=commit_message,
+        filenames_str=filenames_str
+    )
+    
+    # Call the LLM with a very low max_tokens since we only need YES/NO
+    response = generate_with_resilience(prompt, max_tokens=5)
+    
+    if not response:
+        # Fallback to true if LLM fails so we don't accidentally drop good data
+        return True 
+        
+    return "YES" in response.upper()
+
+def filter_commit_files(files: list) -> list:
+    """Remove lockfiles, assets, and docs to save LLM tokens."""
+    ignored_extensions = {".md", ".txt", ".png", ".jpg", ".svg", ".csv", ".json"}
+    ignored_files = {"package-lock.json", "yarn.lock", "poetry.lock", "Pipfile.lock"}
+    
+    filtered = []
+    for f in files:
+        filename = f.get("filename", "").lower()
+        if not filename: continue
+        
+        basename = os.path.basename(filename)
+        _, ext = os.path.splitext(filename)
+        
+        if basename in ignored_files or ext in ignored_extensions:
+            continue
+            
+        # Also skip massive files if patch is too long (over 1000 lines)
+        patch = f.get("patch", "")
+        if len(patch) > 50000: # ~1000 lines
+            continue
+            
+        filtered.append(f)
+    return filtered
 
 def extract_skills_heuristically(commit_message, files):
     skills = set()
@@ -108,18 +152,15 @@ def extract_skills_heuristically(commit_message, files):
     return skills
 
 def save_checkpoint(author: str, skills: set, repo: str = "huggingface/transformers"):
-    """Save progress to both cache and checkpoint file"""
     try:
-        # Don't save empty profiles
         if not skills:
-            print(f"⚠️ Skipping cache for {author} - no skills extracted")
             return False
         
         from collections import Counter
         skill_profile = Counter({skill.lower(): 1.0 for skill in skills})
-        decay_tag = _profile_cache.decay_tag(2.0, 180)
+        # FIX: Append "_skills" to the tag to prevent collision with multiset_engine
+        decay_tag = _profile_cache.decay_tag(2.0, 180) + "_skills" 
         _profile_cache.set_profile(repo, author, skill_profile, decay_tag)
-        
         # Save to checkpoint file
         checkpoint = load_checkpoint()
         checkpoint[author] = list(skills)
@@ -138,20 +179,20 @@ def load_checkpoint():
         try:
             with open(CHECKPOINT_FILE, 'r') as f:
                 return json.load(f)
-        except:
+        except Exception:
             return {}
     return {}
 
 def load_from_cache(author: str, repo: str = "huggingface/transformers"):
     """Try to load skills from cache first"""
     try:
-        decay_tag = _profile_cache.decay_tag(2.0, 180)
+        decay_tag = _profile_cache.decay_tag(2.0, 180) + "_skills"
         profile = _profile_cache.get_profile(repo, author, decay_tag)
         if profile and len(profile) > 0:  # Only return non-empty profiles
             skills = [skill for skill in profile.keys()]
             print(f"✅ Loaded {author} from cache ({len(skills)} skills)")
             return set(skills)
-    except:
+    except Exception:
         pass
     return None
 
@@ -169,7 +210,7 @@ def get_cached_author_count(repo: str = "huggingface/transformers") -> int:
     try:
         checkpoint = load_checkpoint()
         return len([k for k, v in checkpoint.items() if v])
-    except:
+    except Exception:
         return 0
 
 def map_commits_to_skills(commits, max_llm_calls=None, repo="huggingface/transformers", 
@@ -178,8 +219,6 @@ def map_commits_to_skills(commits, max_llm_calls=None, repo="huggingface/transfo
     Map commits to skills with crash-safe checkpointing.
     Can filter to specific authors or limit to max_authors.
     """
-    global llm_calls_made
-    llm_calls_made = 0
     
     # Load existing checkpoint
     checkpoint = load_checkpoint()
@@ -259,13 +298,32 @@ def map_commits_to_skills(commits, max_llm_calls=None, repo="huggingface/transfo
         
         for commit_idx, commit in enumerate(author_commits):
             try:
-                if commit_idx > 0:
-                    time.sleep(0.5)  # Small delay between commits
+                commit_message = commit.get("commit", {}).get("message", "")
                 
-                commit_detail = session.get(commit["url"], headers=HEADERS, timeout=15).json()
-                commit_message = commit["commit"]["message"]
-                files = commit_detail.get("files", [])
-                commit["files"] = files
+                # FIX: Use existing files if available, otherwise fetch
+                if "files" in commit and commit["files"]:
+                    files = commit["files"]
+                else:
+                    if commit_idx > 0:
+                        time.sleep(0.5)
+                    commit_detail = session.get(commit["url"], headers=HEADERS, timeout=15).json()
+                    files = commit_detail.get("files", [])
+                    commit["files"] = files
+                
+                # Skip trivial commits using AI filter
+                if not is_meaningful_commit_ai(commit_message, files):
+                    print(f"   🤖 AI Filtered out trivial commit: {commit_message[:30]}...")
+                    continue
+                
+                # Filter out noise (lockfiles, docs, images, giant files)
+                filtered_files = filter_commit_files(files)
+                if not filtered_files:
+                    continue # Skip commit if no meaningful files are left
+                
+                # Update commit files so LLM only sees filtered files
+                commit["files"] = filtered_files
+                files = filtered_files
+                
                 
                 # Prepare data for Vector DB RAG Indexing
                 to_index = []
@@ -311,7 +369,7 @@ def map_commits_to_skills(commits, max_llm_calls=None, repo="huggingface/transfo
     
     return dev_skills
 # Add this helper function to get commit history without LLM
-def fetch_commit_history_for_author(author: str, owner: str, repo: str, limit: int = 50) -> List[dict]:
+def fetch_commit_history_for_author(author: str, owner: str, repo: str, limit: int = 50) -> list[dict]:
     """Fetch commit history for a specific author from GitHub API."""
     url = f"{BASE_URL}/repos/{owner}/{repo}/commits"
     headers = {"Authorization": f"token {GITHUB_TOKEN}", "Accept": "application/vnd.github+json"}
@@ -337,7 +395,7 @@ def fetch_commit_history_for_author(author: str, owner: str, repo: str, limit: i
             try:
                 detail = session.get(commit["url"], headers=headers, timeout=15).json()
                 commit["files"] = detail.get("files", [])
-            except:
+            except Exception:
                 commit["files"] = []
             collected.append(commit)
         
@@ -347,7 +405,7 @@ def fetch_commit_history_for_author(author: str, owner: str, repo: str, limit: i
     
     return collected[:limit]
 
-def fetch_commit_history_bulk(authors: List[str], owner: str, repo: str, limit: int = 50) -> Dict[str, List[dict]]:
+def fetch_commit_history_bulk(authors: list[str], owner: str, repo: str, limit: int = 50) -> dict[str, list[dict]]:
     """
     Fetch commit history for multiple authors in parallel.
     NO LLM calls - pure GitHub API.

@@ -3,8 +3,6 @@ import requests
 import json
 import re
 from dotenv import load_dotenv
-import sys
-sys.path.insert(0, '/home/shahd/Desktop/Grduation/codience/src/Reviewer_Recommender/PRNew')
 
 from .llm import generate_with_resilience
 from .prompts import JIRA_ANALYSIS_PROMPT

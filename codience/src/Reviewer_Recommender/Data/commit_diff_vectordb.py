@@ -12,12 +12,11 @@ warnings.filterwarnings("ignore", category=UserWarning, module="chromadb")
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_DIR = os.path.join(CURRENT_DIR, "commit_vector_db_nomic")
+DB_DIR = os.path.join(CURRENT_DIR, "commit_vector_db_minilm")
 
-# Use Nomic's modern code-friendly embedding model (Jina throws an ImportError on modern transformers)
+# Use MiniLM's modern, lightweight embedding model for faster semantic search
 embeddings = HuggingFaceEmbeddings(
-    model_name="nomic-ai/nomic-embed-text-v1.5",
-    model_kwargs={'trust_remote_code': True}
+    model_name="all-MiniLM-L6-v2"
 )
 
 def get_commit_vector_db():

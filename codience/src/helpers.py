@@ -59,9 +59,8 @@ def _build_engine_for_required(owner: str, repo: str, required_reviewers: list, 
     )
     return engine
 
-
+# normalize the required reviewers
 def _normalize_reviewers(reviewers: list[Any]) -> list[Any]:
-    """Deduplicates and normalizes strings/dicts into a clean list of reviewer identifiers."""
     normalized = []
     seen = set()
     for r in reviewers:
