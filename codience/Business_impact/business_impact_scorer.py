@@ -18,8 +18,8 @@ class BusinessImpactConfig:
     """Configuration for local model routing parameters"""
     ollama_url: str = "http://127.0.0.1:11434/api/generate"
     model_name: str = "qwen2.5-coder:1.5b"
-    model_weight: float = 0.63
-    formula_weight: float = 0.37
+    model_weight: float = 0.58
+    formula_weight: float = 0.42
 
 
 class BusinessImpactScorer:

@@ -1,9 +1,19 @@
 """
 signal_scorers.py
 ─────────────────
-UserExposure and DeadlinePressure signals
- USER IMPACT (AR-Prioritizer style)
-UI = α log(users) + β severity + γ revenue
+UserExposure and DeadlinePressure signals.
+
+NOTE ON CITATIONS:
+The formulas below are heuristics *inspired by* general findings in the
+PR-prioritization literature (e.g. that severity, affected-user count, and
+deadline proximity correlate with review urgency). They are not verified
+transcriptions of a specific published equation. Treat the "AR-Prioritizer"
+and "Gousios" references as informal attribution of inspiration, not as
+citations of an exact formula — Azeem et al. (2020) is the actual AR-Prioritizer
+paper; Olmedo & Barbeito (2024) published a related but distinct PR-integration
+tool ("IPOptimizer").
+
+UI = α·log(1 + users) + β·severity + γ·revenue   (heuristic, 0-1 scaled)
 """
 
 import math
@@ -39,8 +49,11 @@ MINOR_KW = [
     "dependency", "upgrade", "bump", "chore",
 ]
 
+# FIX: "critical" was 9.0 (10x every other entry on this 0-1 scale).
+# That one typo alone could blow out severity_score and silently inflate
+# every downstream score for any PR linked to a "critical"-severity ticket.
 JIRA_SEV_MAP: dict[str, float] = {
-    "blocker": 1.0, "critical": 9.0,
+    "blocker": 1.00, "critical": 0.90,
     "major": 0.65, "high": 0.70,
     "medium": 0.50, "normal": 0.50,
     "minor": 0.25, "low": 0.20,
@@ -59,6 +72,7 @@ BUCKET_RANK = [
     UserExposureBucket.MINOR,
 ]
 
+
 def _kw_bucket(text: str) -> tuple[UserExposureBucket, list[str]]:
     lower = text.lower()
     c = [k for k in CRITICAL_KW if k in lower]
@@ -68,6 +82,7 @@ def _kw_bucket(text: str) -> tuple[UserExposureBucket, list[str]]:
     if len(m) >= 2:
         return UserExposureBucket.MAJOR, m[:5]
     return UserExposureBucket.MINOR, [k for k in MINOR_KW if k in lower][:3]
+
 
 def score_user_exposure(
     pr_title: str,
@@ -110,20 +125,30 @@ def score_user_exposure(
         k in (pr_title + pr_body).lower()
         for k in ["payment", "billing", "checkout", "invoice", "subscription"]
     ) else 0.25
-    
+
     final_bucket = min(
         [kw_bucket, jira_bucket, label_bucket, users_bucket],
         key=lambda b: BUCKET_RANK.index(b),
     )
 
-    # AR-Prioritizer formula
+    # α·log(1+users) + β·severity + γ·revenue
+    alpha, beta, gamma = 0.5, 0.3, 0.2
     ui_raw = (
-        0.5 * math.log(1 + max_users) +
-        0.3 * severity_score +
-        0.2 * revenue_flag
+        alpha * math.log(1 + max_users) +
+        beta * severity_score +
+        gamma * revenue_flag
     )
-    normalized_score = min(ui_raw / 5.0, 1.0) 
-    score = ui_raw / 10.0
+
+    # FIX: previously two competing normalizations were computed
+    # (`normalized_score = ui_raw/5.0` AND `score = ui_raw/10.0`) and only
+    # `normalized_score` was actually returned — the `score` line was dead
+    # code, which made the divisor choice look unintentional/undocumented.
+    # log(1+users) maxes out in the low single digits even for huge user
+    # counts (e.g. log(1+1,000,000) ≈ 13.8), so /5.0 was already saturating
+    # ui_raw to 1.0 for any large incident. We use a softer divisor (8.0)
+    # so the bucket (which already captures "is this huge") does more of the
+    # categorical work and the continuous score keeps some dynamic range.
+    normalized_score = min(ui_raw / 8.0, 1.0)
 
     parts = []
     if kw_hits:
@@ -138,8 +163,13 @@ def score_user_exposure(
         score=round(normalized_score, 4),
         matched_keywords=kw_hits,
         jira_severity=worst_sev,
-        explanation=f"UI = 0.5*log({max_users}) + 0.3*{severity_score:.2f} + 0.2*{revenue_flag} = {normalized_score:.4f}"
+        explanation=(
+            f"UI = {alpha}*log(1+{max_users}) + {beta}*{severity_score:.2f} "
+            f"+ {gamma}*{revenue_flag} = {ui_raw:.3f} -> normalized {normalized_score:.4f}"
+        ),
     )
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # DEADLINE PRESSURE
 # DP = 1 / (1 + e^(k * days))
@@ -155,13 +185,13 @@ def score_deadline(jira_tickets, milestone):
             if d:
                 try:
                     dates.append(datetime.fromisoformat(d).date())
-                except:
+                except Exception:
                     pass
 
     if milestone:
         try:
             dates.append(datetime.fromisoformat(milestone).date())
-        except:
+        except Exception:
             pass
 
     if not dates:
@@ -173,14 +203,25 @@ def score_deadline(jira_tickets, milestone):
         )
 
     nearest = min(dates)
-    days = max((nearest - today).days, 0)
+    days_signed = (nearest - today).days  # FIX: keep sign before clamping
 
+    # FIX (important behavior bug): `days` was clamped to >= 0 *before* being
+    # passed into the sigmoid, so an overdue deadline (days_signed < 0) was
+    # scored identically to "due today" (days_signed == 0) — both became 0.
+    # An overdue PR should register *more* pressure than one due today, not
+    # the same. We now let the sigmoid see the real signed value and only
+    # clamp `days_remaining` for display purposes.
     k = 0.15
-    dp = 1 / (1 + math.exp(k * days))
+    dp = 1 / (1 + math.exp(k * days_signed))
+
+    days_display = max(days_signed, 0)
+    source = "milestone" if milestone and not any(
+        t.sprint_end_date or t.milestone_due_date for t in jira_tickets
+    ) else ("sprint" if any(t.sprint_end_date for t in jira_tickets) else "milestone")
 
     return DeadlineDetail(
-        days_remaining=days,
-        source="milestone",
+        days_remaining=days_display,
+        source=source,
         score=round(dp, 4),
-        explanation=f"{days} days remaining (sigmoid pressure)"
+        explanation=f"{days_signed} days remaining (sigmoid pressure, k={k})"
     )

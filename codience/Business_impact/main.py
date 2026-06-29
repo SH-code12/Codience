@@ -19,7 +19,78 @@ from dotnet_jira_client import get_dotnet_client, fetch_authenticated_github_ema
 from dotenv import load_dotenv
 
 load_dotenv()
+import asyncio
+import httpx
+from contextlib import asynccontextmanager
+from fastapi import FastAPI, HTTPException, BackgroundTasks
+# ... (keep your existing imports here)
 
+# 1. Define the automatic background lifespan manager
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    print("=" * 80)
+    print("⏳ [Lifecycle] Bootstrapping Application Dependencies...")
+    print("=" * 80)
+
+    # Validate essential environments
+    required_envs = ["GITHUB_TOKEN", "DOTNET_API_URL"]
+    missing = [env for env in required_envs if not os.getenv(env)]
+    if missing:
+        critical_msg = f"CRITICAL BOOT ERROR: Missing environment variables: {missing}"
+        print(f"❌ {critical_msg}")
+        # Shuts down the application worker process safely before accepting traffic
+        raise RuntimeError(critical_msg)
+
+    # Validate or spin up Ollama inside the running event loop
+    print("⏳ [Lifecycle] Verifying Ollama local inference service...")
+    ollama_ready = False
+    async with httpx.AsyncClient(timeout=3.0) as client:
+        try:
+            res = await client.get("http://127.0.0.1:11434/api/tags")
+            if res.status_code == 200:
+                print("   ✓ Ollama service detected running locally.")
+                ollama_ready = True
+        except httpx.ConnectError:
+            print("⚠️ Ollama offline. Attempting automatic micro-service execution...")
+            try:
+                import subprocess
+                import sys
+                if sys.platform == "win32":
+                    subprocess.Popen(["ollama", "serve"], creationflags=subprocess.CREATE_NEW_CONSOLE)
+                else:
+                    subprocess.Popen(["ollama", "serve"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                
+                # Await readiness gracefully inside the event loop
+                for _ in range(5):
+                    await asyncio.sleep(2)
+                    try:
+                        check = await client.get("http://127.0.0.1:11434/api/tags")
+                        if check.status_code == 200:
+                            print("   ✓ Ollama service successfully initialized.")
+                            ollama_ready = True
+                            break
+                    except Exception:
+                        continue
+            except Exception as e:
+                print(f"❌ Could not run background subprocess call for Ollama: {e}")
+
+    if not ollama_ready:
+        print("⚠️ Warning: Running pipeline without a verified local model instance. Semantic scores will fail.")
+
+    print("🚀 [Lifecycle] Application dependency verification complete. Standing up API routers...")
+    yield #----------------- Server yields here and begins serving routes -----------------#
+    print("🛑 [Lifecycle] Shaking down engine components...")
+
+
+# 2. Inject the lifespan handler directly into your FastAPI application setup
+app = FastAPI(
+    title="PR Business Impact Ranking API",
+    description="API for ranking pull requests by business impact using local AI models",
+    version="1.0.0",
+    lifespan=lifespan # 👈 Injected here
+)
+
+# ... (Leave all the rest of your app routes, middleware, and engine instantiations exactly as they are)
 # Initialize FastAPI
 app = FastAPI(
     title="PR Business Impact Ranking API",
