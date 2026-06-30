@@ -14,4 +14,5 @@ public interface IJiraService
     Task<IEnumerable<JiraIssueDto>> GetAssignedIssuesAsync(string accessToken, string cloudId, string projectKey, string assigneeName);
     Task<bool> AssignIssueAsync(string accessToken, string cloudId, string issueKey, string accountId);
     Task<JiraUserProfile> GetCurrentUserAsync(string accessToken);
+    Task<IEnumerable<JiraIssueDto>> GetProjectIssuesAsync(string accessToken, string cloudId, string projectKey);
 }

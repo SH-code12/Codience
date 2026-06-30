@@ -169,4 +169,71 @@ public class JiraService : IJiraService
         if (!response.IsSuccessStatusCode) throw new Exception("GetCurrentUser Error: " + json);
         return JsonSerializer.Deserialize<JiraUserProfile>(json)!;
     }
+    public async Task<IEnumerable<JiraIssueDto>> GetProjectIssuesAsync(
+    string accessToken,
+    string cloudId,
+    string projectKey)
+{
+    _httpClient.DefaultRequestHeaders.Authorization =
+        new AuthenticationHeaderValue("Bearer", accessToken);
+
+    var url = $"https://api.atlassian.com/ex/jira/{cloudId}/rest/api/3/search/jql";
+
+    var body = new
+    {
+        jql = $"project = '{projectKey}'",
+        fields = new[]
+        {
+            "summary",
+            "status",
+            "priority",
+            "issuetype",
+            "description"
+        }
+    };
+
+    var response = await _httpClient.PostAsJsonAsync(url, body);
+    var json = await response.Content.ReadAsStringAsync();
+
+    if (!response.IsSuccessStatusCode)
+        throw new Exception("Jira Search Error: " + json);
+
+    var result = JsonSerializer.Deserialize<JsonElement>(json);
+    var list = new List<JiraIssueDto>();
+
+    if (result.TryGetProperty("issues", out var issuesArray))
+    {
+        foreach (var issue in issuesArray.EnumerateArray())
+        {
+            var fields = issue.GetProperty("fields");
+
+            list.Add(new JiraIssueDto
+            {
+                Key = issue.GetProperty("key").GetString()!,
+                Summary = fields.TryGetProperty("summary", out var s)
+                    ? s.GetString() ?? "No Summary"
+                    : "No Summary",
+
+                Status = fields.TryGetProperty("status", out var st)
+                    ? st.GetProperty("name").GetString() ?? "Unknown"
+                    : "Unknown",
+
+                Priority = fields.TryGetProperty("priority", out var p) &&
+                           p.ValueKind != JsonValueKind.Null
+                    ? p.GetProperty("name").GetString() ?? "Medium"
+                    : "Medium",
+
+                IssueType = fields.TryGetProperty("issuetype", out var it)
+                    ? it.GetProperty("name").GetString() ?? "Task"
+                    : "Task",
+
+                Description = fields.TryGetProperty("description", out var d)
+                    ? d.ToString()
+                    : ""
+            });
+        }
+    }
+
+    return list;
+}
 }

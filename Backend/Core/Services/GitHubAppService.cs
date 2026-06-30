@@ -166,10 +166,7 @@ public class GitHubAppService : IGitHubAppService
     // =========================
     // MAIN FLOW (IMPORTANT)
     // =========================
-    public async Task<ConnectRepoResponseDto> ConnectRepositoryAsync(
-        string userName,
-        string owner,
-        string repo)
+    public async Task<ConnectRepoResponseDto> ConnectRepositoryAsync(string userName,string owner,string repo)
     {
         var installed =
             await IsInstalledAsync(owner, repo);

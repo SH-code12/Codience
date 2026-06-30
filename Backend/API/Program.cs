@@ -57,16 +57,12 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAll", policy =>
     {
         policy
-            .WithOrigins(
-                "http://127.0.0.1:5500",
-                "http://localhost:5500"
-            )
+            .SetIsOriginAllowed(_ => true) // Allow any origin
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
     });
 });
-
 
 // =====================================================
 // Dependency Injection
@@ -82,7 +78,7 @@ builder.Services.AddScoped<IExperienceMetricsService, ExperienceMetricsService>(
 
 builder.Services.AddScoped<IGitHubWebhookService, GithubWebhookService>();
 
-builder.Services.AddScoped<GitHubJwtProvider>();
+builder.Services.AddSingleton<GitHubJwtProvider>();
 
 builder.Services.AddScoped<IPRCommitsService, PRCommitsService>();
 
@@ -140,6 +136,11 @@ var app = builder.Build();
 // Middleware
 // =====================================================
 
+
+app.UseHttpsRedirection();
+
+app.UseRouting(); 
+
 app.UseCors("AllowAll");
 
 if (app.Environment.IsDevelopment())
@@ -150,7 +151,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
 
 app.MapControllers();
 
@@ -169,7 +169,7 @@ using (var scope = app.Services.CreateScope())
 
     if (apply == "true")
     {
-        db.Database.Migrate();
+    db.Database.Migrate();
     }
 }
 //===SIGNALR HUBS===

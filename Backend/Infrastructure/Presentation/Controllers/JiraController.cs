@@ -113,4 +113,21 @@ public class JiraController : ControllerBase
             return BadRequest(new { error = ex.Message });
         }
     }
+    [HttpPost("project-tickets")]
+    public async Task<IActionResult> GetProjectTickets([FromBody] JiraRequestDto request)
+    {
+        try
+        {
+            var issues = await _jiraService.GetProjectIssuesAsync(
+                request.Token,
+                request.CloudId,
+                request.ProjectKey);
+
+            return Ok(issues);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
 }
