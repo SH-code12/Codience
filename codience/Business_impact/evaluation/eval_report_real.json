@@ -1,0 +1,69 @@
+{
+  "judge_model": "qwen2.5:3b ",
+  "timestamp": "2026-07-01T16:17:21.447190",
+  "repo": "SamaAshrafAhmed/Codience_Test",
+  "total_prs": 3,
+  "judge_pass": 0,
+  "judge_fail": 3,
+  "judge_errors": 0,
+  "dimension_averages": {
+    "tier_correctness": 1.67,
+    "score_calibration": 4,
+    "block_decision_soundness": 4,
+    "summary_faithfulness": 2.67,
+    "explanation_quality": 2.33
+  },
+  "prs": [
+    {
+      "pr_number": 40,
+      "pr_title": "Implement user signup with password hashing",
+      "actual_tier": "high",
+      "actual_score": 72.29,
+      "actual_block": true,
+      "judge_scores": {
+        "tier_correctness": 1,
+        "score_calibration": 4,
+        "block_decision_soundness": 5,
+        "summary_faithfulness": 3,
+        "explanation_quality": 2
+      },
+      "judge_verdict": "fail",
+      "judge_reasoning": "The PR introduces a critical security feature (user signup with password hashing), which should be in the highest tier. The score calibration is acceptable but not excellent, and the explanation quality could be improved for clarity.",
+      "error": null
+    },
+    {
+      "pr_number": 39,
+      "pr_title": "Implement borrowing system with JSON data storage",
+      "actual_tier": "low",
+      "actual_score": 44.47,
+      "actual_block": true,
+      "judge_scores": {
+        "tier_correctness": 3,
+        "score_calibration": 4,
+        "block_decision_soundness": 4,
+        "summary_faithfulness": 3,
+        "explanation_quality": 3
+      },
+      "judge_verdict": "fail",
+      "judge_reasoning": "The PR introduces a new feature that could potentially expose user data, which is not adequately addressed in the score breakdown. The tier and score calibration are acceptable but do not fully reflect the potential risks introduced by the borrow system. Additionally, the explanation quality needs improvement to clearly justify the block-merge decision.",
+      "error": null
+    },
+    {
+      "pr_number": 38,
+      "pr_title": "Add login functionality with user password hashing",
+      "actual_tier": "medium",
+      "actual_score": 65.29,
+      "actual_block": true,
+      "judge_scores": {
+        "tier_correctness": 1,
+        "score_calibration": 4,
+        "block_decision_soundness": 3,
+        "summary_faithfulness": 2,
+        "explanation_quality": 2
+      },
+      "judge_verdict": "fail",
+      "judge_reasoning": "The PR introduces a basic login system, which is critical for security. However, the tier assigned (medium) does not reflect its importance and should be at least high. The score calibration seems reasonable but could benefit from more detailed breakdowns. The block-merge decision appears justified given the nature of the changes, but the summary faithfulness is lacking as it doesn't fully capture the PR's impact on security.",
+      "error": null
+    }
+  ]
+}

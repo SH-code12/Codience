@@ -1,0 +1,62 @@
+{
+  "judge_model": "qwen2.5:3b",
+  "timestamp": "2026-07-01T16:39:49.517423",
+  "repo": "SamaAshrafAhmed/Codience_Test",
+  "total_prs": 3,
+  "judge_pass": 2,
+  "judge_fail": 1,
+  "judge_errors": 0,
+  "prs": [
+    {
+      "pr_number": 40,
+      "pr_title": "Implement user signup with password hashing",
+      "actual_tier": "medium",
+      "actual_score": 65.29,
+      "actual_block": true,
+      "judge_scores": {
+        "tier_correctness": "high",
+        "score_calibration": "medium",
+        "block_decision_soundness": "low",
+        "summary_faithfulness": "medium",
+        "explanation_quality": "low"
+      },
+      "judge_verdict": "fail",
+      "judge_reasoning": "The system incorrectly categorized the PR as having a medium tier, which is not accurate given its security-related nature. The block decision also seems flawed due to the low tier calibration.",
+      "error": null
+    },
+    {
+      "pr_number": 39,
+      "pr_title": "Implement borrowing system with JSON data storage",
+      "actual_tier": "high",
+      "actual_score": 70.37,
+      "actual_block": true,
+      "judge_scores": {
+        "tier_correctness": "high",
+        "score_calibration": "medium",
+        "block_decision_soundness": "high",
+        "summary_faithfulness": "medium",
+        "explanation_quality": "low"
+      },
+      "judge_verdict": "pass",
+      "judge_reasoning": "The system correctly identified the PR as high risk due to its impact on the signup and borrowing systems. The block decision is sound given the severity of the changes. However, the score calibration could be more precise, summary faithfulness needs improvement, and explanation quality is low.",
+      "error": null
+    },
+    {
+      "pr_number": 38,
+      "pr_title": "Add login functionality with user password hashing",
+      "actual_tier": "medium",
+      "actual_score": 65.29,
+      "actual_block": true,
+      "judge_scores": {
+        "tier_correctness": "high",
+        "score_calibration": "medium",
+        "block_decision_soundness": "high",
+        "summary_faithfulness": "medium",
+        "explanation_quality": "low"
+      },
+      "judge_verdict": "pass",
+      "judge_reasoning": "The system correctly identified the PR as critical due to its login functionality, and it made a reasonable decision by recommending blocking the merge. However, the score calibration is considered medium due to room for improvement in scoring accuracy.",
+      "error": null
+    }
+  ]
+}
