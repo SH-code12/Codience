@@ -520,9 +520,9 @@ if __name__ == "__main__":
     print("=" * 80)
     print("🚀 Starting PR Business Impact Ranking API")
     print("=" * 80)
-    print(f"\n📍 API URL: http://localhost:8001")
-    print(f"📚 API Docs: http://localhost:8001/docs")
-    print(f"🔍 Health: http://localhost:8001/health")
+    print(f"\n📍 API URL: http://localhost:8003")
+    print(f"📚 API Docs: http://localhost:8003/docs")
+    print(f"🔍 Health: http://localhost:8003/health")
     print("\nPress Ctrl+C to stop\n")
     
     uvicorn.run(

@@ -18,8 +18,8 @@ class BusinessImpactConfig:
     """Configuration for local model routing parameters"""
     ollama_url: str = "http://127.0.0.1:11434/api/generate"
     model_name: str = "qwen2.5-coder:1.5b"
-    model_weight: float = 0.58
-    formula_weight: float = 0.42
+    model_weight: float = 0.70
+    formula_weight: float = 0.30
 
 
 class BusinessImpactScorer:
@@ -39,12 +39,12 @@ class BusinessImpactScorer:
         combined_text = f"{pr.pr_title} {pr.pr_body} {' '.join(pr.changed_files)}".lower()
 
         component_scores = {
-            "payment":  1.0 if any(p in combined_text for p in ["payment", "stripe", "paypal", "charge", "checkout"]) else 0.0,
-            "auth":     0.9 if any(p in combined_text for p in ["auth", "login", "password", "token", "jwt"]) else 0.0,
-            "database": 0.7 if any(p in combined_text for p in ["database", "migration", "schema"]) else 0.0,
-            "api":      0.6 if any(p in combined_text for p in ["api", "endpoint", "route", "controller"]) else 0.0,
+            "payment":  1.0 if any(p in combined_text for p in ["payment", "stripe", "paypal", "charge", "checkout"]) else 0.25,
+            "auth":     0.9 if any(p in combined_text for p in ["auth", "login", "password", "token", "jwt"]) else 0.25,
+            "database": 0.7 if any(p in combined_text for p in ["database", "migration", "schema"]) else 0.25,
+            "api":      0.6 if any(p in combined_text for p in ["api", "endpoint", "route", "controller"]) else 0.25,
         }
-        component_crit = max(component_scores.values(), default=0.45)
+        component_crit = max(component_scores.values(), default=0.33)
 
         security_keywords = ["security", "vulnerability", "exploit", "injection", "xss", "csrf", "bypass",        "authentication",
         "authorization",
@@ -52,10 +52,10 @@ class BusinessImpactScorer:
         "oauth",
         "login",
         "password"]
-        security_risk = 0.8 if any(k in combined_text for k in security_keywords) else 0.44
+        security_risk = 0.8 if any(k in combined_text for k in security_keywords) else 0.33
 
         revenue_keywords = ["payment", "billing", "subscription", "invoice", "checkout", "transaction"]
-        revenue_impact = 0.9 if any(k in combined_text for k in revenue_keywords) else 0.35
+        revenue_impact = 0.9 if any(k in combined_text for k in revenue_keywords) else 0.33
 
         score = (
             0.25 * component_crit +
@@ -64,7 +64,8 @@ class BusinessImpactScorer:
             0.30 * revenue_impact +
             0.10 * blast_score
         )
-
+        if security_risk >= 0.8 or component_crit >= 0.9:
+                    score = max(score, 0.75)
         deadline_boost = 1.0 + (deadline_score * 0.35)
         return min(score * deadline_boost, 1.0)
 
@@ -114,7 +115,7 @@ Expected Schema:
         }
 
         default_fallback = {
-            "ai_score": 0.56,
+            "ai_score": 0.53,
             "summary": "Local engine timeout or processing error.",
             "affected_systems": ["unknown"]
         }
@@ -132,22 +133,22 @@ Expected Schema:
                         model_text = json_match.group(0)
                         
                     parsed = json.loads(model_text)
-                    ai_score = parsed.get("ai_risk_score", parsed.get("ai_score", 0.5))
+                    ai_score = parsed.get("ai_risk_score", parsed.get("ai_score", 0.53))
                     
                     return {
                         "ai_score": float(ai_score),
 
                         "customer_impact":
-                            float(parsed.get("customer_impact",0.5)),
+                            float(parsed.get("customer_impact",0.40)),
 
                         "revenue_impact":
-                            float(parsed.get("revenue_impact",0.5)),
+                            float(parsed.get("revenue_impact",0.40)),
 
                         "security_impact":
-                            float(parsed.get("security_impact",0.5)),
+                            float(parsed.get("security_impact",0.40)),
 
                         "deployment_risk":
-                            float(parsed.get("deployment_risk",0.5)),
+                            float(parsed.get("deployment_risk",0.40)),
 
                         "summary":
                             parsed.get("business_summary",""),
@@ -196,6 +197,6 @@ def score_to_tier(score: float) -> ImpactTier:
     """Convert a 0-100 score to an ImpactTier enum."""
     if score >= 70:
         return ImpactTier.HIGH
-    elif score >= 40:
+    elif score >= 45:
         return ImpactTier.MEDIUM
     return ImpactTier.LOW

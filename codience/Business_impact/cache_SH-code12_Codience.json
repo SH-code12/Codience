@@ -28,5 +28,21 @@
     "weighted_score": 43.76622499999999,
     "tier": "medium",
     "timestamp": "2026-06-17T23:34:14.117438"
+  },
+  {
+    "pr_number": 39,
+    "pr_title": "Implement borrowing system with JSON data storage",
+    "weighted_score": 70.3014075,
+    "tier": "high",
+    "should_block_merge": true,
+    "ai_summary": "Implementing a borrowing system with JSON data storage involves integrating a new feature into the signup process, which requires updating the borrow.py file to handle user borrowing requests and storing them in JSON format.",
+    "score_breakdown": {
+      "blast_radius": 0,
+      "user_exposure": 0.0306,
+      "deadline": 0.1,
+      "formula_score": 0.24338,
+      "local_model_score": 0.9,
+      "business_impact": 70.3014
+    }
   }
 ]

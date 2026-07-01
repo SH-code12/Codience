@@ -111,7 +111,7 @@ def score_blast_radius(changed_files: list[str], diff: str) -> BlastRadiusDetail
     routes = _count_routes(diff)
     n_crit = len(critical)
 
-    # FIX: previously these three weighted components (caller_c/route_c/crit_c,
+    # these three weighted components (caller_c/route_c/crit_c,
     # which sum to at most 0.40+0.25+0.35=1.0 on their own) were added to a
     # SEPARATE, independently-scaled `normalized` term (total_dependencies/10,
     # uncapped before the final min(...,1.0)). That meant any PR with a
@@ -119,7 +119,7 @@ def score_blast_radius(changed_files: list[str], diff: str) -> BlastRadiusDetail
     # own and saturate the whole score regardless of what callers/routes/
     # critical said — i.e. the graph-decay term silently dominated.
     #
-    # Fix: give the graph-decay term its own bounded weight in the same
+    # give the graph-decay term its own bounded weight in the same
     # 0-1 budget as the other three signals, instead of letting it stack
     # on top uncapped.
     dependency_map = defaultdict(int)
@@ -129,13 +129,14 @@ def score_blast_radius(changed_files: list[str], diff: str) -> BlastRadiusDetail
             dependency_map[d] += 1 / depth
     total_dependencies = sum(dependency_map.values())
 
+    file_count_influence = min(len(code) / 15.0, 1.0) * 0.33
     caller_c = min(callers / 10.0, 1.0) * 0.30
     route_c = min(routes / 3.0, 1.0) * 0.20
     crit_c = min(n_crit * 0.15, 0.60) * 0.25
     graph_c = min(total_dependencies / 10.0, 1.0) * 0.25
     # weights now sum to 1.0: 0.30 + 0.20 + 0.25 + 0.25
 
-    score = round(min(caller_c + route_c + crit_c + graph_c, 1.0), 4)
+    score = round(min(caller_c + route_c + crit_c + graph_c + file_count_influence, 1.0), 4)
 
     parts = []
     if callers:
