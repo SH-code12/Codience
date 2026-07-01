@@ -36,13 +36,13 @@ USAGE:
     # use a different judge model
     EVAL_JUDGE_MODEL=llama3.2:3b python llm_judge.py
 """
-
 from __future__ import annotations
 
 import asyncio
 import json
 import os
 import re
+import subprocess  # <-- Added for automatic model management
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Optional
@@ -63,10 +63,10 @@ from dotnet_jira_client import fetch_authenticated_github_email
 from models import PRPayload, PRScoreResult
 
 # ── eval config (override with env vars) ──────────────────────────────────────
-OLLAMA_URL   = os.getenv("OLLAMA_URL",        "http://127.0.0.1:11434/api/generate")
-JUDGE_MODEL  = os.getenv("EVAL_JUDGE_MODEL",  "qwen2.5:3b")
+OLLAMA_URL    = os.getenv("OLLAMA_URL",        "http://127.0.0.1:11434/api/generate")
+JUDGE_MODEL   = os.getenv("EVAL_JUDGE_MODEL",  "qwen2.5:3b")  # Target model
 JUDGE_TIMEOUT = float(os.getenv("EVAL_JUDGE_TIMEOUT", "300.0"))
-EVAL_REPO    = os.getenv("EVAL_REPO",         os.getenv("GITHUB_REPO", ""))
+EVAL_REPO     = os.getenv("EVAL_REPO",         os.getenv("GITHUB_REPO", ""))
 EVAL_MAX_PRS = int(os.getenv("EVAL_MAX_PRS",  "3"))
 
 RUBRIC_DIMENSIONS = [
@@ -76,6 +76,32 @@ RUBRIC_DIMENSIONS = [
     "summary_faithfulness",
     "explanation_quality",
 ]
+
+# ── automatic ollama pull helper ──────────────────────────────────────────────
+def ensure_ollama_model(model_name: str):
+    """Checks if the required model exists locally in Ollama; if not, pulls it automatically."""
+    print(f"🔍 Checking if local Ollama has model '{model_name}'...")
+    try:
+        # Run 'ollama list' to check for existing models
+        result = subprocess.run(["ollama", "list"], capture_output=True, text=True, check=True)
+        if model_name in result.stdout:
+            print(f"✅ Model '{model_name}' is already installed.")
+            return
+
+        # Model wasn't found, trigger the pull operation
+        print(f"📥 Model '{model_name}' not found locally. Running 'ollama pull {model_name}' automatically...")
+        # Using check=True will halt execution if Ollama isn't running or something goes wrong
+        subprocess.run(["ollama", "pull", model_name], check=True)
+        print(f"✅ Successfully pulled '{model_name}'!")
+        
+    except FileNotFoundError:
+        print("❌ Error: The 'ollama' CLI is not installed or not added to your system PATH.")
+        print("Please install Ollama from https://ollama.com before running this script.")
+        sys.exit(1)
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Failed to verify or pull model via Ollama CLI: {e}")
+        print("Ensure the Ollama application/service is running background.")
+        sys.exit(1)
 
 # ── judge prompt (CHANGED TO LOW, MEDIUM, HIGH MEASUREMENTS) ──────────────────
 JUDGE_SYSTEM = """You are a senior engineering manager auditing an automated PR risk-scoring system.
@@ -192,7 +218,7 @@ class EvalResult:
     actual_tier: str
     actual_score: float
     actual_block: bool
-    judge_scores: dict[str, str] # Now stores string levels ("high", "medium", "low")
+    judge_scores: dict[str, str]
     judge_verdict: str
     judge_reasoning: str
     error: Optional[str] = None
@@ -240,11 +266,14 @@ async def main():
         print("❌ Set EVAL_REPO (or GITHUB_REPO) in your .env to the target repo.")
         return
 
+    # Trigger the model check and auto-download right at the beginning
+    ensure_ollama_model(JUDGE_MODEL)
+
     print("=" * 78)
     print("🔬 REAL-DATA LLM-AS-JUDGE EVAL (TEXT SCALE-DRIVEN)")
-    print(f"   Repo:         {EVAL_REPO}")
-    print(f"   Max PRs:      {EVAL_MAX_PRS}")
-    print(f"   Judge model:  {JUDGE_MODEL}")
+    print(f"    Repo:         {EVAL_REPO}")
+    print(f"    Max PRs:      {EVAL_MAX_PRS}")
+    print(f"    Judge model:  {JUDGE_MODEL}")
     print("=" * 78)
 
     print(f"\n📥 Fetching up to {EVAL_MAX_PRS} open PRs from {EVAL_REPO}...")
@@ -279,7 +308,6 @@ async def main():
     n_fail  = sum(1 for r in valid if r.judge_verdict == "fail")
     n_error = len(eval_results) - len(valid)
 
-    # Calculate distribution profiles instead of mathematical averages
     report = {
         "judge_model":  JUDGE_MODEL,
         "timestamp":    datetime.now().isoformat(),
@@ -313,13 +341,13 @@ async def main():
     for r in eval_results:
         flag = "✅" if r.judge_verdict == "pass" else ("❌" if r.judge_verdict == "fail" else "⚠️ ")
         print(f"\n  {flag} PR #{r.pr_number} — {r.pr_title[:60]}")
-        print(f"      system  → tier={r.actual_tier} score={r.actual_score}")
+        print(f"       system  → tier={r.actual_tier} score={r.actual_score}")
         if not r.error:
-            print(f"      scores  → {r.judge_scores}")
-            print(f"      verdict → {r.judge_reasoning}")
+            print(f"       scores  → {r.judge_scores}")
+            print(f"       verdict → {r.judge_reasoning}")
     print("=" * 78)
 
-    out_path = os.path.join(os.path.dirname(__file__), "report.json")
+    out_path = os.path.join(os.path.dirname(__file__), "final-report.json")
     with open(out_path, "w") as f:
         json.dump(report, f, indent=2)
     print(f"\n📝 Full report saved → {out_path}")
